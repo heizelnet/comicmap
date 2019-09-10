@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">comicmap</string>
+    <integer name="circle_original_width">1262</integer>
+    <integer name="circle_original_height">1262</integer>
+</resources>
