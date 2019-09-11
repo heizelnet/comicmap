@@ -8,3 +8,5 @@ todo Update
 2. make Trade tab (set Twitter API, profile)
 
 3. change UI/UX design
+
+4. Login Comiket account + REST API
