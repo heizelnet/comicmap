@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.transition.Explode;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,14 +59,20 @@ public class fragment_map extends Fragment {
     private class PhotoTapListener implements OnPhotoTapListener {
         @Override
         public void onPhotoTap(ImageView view, float x, float y) {
+
+            DisplayMetrics metrics = getResources().getDisplayMetrics();
             Log.e("exploit", "Percentage : " + x + ", " + y + " , " + view.getId());
             Log.e("exploit", "View Location : " + bitmap.getWidth() + ", " + bitmap.getHeight());
-            canvas.drawCircle(bitmap.getWidth() * x, bitmap.getHeight() * y, 60, paint);
+            canvas.drawCircle(bitmap.getWidth() * x, bitmap.getHeight() * y, 60/metrics.density, paint);
             view.invalidate();
 
             adapter.setItems(new sample_circle().getItems());
             dialog = new circle_info_dialog(fragment_map.this, adapter);
+            Explode explodeAnimation = new Explode();
+            explodeAnimation.setDuration(1000);
+            dialog.getWindow().setEnterTransition(explodeAnimation);
             dialog.show();
+            Log.e("exploit", "DPI : " + metrics.density);
             dialog.setCanceledOnTouchOutside(true);
         }
     }

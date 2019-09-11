@@ -38,7 +38,11 @@ public class info_adapter extends RecyclerView.Adapter<info_adapter.ItemViewHold
         circle data = mData.get(position);
 
         Typeface face = ResourcesCompat.getFont(holder.itemView.getContext(), R.font.hannari);
-        Glide.with(holder.itemView.getContext()).load(data.getUrl()).error(R.drawable.bigsight).into(holder.imageView);
+        try {
+            Glide.with(holder.itemView.getContext()).load(data.getUrl()).into(holder.imageView);
+        } catch (Exception e) {
+            Glide.with(holder.itemView.getContext()).load(R.drawable.map_icon).into(holder.imageView);
+        }
         Log.e("exploit", "image loading");
         holder.textName2.setTypeface(face);
         holder.textName2.setText("Name : " + data.getName());
