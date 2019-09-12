@@ -68,12 +68,8 @@ public class fragment_map extends Fragment {
 
             adapter.setItems(new sample_circle().getItems());
             dialog = new circle_info_dialog(fragment_map.this, adapter);
-            Explode explodeAnimation = new Explode();
-            explodeAnimation.setDuration(1000);
-            dialog.getWindow().setEnterTransition(explodeAnimation);
             dialog.show();
             Log.e("exploit", "DPI : " + metrics.density);
-            dialog.setCanceledOnTouchOutside(true);
         }
     }
 

@@ -1,49 +1,36 @@
 package com.example.comicmap;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnNeverAskAgain;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
+import permissions.dispatcher.RuntimePermissions;
+
+@RuntimePermissions
 public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
-
         TextView textView = findViewById(R.id.textView);
         Typeface face = ResourcesCompat.getFont(this, R.font.saucer_bb);
         textView.setTypeface(face);
 
-        /*
-        final ImageView imageView = findViewById(R.id.imageView);
-        imageView.setImageResource(R.drawable.bigsight);
-
-        final ObjectAnimator oa1 = ObjectAnimator.ofFloat(imageView, "scaleX", 1f, 0f);
-        final ObjectAnimator oa2 = ObjectAnimator.ofFloat(imageView, "scaleX", 0f, 1f);
-        oa1.setInterpolator(new DecelerateInterpolator());
-        oa2.setInterpolator(new AccelerateDecelerateInterpolator());
-        oa1.setStartDelay(1500);
-        oa1.setDuration(50);
-        oa2.setDuration(50);
-        oa1.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                imageView.setImageResource(R.drawable.map);
-                oa2.start();
-            }
-        });
-        oa1.start();
-         */
-
-
         Handler timer = new Handler();
+        //SplashActivityPermissionsDispatcher.checkDataBaseWithPermissionCheck(this);
         timer.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -51,7 +38,31 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         }, 3000);
+    }
 
+    @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    void checkDataBase() {
+    }
 
+    @OnShowRationale({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    void showDialogforCheck(final PermissionRequest request) {
+        new AlertDialog.Builder(this)
+                .setMessage("Please Check Permission for Use.")
+                .setPositiveButton(android.R.string.ok, (dialog, button) -> request.proceed())
+                .setNegativeButton(android.R.string.cancel, (dialog, button) -> request.cancel())
+                .setCancelable(false)
+                .show();
+    }
+
+    @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    void showDeniedForPermission() {
+        Toast.makeText(this, "Please Check Permission.", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    void showNeverAskForPermission() {
+        Toast.makeText(this, "Please Check Permission.", Toast.LENGTH_SHORT).show();
+        finish();
     }
 }

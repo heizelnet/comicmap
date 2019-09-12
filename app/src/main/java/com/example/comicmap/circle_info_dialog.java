@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -12,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class circle_info_dialog extends Dialog {
-
 
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter adapter;
@@ -34,6 +35,17 @@ public class circle_info_dialog extends Dialog {
         super(fragment.getContext());
         this.fragment = fragment;
         this.adapter = adapter;
+
+        setCancelable( true );
+        setCanceledOnTouchOutside( true );
+
+        Window window = getWindow();
+        if( window != null ) {
+            WindowManager.LayoutParams params = window.getAttributes();
+            params.windowAnimations = R.style.AnimationPopupStyle;
+            window.setAttributes(params);
+            window.setGravity(Gravity.CENTER_HORIZONTAL);
+        }
     }
 
     @Override
@@ -43,6 +55,7 @@ public class circle_info_dialog extends Dialog {
         setContentView(R.layout.circle_info_dialog);
         recyclerView = findViewById(R.id.recycler_view);
         mLayoutManager = new LinearLayoutManager(fragment.getContext());
+        mLayoutManager.setItemPrefetchEnabled(true);
         recyclerView.setLayoutManager(mLayoutManager);
 
 

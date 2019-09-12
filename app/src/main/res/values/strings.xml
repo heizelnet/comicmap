@@ -2,4 +2,9 @@
     <string name="app_name">comicmap</string>
     <integer name="circle_original_width">1262</integer>
     <integer name="circle_original_height">1262</integer>
+    <string name="row_author">Author : </string>
+    <string name="row_Name">Name :   </string>
+    <string name="row_Hall">Hall :   </string>
+    <string name="row_Day">Day :    </string>
+    <string name="row_Circle">Circle : </string>
 </resources>

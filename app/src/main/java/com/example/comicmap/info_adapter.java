@@ -36,23 +36,19 @@ public class info_adapter extends RecyclerView.Adapter<info_adapter.ItemViewHold
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         circle data = mData.get(position);
-
-        Typeface face = ResourcesCompat.getFont(holder.itemView.getContext(), R.font.hannari);
+        /*
         try {
             Glide.with(holder.itemView.getContext()).load(data.getUrl()).into(holder.imageView);
         } catch (Exception e) {
             Glide.with(holder.itemView.getContext()).load(R.drawable.map_icon).into(holder.imageView);
         }
+        */
+        Glide.with(holder.itemView.getContext()).load(R.drawable.map_icon).into(holder.imageView);
         Log.e("exploit", "image loading");
-        holder.textName2.setTypeface(face);
         holder.textName2.setText("Name : " + data.getName());
-        holder.textAuthor2.setTypeface(face);
         holder.textAuthor2.setText("Author : " + data.getAuthor());
-        holder.textHall2.setTypeface(face);
         holder.textHall2.setText("Hall : " + data.getHall());
-        holder.textDay2.setTypeface(face);
         holder.textDay2.setText("Day : " + data.getDay());
-        holder.textCircle.setTypeface(face);
         holder.textCircle.setText("Circle : " + data.getCircle());
 
 
