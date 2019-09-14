@@ -7,4 +7,6 @@
     <string name="row_Hall">Hall :   </string>
     <string name="row_Day">Day :    </string>
     <string name="row_Circle">Circle : </string>
+    <string name="loading">Copying Database..</string>
+    <string name="done">Database Checked!</string>
 </resources>

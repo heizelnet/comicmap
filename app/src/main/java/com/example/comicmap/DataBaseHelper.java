@@ -13,7 +13,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
-    // varaible declaration
     public static String TAG = "DatabaseHelper";
     private static String DB_NAME = "comike_location.db";//file name in assets
     private SQLiteDatabase sqliteDatabase;
@@ -26,12 +25,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         DatabasePath = "/data/data/" + myContext.getPackageName() + "/databases/";
     }
 
-    /**
-     * Method to create the database inside application
-     *
-     * @throws IOException
-     */
-    private void createDatabase() throws IOException {
+    public void createDatabase() throws IOException {
         try {
 
             // check if the database exists
@@ -40,7 +34,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 // database is not present copy databse
                 this.getReadableDatabase();
                 try {
-                    copyDatabse();
+                    copyDatabase();
                 } catch (IOException e) {
                     // TODO: handle exception
                     // String ex = e.getMessage();
@@ -53,12 +47,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    /**
-     * Check if the database already exist to avoid re-copying the file each
-     * time you open the application.
-     *
-     * @return true if it exists, false if it doesn't
-     */
     private boolean checkDatabase() {
         SQLiteDatabase checkDB = null;
         try {
@@ -83,12 +71,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return checkDB != null;
     }
 
-    /**
-     * Copies your database from your local assets-folder to the just created
-     * empty database in the system folder, from where it can be accessed and
-     * handled. This is done by tranfering bytestream.
-     * */
-    private void copyDatabse() throws IOException {
+    private void copyDatabase() throws IOException {
         try {
             // Open your local db as the input stream
             InputStream myInput = myContext.getAssets().open(DB_NAME);
@@ -109,20 +92,23 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             myOutput.flush();
             myOutput.close();
             myInput.close();
+            Log.e("exploit", "database created..");
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
-
+    public SQLiteDatabase openDataBase() throws SQLException
+    {
+        //Log.v("mPath", mPath);
+        return SQLiteDatabase.openDatabase(DatabasePath + DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
+        //mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
-        try {
-            createDatabase();
-        } catch (IOException e) { e.printStackTrace(); }
     }
 
     @Override
@@ -131,8 +117,5 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-/**
- * Other Methods to insert,delete, update,select in Database
- **/
 
 }
