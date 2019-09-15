@@ -1,6 +1,8 @@
 package com.example.comicmap;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.widget.Toast;
@@ -9,6 +11,9 @@ import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private FragmentManager manager;
+    Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
