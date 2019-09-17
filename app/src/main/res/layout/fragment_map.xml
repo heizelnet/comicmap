@@ -35,10 +35,10 @@
             android:id="@+id/AnimationButton"
             android:layout_width="41dp"
             android:layout_height="41dp"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/fill_heart"
+            android:layout_marginEnd="20dp"
             android:background="@android:color/white"
-            app:layout_constraintStart_toEndOf="@+id/spinner4"
+            android:src="@drawable/fill_heart"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
