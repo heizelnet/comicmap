@@ -18,17 +18,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="3dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginEnd="3dp">
+        android:padding="4dp">
 
         <ImageView
             android:id="@+id/imageThumb"
             android:layout_width="70dp"
             android:layout_height="100dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.012"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,10 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
             android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/imageThumb"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_Author2"
@@ -49,10 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
             android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/imageThumb"
-            app:layout_constraintTop_toBottomOf="@+id/text_Name2"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_Name2" />
 
         <TextView
             android:id="@+id/text_Hall2"
@@ -60,10 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
             android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/imageThumb"
-            app:layout_constraintTop_toBottomOf="@+id/text_Author2"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_Author2" />
 
         <TextView
             android:id="@+id/text_Day2"
@@ -71,10 +61,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
             android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/imageThumb"
-            app:layout_constraintTop_toBottomOf="@+id/text_Hall2"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_Hall2" />
 
         <TextView
             android:id="@+id/text_Circle"
@@ -82,11 +70,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
             android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/imageThumb"
-            app:layout_constraintTop_toBottomOf="@+id/text_Day2"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_Day2"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.cardview.widget.CardView>
 
 </FrameLayout>

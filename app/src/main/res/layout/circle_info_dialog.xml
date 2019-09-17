@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@drawable/border_line">
+    android:background="@drawable/dialog_bg">
 
 
     <androidx.recyclerview.widget.RecyclerView
