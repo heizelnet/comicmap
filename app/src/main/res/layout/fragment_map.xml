@@ -9,14 +9,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:padding="4dp"
         android:background="@drawable/border_line" >
 
         <Spinner
             android:id="@+id/spinner4"
             android:layout_width="140dp"
             android:layout_height="41dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/spinner3"
@@ -26,25 +27,28 @@
             android:id="@+id/spinner3"
             android:layout_width="140dp"
             android:layout_height="41dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/AnimationButton"
             android:layout_width="41dp"
             android:layout_height="41dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/fill_heart"
+            android:background="@android:color/white"
             app:layout_constraintStart_toEndOf="@+id/spinner4"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/fill_heart" />
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/photo_view"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="4dp"
         android:background="@drawable/border_line" />
 
 </LinearLayout>

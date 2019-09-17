@@ -8,18 +8,17 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
-import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
@@ -32,8 +31,8 @@ public class fragment_map extends Fragment {
     private PhotoView photoView;
     private Bitmap bitmap;
     private Canvas canvas;
-    private ImageView imageView;
-    private AnimatedVectorDrawable vectorDrawable;
+    private BitmapDrawable drawable;
+    private ImageButton imageButton;
     private Paint paint;
     private info_adapter adapter = new info_adapter();
     private circle_info_dialog dialog;
@@ -46,12 +45,12 @@ public class fragment_map extends Fragment {
         mDataBase = new DataBaseHelper(getContext()).openDataBase();
 
         toggle = false;
-        imageView = view.findViewById(R.id.AnimationButton);
+        imageButton = view.findViewById(R.id.AnimationButton);
         photoView = view.findViewById(R.id.photo_view);
         photoView.setMaximumScale(6.0f);
 
         //Set Map with bitmap layer
-        BitmapDrawable drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.west_34);
+        drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.west_34);
         bitmap = drawable.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
         canvas = new Canvas(bitmap);
         paint = new Paint();
@@ -66,27 +65,30 @@ public class fragment_map extends Fragment {
             return false;
         });
 
-        imageView.setOnClickListener(v -> {
+        imageButton.setOnClickListener(v -> {
             if(!toggle) {
-                imageView.setImageResource(R.drawable.fill_heart);
-                vectorDrawable = (AnimatedVectorDrawable) imageView.getDrawable();
-                AnimatedVectorDrawable animatedVectorDrawable = vectorDrawable;
+                imageButton.setImageDrawable(getResources().getDrawable(R.drawable.fill_heart));
+                AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageButton.getDrawable();
                 animatedVectorDrawable.start();
 
+                Log.e("exploit", "Favorite Function Activated");
                 //Test code for favorite function
                 canvas.drawCircle(bitmap.getWidth() * (float)0.86, bitmap.getHeight() * (float)0.65, (float)22.5, paint);
                 canvas.drawCircle(bitmap.getWidth() * (float)0.68, bitmap.getHeight() * (float)0.56, (float)22.5, paint);
                 canvas.drawCircle(bitmap.getWidth() * (float)0.35, bitmap.getHeight() * (float)0.27, (float)22.5, paint);
                 canvas.drawCircle(bitmap.getWidth() * (float)0.72, bitmap.getHeight() * (float)0.53, (float)22.5, paint);
                 canvas.drawCircle(bitmap.getWidth() * (float)0.53, bitmap.getHeight() * (float)0.72, (float)22.5, paint);
-                view.invalidate();
+                photoView.invalidate();
                 toggle = true;
 
             } else {
-                imageView.setImageResource(R.drawable.unfill_heart);
-                vectorDrawable = (AnimatedVectorDrawable) imageView.getDrawable();
-                AnimatedVectorDrawable animatedVectorDrawable = vectorDrawable;
+                imageButton.setImageDrawable(getResources().getDrawable(R.drawable.unfill_heart));
+                AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageButton.getDrawable();
                 animatedVectorDrawable.start();
+                drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.west_34);
+                bitmap = drawable.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
+                canvas.drawBitmap(bitmap, 0, 0, null);
+                photoView.invalidate();
                 toggle = false;
             }
         });
@@ -99,8 +101,8 @@ public class fragment_map extends Fragment {
 
             //get location & add query
             DisplayMetrics metrics = getResources().getDisplayMetrics();
-            int location_x = (int)Math.floor((bitmap.getWidth() * x) / 19);
-            int location_y = (int)Math.floor((bitmap.getHeight() * y) / 19);
+            int location_x = (int)Math.floor((bitmap.getWidth() / metrics.density * x) / 19);
+            int location_y = (int)Math.floor((bitmap.getHeight() / metrics.density * y) / 19);
             String query = "select * from circle_info where Hall like '%W34%' and Day=3 and location_x="+location_x+" and location_y="+location_y;
             Cursor cur = mDataBase.rawQuery(query, null);
             cur.moveToFirst();
@@ -125,9 +127,11 @@ public class fragment_map extends Fragment {
             }
             cur.close();
 
+            Log.e("exploit", "View Length : " + bitmap.getWidth() + ", " + bitmap.getHeight());
             Log.e("exploit", "Percentage : " + x + ", " + y + " , " + view.getId());
             Log.e("exploit", "Check Location : " + location_x + ", " + location_y);
             Log.e("exploit", "DPI : " + metrics.density);
+            Log.e("exploit", "Drawable Length : " + drawable.getIntrinsicWidth() + ", " + drawable.getIntrinsicHeight());
 
         }
     }

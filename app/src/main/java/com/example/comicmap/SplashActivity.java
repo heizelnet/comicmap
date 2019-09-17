@@ -39,7 +39,7 @@ public class SplashActivity extends AppCompatActivity {
     @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void checkDataBase() {
         helper = new DataBaseHelper(this);
-        TextView tv = findViewById(R.id.textView2);
+        TextView tv = findViewById(R.id.textView_load);
         Log.e("exploit", "wait for check...");
         tv.setText(R.string.loading);
         try {
