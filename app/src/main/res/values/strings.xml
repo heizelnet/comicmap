@@ -8,6 +8,8 @@
     <integer name="west_12_height">1211</integer>
     <integer name="west_34_width">1269</integer>
     <integer name="west_34_height">1212</integer>
+    <integer name="west_circle_pixel">19</integer>
+    <integer name="south_circle_pixel">31</integer>
     <string name="row_Author">Author :  </string>
     <string name="row_Name">Name :   </string>
     <string name="row_Hall">Hall :   </string>
