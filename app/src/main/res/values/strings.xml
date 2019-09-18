@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">comicmap</string>
-    <integer name="circle_original_width">1262</integer>
-    <integer name="circle_original_height">1262</integer>
+    <integer name="south_12_width">1936</integer>
+    <integer name="south_12_height">1062</integer>
+    <integer name="south_34_width">1936</integer>
+    <integer name="south_34_height">1062</integer>
+    <integer name="west_12_width">1703</integer>
+    <integer name="west_12_height">1211</integer>
+    <integer name="west_34_width">1269</integer>
+    <integer name="west_34_height">1212</integer>
     <string name="row_Author">Author :  </string>
     <string name="row_Name">Name :   </string>
     <string name="row_Hall">Hall :   </string>

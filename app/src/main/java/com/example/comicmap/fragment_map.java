@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 
 
@@ -38,6 +37,7 @@ public class fragment_map extends Fragment {
     private circle_info_dialog dialog;
     private SQLiteDatabase mDataBase;
     private boolean toggle;
+    private int map_width, map_height;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,6 +50,8 @@ public class fragment_map extends Fragment {
         photoView.setMaximumScale(6.0f);
 
         //Set Map with bitmap layer
+        map_width = getResources().getInteger(R.integer.west_34_width);
+        map_height = getResources().getInteger(R.integer.west_34_height);
         drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.west_34);
         bitmap = drawable.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
         canvas = new Canvas(bitmap);
@@ -67,7 +69,7 @@ public class fragment_map extends Fragment {
 
         imageButton.setOnClickListener(v -> {
             if(!toggle) {
-                imageButton.setImageDrawable(getResources().getDrawable(R.drawable.fill_heart));
+                imageButton.setImageDrawable(getContext().getDrawable(R.drawable.fill_heart));
                 AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageButton.getDrawable();
                 animatedVectorDrawable.start();
 
@@ -82,7 +84,7 @@ public class fragment_map extends Fragment {
                 toggle = true;
 
             } else {
-                imageButton.setImageDrawable(getResources().getDrawable(R.drawable.unfill_heart));
+                imageButton.setImageDrawable(getContext().getDrawable(R.drawable.unfill_heart));
                 AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageButton.getDrawable();
                 animatedVectorDrawable.start();
                 drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.west_34);
@@ -99,10 +101,13 @@ public class fragment_map extends Fragment {
         @Override
         public void onPhotoTap(ImageView view, float x, float y) {
 
+
+
             //get location & add query
-            DisplayMetrics metrics = getResources().getDisplayMetrics();
-            int location_x = (int)Math.floor((bitmap.getWidth() / metrics.density * x) / 19);
-            int location_y = (int)Math.floor((bitmap.getHeight() / metrics.density * y) / 19);
+            int density = ((int)bitmap.getWidth() / map_width);
+            Log.e("exploit", "DPI : " + density + ", resource width : " + map_width);
+            int location_x = (int)Math.floor((bitmap.getWidth() / density * x) / 19);
+            int location_y = (int)Math.floor((bitmap.getHeight() / density * y) / 19);
             String query = "select * from circle_info where Hall like '%W34%' and Day=3 and location_x="+location_x+" and location_y="+location_y;
             Cursor cur = mDataBase.rawQuery(query, null);
             cur.moveToFirst();
@@ -130,7 +135,7 @@ public class fragment_map extends Fragment {
             Log.e("exploit", "View Length : " + bitmap.getWidth() + ", " + bitmap.getHeight());
             Log.e("exploit", "Percentage : " + x + ", " + y + " , " + view.getId());
             Log.e("exploit", "Check Location : " + location_x + ", " + location_y);
-            Log.e("exploit", "DPI : " + metrics.density);
+
             Log.e("exploit", "Drawable Length : " + drawable.getIntrinsicWidth() + ", " + drawable.getIntrinsicHeight());
 
         }
@@ -151,5 +156,9 @@ public class fragment_map extends Fragment {
             int floor_y = (int)Math.floor((bitmap.getHeight() * y ) / 32);
 
              //String query = "select * from circle_info where Hall like '%S34%' and Day=2 and location_x between " + floor_x + " and " +ceil_x + " and location_y between " + floor_y + " and " + ceil_y;
+
+             Get Density of resource
+                         DisplayMetrics metrics = getResources().getDisplayMetrics();
+                         metrics.density
 
  */
