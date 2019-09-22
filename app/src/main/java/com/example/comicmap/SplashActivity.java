@@ -30,8 +30,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         TextView textView = findViewById(R.id.textView);
-        Typeface face = ResourcesCompat.getFont(this, R.font.saucer_bb);
-        textView.setTypeface(face);
+        //Typeface face = ResourcesCompat.getFont(this, R.font.saucer_bb);
+        //textView.setTypeface(face);
 
         SplashActivityPermissionsDispatcher.checkDataBaseWithPermissionCheck(this);
     }

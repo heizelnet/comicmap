@@ -10,17 +10,17 @@
     android:id="@+id/cv_item_cardview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="3dp"
-    android:layout_marginBottom="3dp"
-    android:layout_marginStart="3dp"
-    android:layout_marginEnd="3dp"
-    app:cardCornerRadius="5dp"
-    android:elevation="2dp" >
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    app:cardCornerRadius="10dp"
+    android:elevation="3dp" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp">
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/imageThumb"
@@ -35,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
+            android:fontFamily="@font/nicokaku"
             android:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -44,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
+            android:fontFamily="@font/nicokaku"
             android:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_Name2" />
@@ -53,6 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
+            android:fontFamily="@font/nicokaku"
             android:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_Author2" />
@@ -62,6 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
+            android:fontFamily="@font/nicokaku"
             android:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_Hall2" />
@@ -71,6 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
+            android:fontFamily="@font/nicokaku"
             android:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_Day2"/>
