@@ -17,7 +17,8 @@
         android:gravity="center"
         android:text="COMIC MAP"
         android:textAlignment="center"
-        android:textColor="@android:color/holo_green_light"
+
+        android:textColor="@color/black2"
         android:textSize="80sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,3 +39,5 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout >
+
+    <!-- android:textColor="@android:color/holo_green_light" !-->

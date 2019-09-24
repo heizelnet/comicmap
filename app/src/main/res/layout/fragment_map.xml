@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp"
+    android:background="@drawable/border_bottom_line" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="4dp"
+        android:padding="5dp"
         android:background="@drawable/border_line" >
 
         <Spinner
@@ -35,7 +37,7 @@
             android:id="@+id/AnimationButton"
             android:layout_width="41dp"
             android:layout_height="41dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="15dp"
             android:src="@drawable/fill_heart"
             android:background="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,12 +45,13 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/photo_view"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="4dp"
-        android:background="@drawable/border_line" />
+        android:layout_height="match_parent" />
+
+
 
 </LinearLayout>

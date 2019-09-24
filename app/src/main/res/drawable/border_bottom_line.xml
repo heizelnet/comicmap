@@ -5,18 +5,9 @@
             <solid android:color="@color/black2" />
         </shape>
     </item>
-    <item android:bottom="4dp"  android:top="4dp" >
+    <item android:bottom="4dp" >
         <shape android:shape="rectangle">
             <solid android:color="@android:color/white" />
         </shape>
     </item>
 </layer-list>
-
-<!--
-
-        android:bottom="3dp"
-        android:left="3dp"
-        android:right="3dp"
-        android:top="3dp"
-
-!-->
