@@ -9,7 +9,6 @@ import android.graphics.Paint;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,6 +66,7 @@ public class fragment_map extends Fragment {
             return false;
         });
 
+        //favorite button listener
         imageButton.setOnClickListener(v -> {
             if(!toggle) {
                 imageButton.setImageDrawable(getContext().getDrawable(R.drawable.fill_heart));
@@ -106,8 +106,8 @@ public class fragment_map extends Fragment {
             //get location & add query
             int density = ((int)bitmap.getWidth() / map_width);
             Log.e("exploit", "DPI : " + density + ", resource width : " + map_width);
-            int location_x = (int)Math.floor((bitmap.getWidth() / density * x) / 19);
-            int location_y = (int)Math.floor((bitmap.getHeight() / density * y) / 19);
+            int location_x = (int)Math.floor((bitmap.getWidth() / density * x) / 22.2);
+            int location_y = (int)Math.floor((bitmap.getHeight() / density * y) / 22.2);
             String query = "select * from circle_info where Hall like '%W34%' and Day=3 and location_x="+location_x+" and location_y="+location_y;
             Cursor cur = mDataBase.rawQuery(query, null);
             cur.moveToFirst();

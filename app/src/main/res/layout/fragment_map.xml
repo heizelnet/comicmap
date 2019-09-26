@@ -4,21 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="10dp"
-    android:background="@drawable/border_bottom_line" >
+    android:layout_height="match_parent" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="5dp"
-        android:background="@drawable/border_line" >
+        android:padding="5dp" >
 
         <Spinner
             android:id="@+id/spinner4"
             android:layout_width="140dp"
-            android:layout_height="41dp"
+            android:layout_height="50dp"
             android:layout_marginStart="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -28,18 +25,18 @@
         <Spinner
             android:id="@+id/spinner3"
             android:layout_width="140dp"
-            android:layout_height="41dp"
+            android:layout_height="50dp"
             android:layout_marginStart="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/AnimationButton"
-            android:layout_width="41dp"
-            android:layout_height="41dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="15dp"
             android:src="@drawable/fill_heart"
-            android:background="@android:color/white"
+            android:background="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,7 +45,7 @@
 
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/photo_view"
-        android:layout_marginTop="10dp"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

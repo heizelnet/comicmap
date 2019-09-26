@@ -1,15 +1,15 @@
 <resources>
     <string name="app_name">comicmap</string>
-    <integer name="south_12_width">1936</integer>
-    <integer name="south_12_height">1062</integer>
-    <integer name="south_34_width">1936</integer>
-    <integer name="south_34_height">1062</integer>
-    <integer name="west_12_width">1703</integer>
-    <integer name="west_12_height">1211</integer>
-    <integer name="west_34_width">1269</integer>
-    <integer name="west_34_height">1212</integer>
-    <integer name="west_circle_pixel">19</integer>
-    <integer name="south_circle_pixel">31</integer>
+    <integer name="south_12_width">2270</integer>
+    <integer name="south_12_height">1244</integer>
+    <integer name="south_34_width">2270</integer>
+    <integer name="south_34_height">1244</integer>
+    <integer name="west_12_width">1997</integer>
+    <integer name="west_12_height">1419</integer>
+    <integer name="west_34_width">1487</integer>
+    <integer name="west_34_height">1419</integer>
+    <string name="west_circle_pixel">22.2</string>
+    <string name="south_circle_pixel">34.3</string>
     <string name="row_Author">Author :  </string>
     <string name="row_Name">Name :   </string>
     <string name="row_Hall">Hall :   </string>

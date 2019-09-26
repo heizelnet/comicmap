@@ -1,6 +1,5 @@
 package com.example.comicmap;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -38,6 +37,7 @@ public class circle_info_dialog extends Dialog {
 
         setCancelable( true );
         setCanceledOnTouchOutside( true );
+
 
         Window window = getWindow();
         if( window != null ) {
