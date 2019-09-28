@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="HallArray">
+        <item> West12 </item>
+        <item> West34 </item>
+        <item> South12 </item>
+        <item> South34 </item>
+    </string-array>
+
+    <string-array name="DayArray">
+    <item> Day 1 </item>
+    <item> Day 2 </item>
+    <item> Day 3 </item>
+    <item> Day 4 </item>
+</string-array>
+
+</resources>

@@ -6,4 +6,5 @@
     <item name="fab_custom_theme" type="id" />
     <item name="fab_add_action" type="id" />
     <item name="fab_link" type="id" />
+    <item name="fab_map" type="id" />
 </resources>
