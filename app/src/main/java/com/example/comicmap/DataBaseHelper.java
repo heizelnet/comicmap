@@ -31,7 +31,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             // check if the database exists
             boolean dbExist = checkDatabase();
             if (!dbExist) {
-                // database is not present copy databse
+                // database is not present copy database
                 this.getReadableDatabase();
                 try {
                     copyDatabase();
@@ -102,7 +102,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public SQLiteDatabase openDataBase() throws SQLException
     {
         //Log.v("mPath", mPath);
-        return SQLiteDatabase.openDatabase(DatabasePath + DB_NAME, null, SQLiteDatabase.OPEN_READONLY);
+        return SQLiteDatabase.openDatabase(DatabasePath + DB_NAME, null, SQLiteDatabase.OPEN_READWRITE);
         //mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS);
     }
 
