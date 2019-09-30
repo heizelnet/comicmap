@@ -6,15 +6,21 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -36,28 +42,112 @@ public class fragment_map extends Fragment {
     private circle_info_dialog dialog;
     private SQLiteDatabase mDataBase;
     private boolean toggle;
-    private int map_width, map_height;
+    private Spinner spinnerHall, spinnerDay;
+    private int day, map_pixel;
+    private float circle_pixel;
+    private String hallName;
+    private Point size;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         mDataBase = new DataBaseHelper(getContext()).openDataBase();
 
+        //Set Default Settings
         toggle = false;
         imageButton = view.findViewById(R.id.AnimationButton);
         photoView = view.findViewById(R.id.photo_view);
-        photoView.setMaximumScale(6.0f);
+        photoView.setMaximumScale(7.0f);
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        size = new Point();
+        display.getSize(size);
 
         //Set Map with bitmap layer
-        map_width = getResources().getInteger(R.integer.west_34_width);
-        map_height = getResources().getInteger(R.integer.west_34_height);
-        drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.west_34);
+        map_pixel = getResources().getInteger(R.integer.west_12_width);
+        circle_pixel = Float.parseFloat(getResources().getString(R.string.west_circle_pixel));
+        drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.west_12);
         bitmap = drawable.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
         canvas = new Canvas(bitmap);
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(Color.argb(120, 164, 198, 57));
         photoView.setImageBitmap(bitmap);
+
+        //Set Spinner Adapter
+        String[] Hall, Day;
+        spinnerHall =(Spinner) view.findViewById(R.id.spinner3);
+        spinnerDay = (Spinner) view.findViewById(R.id.spinner4);
+        Hall = getResources().getStringArray(R.array.HallArray);
+        Day = getResources().getStringArray(R.array.DayArray);
+        spinnerHall.setAdapter(new ItemSpinnerAdapter(getActivity().getApplicationContext(), Hall));
+        spinnerDay.setAdapter(new ItemSpinnerAdapter(getActivity().getApplicationContext(), Day));
+        spinnerHall.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        hallName = "W12";
+                        circle_pixel = Float.parseFloat(getResources().getString(R.string.west_circle_pixel));
+                        map_pixel = getResources().getInteger(R.integer.west_12_width);
+                        drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.west_12);
+                        bitmap = drawable.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
+                        canvas.setBitmap(bitmap);
+                        photoView.setImageBitmap(bitmap);
+                        break;
+                    case 1:
+                        hallName = "W34";
+                        circle_pixel = Float.parseFloat(getResources().getString(R.string.west_circle_pixel));
+                        map_pixel = getResources().getInteger(R.integer.west_34_width);
+                        drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.west_34);
+                        bitmap = drawable.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
+                        canvas.setBitmap(bitmap);
+                        photoView.setImageBitmap(bitmap);
+                        break;
+                    case 2:
+                        hallName = "S12";
+                        circle_pixel = Float.parseFloat(getResources().getString(R.string.south_circle_pixel));
+                        map_pixel = getResources().getInteger(R.integer.south_12_width);
+                        drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.south_12);
+                        bitmap = drawable.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
+                        canvas.setBitmap(bitmap);
+                        photoView.setImageBitmap(bitmap);
+                        break;
+                    case 3:
+                        hallName = "S34";
+                        circle_pixel = Float.parseFloat(getResources().getString(R.string.south_circle_pixel));
+                        drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.south_34);
+                        map_pixel = getResources().getInteger(R.integer.south_34_width);
+                        bitmap = drawable.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
+                        canvas.setBitmap(bitmap);
+                        photoView.setImageBitmap(bitmap);
+                        break;
+                }
+                if(toggle) {
+                    imageButton.setImageDrawable(getContext().getDrawable(R.drawable.unfill_heart));
+                    AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageButton.getDrawable();
+                    animatedVectorDrawable.start();
+                    toggle = false;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(getContext(), "Select Hall", Toast.LENGTH_SHORT).show(); }
+        });
+        spinnerDay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                day = position + 1;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(getContext(), "Select Day", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        spinnerHall.setSelection(0);
+        spinnerDay.setSelection(0);
 
         //Set TapListener
         photoView.setOnPhotoTapListener(new PhotoTapListener());
@@ -75,11 +165,12 @@ public class fragment_map extends Fragment {
 
                 Log.e("exploit", "Favorite Function Activated");
                 //Test code for favorite function
-                canvas.drawCircle(bitmap.getWidth() * (float)0.86, bitmap.getHeight() * (float)0.65, (float)22.5, paint);
-                canvas.drawCircle(bitmap.getWidth() * (float)0.68, bitmap.getHeight() * (float)0.56, (float)22.5, paint);
-                canvas.drawCircle(bitmap.getWidth() * (float)0.35, bitmap.getHeight() * (float)0.27, (float)22.5, paint);
-                canvas.drawCircle(bitmap.getWidth() * (float)0.72, bitmap.getHeight() * (float)0.53, (float)22.5, paint);
-                canvas.drawCircle(bitmap.getWidth() * (float)0.53, bitmap.getHeight() * (float)0.72, (float)22.5, paint);
+                //canvas.setBitmap(bitmap);
+                canvas.drawCircle(bitmap.getWidth() * (float)0.86, bitmap.getHeight() * (float)0.65, circle_pixel, paint);
+                canvas.drawCircle(bitmap.getWidth() * (float)0.68, bitmap.getHeight() * (float)0.56, circle_pixel, paint);
+                canvas.drawCircle(bitmap.getWidth() * (float)0.35, bitmap.getHeight() * (float)0.27, circle_pixel, paint);
+                canvas.drawCircle(bitmap.getWidth() * (float)0.72, bitmap.getHeight() * (float)0.53, circle_pixel, paint);
+                canvas.drawCircle(bitmap.getWidth() * (float)0.53, bitmap.getHeight() * (float)0.72, circle_pixel, paint);
                 photoView.invalidate();
                 toggle = true;
 
@@ -87,7 +178,6 @@ public class fragment_map extends Fragment {
                 imageButton.setImageDrawable(getContext().getDrawable(R.drawable.unfill_heart));
                 AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageButton.getDrawable();
                 animatedVectorDrawable.start();
-                drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.west_34);
                 bitmap = drawable.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
                 canvas.drawBitmap(bitmap, 0, 0, null);
                 photoView.invalidate();
@@ -101,14 +191,14 @@ public class fragment_map extends Fragment {
         @Override
         public void onPhotoTap(ImageView view, float x, float y) {
 
-
-
             //get location & add query
-            int density = ((int)bitmap.getWidth() / map_width);
-            Log.e("exploit", "DPI : " + density + ", resource width : " + map_width);
-            int location_x = (int)Math.floor((bitmap.getWidth() / density * x) / 22.2);
-            int location_y = (int)Math.floor((bitmap.getHeight() / density * y) / 22.2);
-            String query = "select * from circle_info where Hall like '%W34%' and Day=3 and location_x="+location_x+" and location_y="+location_y;
+            int density = ((int)bitmap.getWidth() / map_pixel);
+            Log.e("exploit", "DPI : " + density + ", resource width : " + map_pixel + ", circle_pixel : " + circle_pixel);
+            int location_x = (int)Math.floor(((float)bitmap.getWidth() / density * x) / circle_pixel);
+            int location_y = (int)Math.floor(((float)bitmap.getHeight() / density * y) / circle_pixel);
+            String query = "select * from circle_info where Hall like '%" + hallName +
+                    "%' and Day=" + day + " and location_x=" + location_x +
+                    " and location_y=" + location_y;
             Cursor cur = mDataBase.rawQuery(query, null);
             cur.moveToFirst();
 
@@ -120,7 +210,7 @@ public class fragment_map extends Fragment {
                         Log.e("exploit", "Circle Result :" + cur.getString(cur.getColumnIndex("circle")));
                         items.add(new circle("Sample", cur.getString(cur.getColumnIndex("Name")),
                                 cur.getString(cur.getColumnIndex("Author")),
-                                "W34", "3", cur.getString(cur.getColumnIndex("circle"))));
+                                hallName, String.valueOf(day), cur.getString(cur.getColumnIndex("circle"))));
                     } catch (Exception e) {
                         break;
                     }
@@ -129,6 +219,10 @@ public class fragment_map extends Fragment {
                 adapter.setItems(items);
                 dialog = new circle_info_dialog(fragment_map.this, adapter);
                 dialog.show();
+
+                Window window = dialog.getWindow();
+                window.setLayout((int)(size.x * 0.9f), (int)(size.y *0.4f));
+
             }
             cur.close();
 

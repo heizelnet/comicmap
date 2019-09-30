@@ -9,7 +9,7 @@
     <integer name="west_34_width">1487</integer>
     <integer name="west_34_height">1419</integer>
     <string name="west_circle_pixel">22.2</string>
-    <string name="south_circle_pixel">34.3</string>
+    <string name="south_circle_pixel">36.6</string>
     <string name="row_Author">Author :  </string>
     <string name="row_Name" translatable="false">Name :   </string>
     <string name="row_Hall">Hall :   </string>
