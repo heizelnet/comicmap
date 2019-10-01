@@ -221,7 +221,7 @@ public class fragment_map extends Fragment {
                 dialog.show();
 
                 Window window = dialog.getWindow();
-                window.setLayout((int)(size.x * 0.9f), (int)(size.y *0.4f));
+                window.setLayout((int)(size.x * 0.95f), (int)(size.y *0.4f));
 
             }
             cur.close();
