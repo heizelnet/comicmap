@@ -3,85 +3,117 @@ package com.example.comicmap;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.animation.Animator;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.widget.LinearLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FragmentManager manager;
-    private Fragment fragment;
-    private ConstraintLayout layoutFragment;
+    private Fragment fragment_top, fragment_map, fragment_favorite, fragment_search, fragment_trade, fragment_route;
     private boolean isOpen = false;
     private DrawerLayout drawerLayout;
-    private View drawerView;
+    private NavigationView drawerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        layoutFragment = findViewById(R.id.fragment);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        drawerView = (View)findViewById(R.id.nav_view);
+        drawerView = (NavigationView) findViewById(R.id.nav_view);
+        View nav_header_view = drawerView.getHeaderView(0);
+        LinearLayout header = (LinearLayout) nav_header_view.findViewById(R.id.drawer_item);
+
+        //Set Layout Button in NavigationView.. Fuck..
+        LinearLayout map_button = (LinearLayout) header.findViewById(R.id.map_button);
+        map_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("exploit", "map_button_clicked!");
+                if(fragment_map == null)
+                    fragment_map = new fragment_map();
+                fragment_top = fragment_map;
+                viewMenu(fragment_top);
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        LinearLayout favorite_button = (LinearLayout) header.findViewById(R.id.favorite_button);
+        favorite_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("exploit", "favorite_button_clicked!");
+                if(fragment_favorite == null)
+                    fragment_favorite = new fragment_favorite();
+                fragment_top = fragment_favorite;
+                viewMenu(fragment_top);
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        LinearLayout search_button = (LinearLayout) header.findViewById(R.id.search_button);
+        search_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("exploit", "search_button_clicked!");
+                if(fragment_search == null)
+                    fragment_search = new fragment_favorite();
+                fragment_top = fragment_search;
+                viewMenu(fragment_top);
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        LinearLayout trade_button = (LinearLayout) header.findViewById(R.id.trade_button);
+        trade_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("exploit", "trade_button_clicked!");
+                if(fragment_trade == null)
+                    fragment_trade = new fragment_trade();
+                fragment_top = fragment_trade;
+                viewMenu(fragment_top);
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        LinearLayout route_button = (LinearLayout) header.findViewById(R.id.route_button);
+        route_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("exploit", "route_button_clicked!");
+                if(fragment_route == null)
+                    fragment_route = new fragment_route();
+                fragment_top = fragment_route;
+                viewMenu(fragment_top);
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.open_drawer, R.string.close_drawer);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        drawerView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.e("exploit", "NAV_VIEW_clicked!");
-                Fragment fragment = null;
-                switch (v.getId()) {
-                    case R.id.map_button:
-                        Log.e("exploit", "map_button_clicked!");
-                        fragment = new fragment_map();
-                        break;
-                    case R.id.favorite_button:
-                        Log.e("exploit", "favorite_button_clicked!");
-                        fragment = new fragment_favorite();
-                        break;
-                    case R.id.search_button:
-                        Log.e("exploit", "search_button_clicked!");
-                        fragment = new fragment_favorite();
-                        break;
-                    case R.id.trade_button:
-                        Log.e("exploit", "trade_button_clicked!");
-                        fragment = new fragment_trade();
-                        break;
-                    case R.id.route_button:
-                        Log.e("exploit", "route_button_clicked!");
-                        fragment = new fragment_route();
-                        break;
-                }
-                drawerLayout.closeDrawer(GravityCompat.START);
-                if (fragment != null) {
-                    viewMenu(fragment);
-                }
-                return true;
-            }
-            });
     }
-
     private void viewMenu(Fragment selected_frag) {
         FragmentManager manager = getSupportFragmentManager();
-        fragment = selected_frag;
+        fragment_top = selected_frag;
+        manager.beginTransaction()
+                .replace(R.id.fragment, fragment_top)
+                .commit();
+        /*
         if(!isOpen) {
 
             int x = layoutFragment.getRight();
@@ -94,9 +126,7 @@ public class MainActivity extends AppCompatActivity {
             anim.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animator) {
-                    manager.beginTransaction()
-                            .replace(R.id.fragment, fragment)
-                            .commit();
+
                 }
                 @Override
                 public void onAnimationEnd(Animator animator) { }
@@ -108,11 +138,13 @@ public class MainActivity extends AppCompatActivity {
             anim.start();
             isOpen = true;
         }
+        */
     }
 
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            Log.e("exploit", "BackButton Pressed!");
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
