@@ -5,5 +5,5 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/colorPrimary"
         android:background="@color/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:theme="@style/AppTheme"
         android:minHeight="?attr/actionBarSize" />

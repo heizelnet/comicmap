@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#FCFCFC</color>
-    <color name="colorPrimaryDark">#2A2E43</color>
-    <color name="colorAccent">#FF402D</color>
+    <color name="colorPrimaryDark">#171717</color>
+    <color name="colorAccent">#171717</color>
     <color name="testcolor">#E91E63</color>
 
     <!--colors for light mode-->
     <color name="contentTextColor">#020000</color>
     <color name="black2">#171717</color>
     <color name="whiteTextColor">#fff</color>
-    <color name="comic_bg">#F5F5DC</color>
+    <color name="comic_bg">@android:color/holo_green_light</color>
     <color name="border_gray">#808080</color>
+    <color name="ripple_color">#FCFCFC</color>
 
 
 </resources>

@@ -1,28 +1,32 @@
 package com.example.comicmap;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.animation.Animator;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.widget.LinearLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity {
 
     private FragmentManager manager;
     private Fragment fragment;
     private ConstraintLayout layoutFragment;
     private boolean isOpen = false;
-
+    private DrawerLayout drawerLayout;
+    private View drawerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,21 +34,54 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         layoutFragment = findViewById(R.id.fragment);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("Comicmap");
+        getSupportActionBar().setTitle(null);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        drawerView = (View)findViewById(R.id.nav_view);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.open_drawer, R.string.close_drawer);
-        drawer.addDrawerListener(toggle);
+        drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        drawerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.e("exploit", "NAV_VIEW_clicked!");
+                Fragment fragment = null;
+                switch (v.getId()) {
+                    case R.id.map_button:
+                        Log.e("exploit", "map_button_clicked!");
+                        fragment = new fragment_map();
+                        break;
+                    case R.id.favorite_button:
+                        Log.e("exploit", "favorite_button_clicked!");
+                        fragment = new fragment_favorite();
+                        break;
+                    case R.id.search_button:
+                        Log.e("exploit", "search_button_clicked!");
+                        fragment = new fragment_favorite();
+                        break;
+                    case R.id.trade_button:
+                        Log.e("exploit", "trade_button_clicked!");
+                        fragment = new fragment_trade();
+                        break;
+                    case R.id.route_button:
+                        Log.e("exploit", "route_button_clicked!");
+                        fragment = new fragment_route();
+                        break;
+                }
+                drawerLayout.closeDrawer(GravityCompat.START);
+                if (fragment != null) {
+                    viewMenu(fragment);
+                }
+                return true;
+            }
+            });
     }
 
-    private void viewMenu() {
+    private void viewMenu(Fragment selected_frag) {
         FragmentManager manager = getSupportFragmentManager();
-        fragment = new fragment_map();
+        fragment = selected_frag;
         if(!isOpen) {
 
             int x = layoutFragment.getRight();
@@ -74,8 +111,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        return false;
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+
     }
 }
 
