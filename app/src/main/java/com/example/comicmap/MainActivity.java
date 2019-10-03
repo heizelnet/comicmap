@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         fragment_top = selected_frag;
         manager.beginTransaction()
+                .setCustomAnimations(R.anim.fadein, R.anim.fadeout)
                 .replace(R.id.fragment, fragment_top)
                 .commit();
         /*
