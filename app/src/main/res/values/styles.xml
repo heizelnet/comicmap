@@ -38,7 +38,7 @@
     </style>
 
     <style name="SelectableItemTheme">
-        <item name="colorControlHighlight">@color/comic_bg</item>
+        <item name="colorControlHighlight">@color/gray2</item>
     </style>
 
     <style name="SelectableItemBackground">

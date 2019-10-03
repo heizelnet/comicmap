@@ -162,8 +162,8 @@ public class fragment_map extends Fragment {
                 Log.e("exploit", "Favorite Function Activated");
                 //Test code for favorite function
                 //canvas.setBitmap(bitmap);
-                canvas.drawCircle(map_width * (float)0.86, map_height * (float)0.65, circle_pixel, paint);
-                canvas.drawCircle(map_width * (float)0.68, map_height * (float)0.56, circle_pixel, paint);
+                canvas.drawCircle(map_width * (float)0.86, map_height * (float)0.65, circle_pixel / 2, paint);
+                canvas.drawCircle(map_width * (float)0.68, map_height * (float)0.56, circle_pixel/ 2, paint);
                 photoView.invalidate();
                 toggle = true;
 
@@ -228,22 +228,3 @@ public class fragment_map extends Fragment {
 
 
 }
-
-/* bitmap Invalidate code
- canvas.drawCircle(bitmap.getWidth() * x, bitmap.getHeight() * y, 60/metrics.density, paint);
- view.invalidate();
-
-    older version location check;
-
-            int ceil_x = (int)Math.ceil((bitmap.getWidth() * x ) / 32);
-            int ceil_y = (int)Math.ceil((bitmap.getHeight() * y ) / 32);
-            int floor_x = (int)Math.floor((bitmap.getWidth() * x ) / 32);
-            int floor_y = (int)Math.floor((bitmap.getHeight() * y ) / 32);
-
-             //String query = "select * from circle_info where Hall like '%S34%' and Day=2 and location_x between " + floor_x + " and " +ceil_x + " and location_y between " + floor_y + " and " + ceil_y;
-
-             Get Density of resource
-                         DisplayMetrics metrics = getResources().getDisplayMetrics();
-                         metrics.density
-
- */

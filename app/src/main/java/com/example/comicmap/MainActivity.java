@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -100,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.open_drawer, R.string.close_drawer);
         drawerLayout.addDrawerListener(toggle);
@@ -109,10 +109,15 @@ public class MainActivity extends AppCompatActivity {
     }
     private void viewMenu(Fragment selected_frag) {
         FragmentManager manager = getSupportFragmentManager();
+        String fragmentTag = selected_frag.getClass().getSimpleName();
+        Log.e("exploit", "Tag name : " + fragmentTag);
+        //manager.popBackStack(fragmentTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
         fragment_top = selected_frag;
         manager.beginTransaction()
-                .setCustomAnimations(R.anim.fadein, R.anim.fadeout)
+                .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
                 .replace(R.id.fragment, fragment_top)
+                .addToBackStack(fragmentTag)
                 .commit();
         /*
         if(!isOpen) {
