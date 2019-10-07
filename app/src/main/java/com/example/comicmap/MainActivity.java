@@ -17,7 +17,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Fragment fragment_top, fragment_map, fragment_favorite, fragment_search, fragment_trade, fragment_route;
+    private Fragment fragment_map, fragment_favorite, fragment_search, fragment_trade, fragment_route;
     private boolean isOpen = false;
     private DrawerLayout drawerLayout;
     private NavigationView drawerView;
@@ -40,10 +40,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e("exploit", "map_button_clicked!");
-                if(fragment_map == null)
-                    fragment_map = new fragment_map();
-                fragment_top = fragment_map;
-                viewMenu(fragment_top);
+                fragment_map = new fragment_map();
+                viewMenu(fragment_map);
                 drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
@@ -53,10 +51,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e("exploit", "favorite_button_clicked!");
-                if(fragment_favorite == null)
-                    fragment_favorite = new fragment_favorite();
-                fragment_top = fragment_favorite;
-                viewMenu(fragment_top);
+                fragment_favorite = new fragment_favorite();
+                viewMenu(fragment_favorite);
                 drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
@@ -66,10 +62,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e("exploit", "search_button_clicked!");
-                if(fragment_search == null)
-                    fragment_search = new fragment_favorite();
-                fragment_top = fragment_search;
-                viewMenu(fragment_top);
+                fragment_search = new fragment_search();
+                viewMenu(fragment_search);
                 drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
@@ -79,10 +73,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e("exploit", "trade_button_clicked!");
-                if(fragment_trade == null)
-                    fragment_trade = new fragment_trade();
-                fragment_top = fragment_trade;
-                viewMenu(fragment_top);
+                fragment_trade = new fragment_trade();
+                viewMenu(fragment_trade);
                 drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
@@ -92,10 +84,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.e("exploit", "route_button_clicked!");
-                if(fragment_route == null)
-                    fragment_route = new fragment_route();
-                fragment_top = fragment_route;
-                viewMenu(fragment_top);
+                fragment_route = new fragment_route();
+                viewMenu(fragment_route);
                 drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
@@ -110,12 +100,11 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         String fragmentTag = selected_frag.getClass().getSimpleName();
         Log.e("exploit", "Tag name : " + fragmentTag);
-        //manager.popBackStack(fragmentTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        manager.popBackStack(fragmentTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
-        fragment_top = selected_frag;
         manager.beginTransaction()
                 .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
-                .replace(R.id.fragment, fragment_top)
+                .add(R.id.fragment, selected_frag)
                 .addToBackStack(fragmentTag)
                 .commit();
         /*

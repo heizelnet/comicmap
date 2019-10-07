@@ -1,6 +1,7 @@
 package com.example.comicmap;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +19,12 @@ import java.util.ArrayList;
 public class info_adapter extends RecyclerView.Adapter<info_adapter.ItemViewHolder> {
 
     private ArrayList<circle> mData = new ArrayList<>();
+    private Context context;
 
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+        context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View view = inflater.inflate(R.layout.circle_info_item, parent, false);
@@ -34,20 +36,15 @@ public class info_adapter extends RecyclerView.Adapter<info_adapter.ItemViewHold
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         circle data = mData.get(position);
-        /*
-        try {
-            Glide.with(holder.itemView.getContext()).load(data.getUrl()).into(holder.imageView);
-        } catch (Exception e) {
-            Glide.with(holder.itemView.getContext()).load(R.drawable.map_icon).into(holder.imageView);
-        }
-        */
         Glide.with(holder.itemView.getContext()).load(R.drawable.map_icon).into(holder.imageView);
         Log.e("exploit", "image loading");
-        holder.textName2.setText("Name : " + data.getName());
-        holder.textAuthor2.setText("Author : " + data.getAuthor());
-        holder.textHall2.setText("Hall : " + data.getHall());
-        holder.textDay2.setText("Day : " + data.getDay());
-        holder.textCircle.setText("Circle : " + data.getCircle());
+
+        Resources res = context.getResources();
+        holder.textName2.setText(res.getString(R.string.row_Name, data.getName()));
+        holder.textAuthor2.setText(res.getString(R.string.row_Author, data.getAuthor()));
+        holder.textHall2.setText(res.getString(R.string.row_Hall, data.getHall()));
+        holder.textDay2.setText(res.getString(R.string.row_Day, data.getDay()));
+        holder.textCircle.setText(res.getString(R.string.row_Circle, data.getCircle()));
 
 
     }

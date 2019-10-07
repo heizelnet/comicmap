@@ -10,11 +10,11 @@
     <integer name="west_34_height">1419</integer>
     <string name="west_circle_pixel">22.2</string>
     <string name="south_circle_pixel">36.6</string>
-    <string name="row_Author">Author :  </string>
-    <string name="row_Name" translatable="false">Name :   </string>
-    <string name="row_Hall">Hall :   </string>
-    <string name="row_Day">Day :    </string>
-    <string name="row_Circle">Circle : </string>
+    <string name="row_Author" translatable="false">Author :  %1$s</string>
+    <string name="row_Name" translatable="false">Name :  %1$s</string>
+    <string name="row_Hall">Hall :   %1$s</string>
+    <string name="row_Day">Day :    %1$s</string>
+    <string name="row_Circle">Circle : %1$s</string>
     <string name="loading">Copying Database..</string>
     <string name="done">Database Checked!</string>
     <string name="open_drawer">open</string>

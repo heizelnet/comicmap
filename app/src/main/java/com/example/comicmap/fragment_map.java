@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 
@@ -47,6 +48,11 @@ public class fragment_map extends Fragment {
     private float circle_pixel, map_width, map_height, map_pixel;
     private String hallName;
     private Point size;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -224,6 +230,11 @@ public class fragment_map extends Fragment {
             Log.e("exploit", "Check Location : " + location_x + ", " + location_y);
 
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
     }
 
 

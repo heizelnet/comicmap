@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textView_spinner_name"
@@ -16,6 +17,8 @@
         tools:text="Hello_world"
         android:textAlignment="center"
         android:textSize="20sp"
+        android:textColor="#B2000000"
         android:fontFamily="@font/nicokaku"
+        app:fontFamily="@font/nicokaku"
         />
 </LinearLayout>

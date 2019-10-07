@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="5dp"
-    android:background="@drawable/border_top_bottom_line" >
+    android:background="@drawable/border_top_bottom_line">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingBottom="10dp"
+        android:paddingBottom="5dp"
         android:background="@drawable/border_bottom_line">
 
         <Spinner
@@ -21,7 +22,8 @@
             android:layout_marginStart="10dp"
             android:dropDownVerticalOffset="50dp"
             android:popupElevation="0dp"
-            android:background="?android:attr/selectableItemBackground"
+            tools:text="Test Text"
+            android:background="@android:color/transparent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,9 +32,10 @@
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
-            android:background="?android:attr/selectableItemBackground"
+            android:background="@android:color/transparent"
             android:dropDownVerticalOffset="50dp"
             android:popupElevation="0dp"
+            tools:text="Test Text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/spinner3"
@@ -64,3 +67,5 @@
 
 
 </LinearLayout>
+
+<!-- ?android:attr/selectableItemBackground !-->
