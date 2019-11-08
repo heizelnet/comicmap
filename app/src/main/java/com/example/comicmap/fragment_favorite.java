@@ -36,7 +36,7 @@ public class fragment_favorite extends Fragment {
         recyclerView = view.findViewById(R.id.recview);
 
         //Test Code for update
-        /*
+
         String query = "select * from circle_info where favorite != 0";
         Cursor cur = mDataBase.rawQuery(query, null);
         if(cur.getCount() == 0) {
@@ -46,7 +46,8 @@ public class fragment_favorite extends Fragment {
             viewGroup.setVisibility(View.GONE);
         }
         cur.close();
-         */
+        mDataBase.close();
+
         recyclerView.setVisibility(View.GONE);
         viewGroup.setVisibility(View.VISIBLE);
 
