@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         drawerView = (NavigationView) findViewById(R.id.nav_view);
         View nav_header_view = drawerView.getHeaderView(0);
         LinearLayout header = (LinearLayout) nav_header_view.findViewById(R.id.drawer_item);
+        Toast.makeText(getApplicationContext(), "Login Success!", Toast.LENGTH_SHORT).show();
 
         //Set Layout Button in NavigationView.. Fuck..
         LinearLayout map_button = (LinearLayout) header.findViewById(R.id.map_button);

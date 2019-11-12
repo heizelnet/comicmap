@@ -2,6 +2,8 @@ package com.example.comicmap;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -33,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         button = findViewById(R.id.login_button);
         idview = findViewById(R.id.idView);
         pwview = findViewById(R.id.pwView);
+        SharedPreferences preferences = this.getSharedPreferences("Loginfo", MODE_PRIVATE);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,8 +49,26 @@ public class LoginActivity extends AppCompatActivity {
                 call.enqueue(new Callback() {
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                        String verificationToken = response.headers().toString().split("set-cookie: ")[1].split(";")[0].replace("__RequestVerificationToken=","");
-                        Log.e("==exploit==", "==="+verificationToken);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        String header = response.headers().toString();
+                        if(header.contains("__RequestVerificationToken=")){
+                            String verification = response.headers().toString().split("__RequestVerificationToken=")[1].split(";")[0];
+                            Log.e("==exploit==", "Token : "+verification);
+                            editor.putString("username", s1);
+                            editor.putString("password", s2);
+                            editor.putString("verificationToken", verification);
+                            editor.apply();
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            finish();
+                        }
+                        else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "Login Error!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
                     }
 
                     @Override
