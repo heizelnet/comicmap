@@ -44,14 +44,15 @@ public class SplashActivity extends AppCompatActivity {
 
     @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void checkProcess() {
+        //Check DataBase Permission & Storage
         helper = new DataBaseHelper(this);
         TextView tv = findViewById(R.id.textView_load);
-        Log.e("exploit", "wait for check...");
-        tv.setText(R.string.loading);
         try {
             helper.createDatabase();
         } catch (Exception e) { e.printStackTrace(); }
         tv.setText(R.string.done);
+
+        //Login With check ID, Password in SharedPref
         Handler timer = new Handler();
         if(!logincheck()) {
             timer.postDelayed(new Runnable() {
@@ -70,6 +71,9 @@ public class SplashActivity extends AppCompatActivity {
                 }
             }, 2000);
         }
+
+        //Check Permission with Comicmarket OAuth Permissions..
+        
     }
 
     @OnShowRationale({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
@@ -123,14 +127,12 @@ public class SplashActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                    @SuppressLint("HandlerLeak")
-                    Handler handler = new Handler() {
-                        public void handleMessage(Message msg) {
-                            Toast.makeText(getApplicationContext(), "Error! Login Retry", Toast.LENGTH_SHORT).show();
-                            super.handleMessage(msg);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "Network Error!", Toast.LENGTH_SHORT).show();
                         }
-                    };
-                    handler.sendEmptyMessage(0);
+                    });
                 }
             });
             String token = preferences.getString("verificationToken", "");

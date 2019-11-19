@@ -18,7 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Fragment fragment_map, fragment_favorite, fragment_search, fragment_trade, fragment_route;
+    private Fragment fragment_map, fragment_favorite, fragment_search, fragment_checklist, fragment_route;
     private boolean isOpen = false;
     private DrawerLayout drawerLayout;
     private NavigationView drawerView;
@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //favorite Button Layer
         LinearLayout favorite_button = (LinearLayout) header.findViewById(R.id.favorite_button);
         favorite_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Search Button Layer
         LinearLayout search_button = (LinearLayout) header.findViewById(R.id.search_button);
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,17 +72,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        LinearLayout trade_button = (LinearLayout) header.findViewById(R.id.trade_button);
-        trade_button.setOnClickListener(new View.OnClickListener() {
+        //Trade Function has deprecated..
+
+        LinearLayout checklist_button = (LinearLayout) header.findViewById(R.id.trade_button);
+        checklist_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("exploit", "trade_button_clicked!");
-                fragment_trade = new fragment_trade();
-                viewMenu(fragment_trade);
+                fragment_checklist = new fragment_checklist();
+                viewMenu(fragment_checklist);
                 drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
 
+
+        //Route Button Layer
         LinearLayout route_button = (LinearLayout) header.findViewById(R.id.route_button);
         route_button.setOnClickListener(new View.OnClickListener() {
             @Override

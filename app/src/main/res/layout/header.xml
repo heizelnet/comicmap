@@ -120,7 +120,7 @@
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
-                android:text="TRADE"
+                android:text="CHECK LIST"
                 android:textSize="15sp"
                 android:fontFamily="@font/saucer_bold"
                 android:textStyle="bold" />

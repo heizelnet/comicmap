@@ -16,7 +16,7 @@
     <string name="row_Day">Day :    %1$s</string>
     <string name="row_Circle">Circle : %1$s</string>
     <string name="loading">Copying Database..</string>
-    <string name="done">Database Checked!</string>
+    <string name="done">Database Updating..</string>
     <string name="open_drawer">open</string>
     <string name="close_drawer">close</string>
 </resources>

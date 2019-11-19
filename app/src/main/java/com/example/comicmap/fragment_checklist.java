@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-public class fragment_trade extends Fragment {
+public class fragment_checklist extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_trade, container, false);
+        View view = inflater.inflate(R.layout.fragment_checklist, container, false);
 
         return view;
     }

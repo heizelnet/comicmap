@@ -1,13 +1,11 @@
 package com.example.comicmap;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -73,14 +71,12 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                        @SuppressLint("HandlerLeak")
-                        Handler handler = new Handler() {
-                            public void handleMessage(Message msg) {
-                                Toast.makeText(getApplicationContext(), "Error! Login Retry", Toast.LENGTH_SHORT).show();
-                                super.handleMessage(msg);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "Network Error!", Toast.LENGTH_SHORT).show();
                             }
-                        };
-                        handler.sendEmptyMessage(0);
+                        });
                     }
                 });
                 //Toast.makeText(getApplicationContext(), "mail : " + s1 + ", " + "pw : " + s2, Toast.LENGTH_SHORT).show();
