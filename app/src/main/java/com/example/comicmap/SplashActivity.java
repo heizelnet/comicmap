@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 
 import okhttp3.Call;
@@ -164,11 +166,11 @@ public class SplashActivity extends AppCompatActivity {
         responseBodyCall.enqueue(new retrofit2.Callback<ResponseBody>() {
             @Override
             public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                String result = null;
                 try {
-                    result = response.body().string();
+                    String result = response.body().string();
+                    String req_token = result.split("<input name=\"__RequestVerificationToken\" type=\"hidden\" value=\"")[1].split("\" />")[0];
                     Log.e("exploit", "Result : " + result);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 

@@ -1,7 +1,9 @@
-package com.example.comicmap;
+package com.example.comicmap.cookie;
 
 
 import android.util.Log;
+
+import com.example.comicmap.LoginSharedPreference;
 
 import org.jetbrains.annotations.NotNull;
 

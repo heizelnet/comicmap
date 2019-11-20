@@ -1,9 +1,18 @@
 package com.example.comicmap;
 
-import android.content.Context;
+
+import com.franmontiel.persistentcookiejar.ClearableCookieJar;
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+
+
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 
 import okhttp3.Call;
 import okhttp3.FormBody;
+import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
@@ -16,7 +25,8 @@ public class PostCall_Login {
         url = "https://auth2.circle.ms";
         id_ = id;
         password_ = password;
-        okHttpClient = new OkHttpClient.Builder().addNetworkInterceptor(new ReceivedCookiesInterceptor()).build();
+        ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(MyApplication.getAppContext()));
+        okHttpClient = new OkHttpClient.Builder().cookieJar(cookieJar).build();
     }
     /* Create OkHttp3 Call object use post method with url. */
     public Call createHttpPostMethodCall() {
