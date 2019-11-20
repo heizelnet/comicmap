@@ -1,11 +1,7 @@
 package com.example.comicmap;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +16,8 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
@@ -33,30 +31,27 @@ public class LoginActivity extends AppCompatActivity {
         button = findViewById(R.id.login_button);
         idview = findViewById(R.id.idView);
         pwview = findViewById(R.id.pwView);
-        SharedPreferences preferences = this.getSharedPreferences("Loginfo", MODE_PRIVATE);
+        LoginSharedPreference loginSharedPreference = new LoginSharedPreference();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String s1 = String.valueOf(idview.getText());
                 String s2 = String.valueOf(pwview.getText());
 
-                LoginPostCall postCall = new LoginPostCall(s1, s2);
-                Log.e("exploit", "ID : " + s1 + ", PW : " + s2);
+                PostCall_Login postCall = new PostCall_Login(s1, s2);
                 Call call = postCall.createHttpPostMethodCall();
 
                 call.enqueue(new Callback() {
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                        SharedPreferences.Editor editor = preferences.edit();
                         String header = response.headers().toString();
                         if(header.contains("__RequestVerificationToken=")){
                             String verification = response.headers().toString().split("__RequestVerificationToken=")[1].split(";")[0];
                             Log.e("==exploit==", "Token : "+verification);
-                            editor.putString("username", s1);
-                            editor.putString("password", s2);
-                            editor.putString("verificationToken", verification);
-                            editor.apply();
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            loginSharedPreference.putString("username", s1);
+                            loginSharedPreference.putString("password", s2);
+                            loginSharedPreference.putString("verificationToken", verification);
+                            startActivity(new Intent(LoginActivity.this, SplashActivity.class));
                             finish();
                         }
                         else {
