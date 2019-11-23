@@ -9,13 +9,11 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
-class APIClient {
+class TokenClient {
 
     private static Retrofit retrofit = null;
 
     static Retrofit getClient(String base_url) {
-        //CookieManager cookieManager = new CookieManager();
-        //cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
         ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(MyApplication.getAppContext()));
         OkHttpClient client = new OkHttpClient.Builder().cookieJar(cookieJar).build();
 
