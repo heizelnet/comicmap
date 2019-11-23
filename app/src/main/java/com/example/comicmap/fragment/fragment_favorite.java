@@ -1,4 +1,4 @@
-package com.example.comicmap;
+package com.example.comicmap.fragment;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.comicmap.DataBaseHelper;
+import com.example.comicmap.R;
 
 public class fragment_favorite extends Fragment {
 

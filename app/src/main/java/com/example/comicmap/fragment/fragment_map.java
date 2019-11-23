@@ -1,4 +1,4 @@
-package com.example.comicmap;
+package com.example.comicmap.fragment;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -26,6 +26,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 
+import com.example.comicmap.DataBaseHelper;
+import com.example.comicmap.ItemSpinnerAdapter;
+import com.example.comicmap.R;
+import com.example.comicmap.circle;
+import com.example.comicmap.circle_info_dialog;
+import com.example.comicmap.info_adapter;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.PhotoView;
 

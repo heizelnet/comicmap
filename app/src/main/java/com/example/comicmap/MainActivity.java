@@ -14,6 +14,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.comicmap.fragment.fragment_checklist;
+import com.example.comicmap.fragment.fragment_favorite;
+import com.example.comicmap.fragment.fragment_map;
+import com.example.comicmap.fragment.fragment_route;
+import com.example.comicmap.fragment.fragment_search;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
