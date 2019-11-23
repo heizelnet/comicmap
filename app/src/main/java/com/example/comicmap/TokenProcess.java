@@ -18,6 +18,7 @@ import retrofit2.http.Query;
 public interface TokenProcess {
     String LOGIN_URL = "https://auth2.circle.ms/";
     String BASE_URL = "https://auth1-sandbox.circle.ms/";
+    String API_URL = "https://api1.circle.ms/";
 
     @FormUrlEncoded
     @Headers({"Accept-Language: ko,en-US;q=0.9,en;q=0.8,ja;q=0.7",

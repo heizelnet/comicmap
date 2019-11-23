@@ -25,11 +25,13 @@ public class AddCookiesInterceptor implements Interceptor {
                 addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36").
                 addHeader("Accept-Encoding", "gzip, deflate, br");
 
+        /*
         HashSet<String> preferences = mDsp.getHashSet(LoginSharedPreference.KEY_COOKIE, new HashSet<String>());
         for (String cookie : preferences) {
             builder.addHeader("Cookie", cookie);
             //Log.e("exploit", cookie);
         }
+         */
 
         return chain.proceed(builder.build());
     }

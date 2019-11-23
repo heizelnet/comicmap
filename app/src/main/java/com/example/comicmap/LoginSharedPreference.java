@@ -8,8 +8,8 @@ import java.util.HashSet;
 
 public class LoginSharedPreference {
 
-    public static final String KEY_COOKIE = "com.dalgonakit.key.cookie";
-    public static final String KEY_COOKIE2 = "com.dalgonakit.key.cookies";
+    //public static final String KEY_COOKIE = "com.dalgonakit.key.cookie";
+    //public static final String KEY_COOKIE2 = "com.dalgonakit.key.cookies";
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 /*

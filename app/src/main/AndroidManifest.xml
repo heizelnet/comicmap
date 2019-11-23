@@ -18,16 +18,15 @@
         android:largeHeap="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.example.comicmap.LoginActivity">
-        </activity>
+        <activity android:name="com.example.comicmap.LoginActivity" />
         <activity android:name="com.example.comicmap.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.comicmap.MainActivity">
-        </activity>
+        <activity android:name="com.example.comicmap.MainActivity" />
+        <activity android:name=".PermissionActivity" />
 
     </application>
 

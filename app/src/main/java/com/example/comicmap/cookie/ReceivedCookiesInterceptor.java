@@ -24,7 +24,9 @@ public class ReceivedCookiesInterceptor implements Interceptor {
     @NotNull
     @Override
     public Response intercept(Interceptor.Chain chain) throws IOException {
+
         Response originalResponse = chain.proceed(chain.request());
+        /*
         String cookie_pattern1 = ".AspNet.ExternalCookie=";
         String cookie_pattern2 = ".ASPXAUTH=";
         String cookie_pattern3 = "__RequestVerificationToken=";
@@ -57,6 +59,8 @@ public class ReceivedCookiesInterceptor implements Interceptor {
             }
             mDsp_.putHashSet(LoginSharedPreference.KEY_COOKIE, cookies);
         }
+
+         */
         return originalResponse;
     }
 
