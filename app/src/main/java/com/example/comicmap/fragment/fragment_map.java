@@ -29,9 +29,9 @@ import androidx.fragment.app.Fragment;
 import com.example.comicmap.DataBaseHelper;
 import com.example.comicmap.ItemSpinnerAdapter;
 import com.example.comicmap.R;
-import com.example.comicmap.circle;
+import com.example.comicmap.circle_instance;
 import com.example.comicmap.circle_info_dialog;
-import com.example.comicmap.info_adapter;
+import com.example.comicmap.circle_info_adapter;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.PhotoView;
 
@@ -45,7 +45,7 @@ public class fragment_map extends Fragment {
     private BitmapDrawable drawable;
     private ImageButton imageButton;
     private Paint paint;
-    private info_adapter adapter = new info_adapter();
+    private circle_info_adapter adapter = new circle_info_adapter();
     private circle_info_dialog dialog;
     private SQLiteDatabase mDataBase;
     private boolean toggle;
@@ -159,6 +159,8 @@ public class fragment_map extends Fragment {
 
         //Set TapListener
         photoView.setOnPhotoTapListener(new PhotoTapListener());
+
+        //Set LongClickListener
         photoView.setOnLongClickListener(view1 -> {
             Log.e("exploit", "Long clicked");
             return false;
@@ -208,23 +210,26 @@ public class fragment_map extends Fragment {
             cur.moveToFirst();
 
             //iterate query add items to dialog
-            ArrayList<circle> items = new ArrayList<>();
+            ArrayList<circle_instance> items = new ArrayList<>();
             if(cur.getCount() != 0) {
                 while (true) {
                     try {
-                        Log.e("exploit", "Circle Result :" + cur.getString(cur.getColumnIndex("circle")));
-                        items.add(new circle("Sample", cur.getString(cur.getColumnIndex("Name")),
+                        Log.e("exploit", "Circle Result :" + cur.getString(cur.getColumnIndex("circle_instance")));
+                        items.add(new circle_instance("Sample", cur.getString(cur.getColumnIndex("Name")),
                                 cur.getString(cur.getColumnIndex("Author")),
-                                hallName, String.valueOf(day), cur.getString(cur.getColumnIndex("circle"))));
+                                hallName, String.valueOf(day), cur.getString(cur.getColumnIndex("circle_instance"))));
                     } catch (Exception e) {
                         break;
                     }
                     cur.moveToNext();
                 }
+
+                //Set Dialog Items (Circle A, Circle B)
                 adapter.setItems(items);
                 dialog = new circle_info_dialog(fragment_map.this, adapter);
                 dialog.show();
 
+                //Set Dialog Layout size
                 Window window = dialog.getWindow();
                 window.setLayout((int)(size.x * 0.95f), ViewGroup.LayoutParams.WRAP_CONTENT);
 
@@ -242,6 +247,4 @@ public class fragment_map extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
     }
-
-
 }

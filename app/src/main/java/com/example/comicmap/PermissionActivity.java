@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.comicmap.OAuth.TokenClient;
 import com.example.comicmap.OAuth.TokenProcess;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -46,7 +47,7 @@ public class PermissionActivity extends AppCompatActivity {
 
         responseBodyCall.enqueue(new retrofit2.Callback<ResponseBody>() {
             @Override
-            public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+            public void onResponse(@NotNull retrofit2.Call<ResponseBody> call, @NotNull retrofit2.Response<ResponseBody> response) {
                 try {
                     String result = response.body().string();
                     String req_token = result.split("<input name=\"__RequestVerificationToken\" type=\"hidden\" value=\"")[1].split("\" />")[0];
@@ -82,7 +83,7 @@ public class PermissionActivity extends AppCompatActivity {
                 responseBodyCall = tokenInterface.postData(postData);
                 responseBodyCall.enqueue(new retrofit2.Callback<ResponseBody>() {
                     @Override
-                    public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    public void onResponse(@NotNull retrofit2.Call<ResponseBody> call, @NotNull retrofit2.Response<ResponseBody> response) {
                         try {
                             String result = response.toString();
                             Log.e("exploit", "Result : " + result);
@@ -112,7 +113,7 @@ public class PermissionActivity extends AppCompatActivity {
                 responseBodyCall = tokenInterface.accessToken(postData2);
                 responseBodyCall.enqueue(new retrofit2.Callback<ResponseBody>() {
                     @Override
-                    public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                    public void onResponse(@NotNull retrofit2.Call<ResponseBody> call, @NotNull retrofit2.Response<ResponseBody> response) {
                         try {
                             String result = response.body().string();
                             Log.e("exploit", "Token retrieved! : " + result);

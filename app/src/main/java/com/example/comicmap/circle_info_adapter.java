@@ -16,9 +16,9 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-public class info_adapter extends RecyclerView.Adapter<info_adapter.ItemViewHolder> {
+public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapter.ItemViewHolder> {
 
-    private ArrayList<circle> mData = new ArrayList<>();
+    private ArrayList<circle_instance> mData = new ArrayList<>();
     private Context context;
 
     @NonNull
@@ -28,14 +28,14 @@ public class info_adapter extends RecyclerView.Adapter<info_adapter.ItemViewHold
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View view = inflater.inflate(R.layout.circle_info_item, parent, false);
-        info_adapter.ItemViewHolder vh = new info_adapter.ItemViewHolder(view);
+        circle_info_adapter.ItemViewHolder vh = new circle_info_adapter.ItemViewHolder(view);
 
         return vh;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        circle data = mData.get(position);
+        circle_instance data = mData.get(position);
         Glide.with(holder.itemView.getContext()).load(R.drawable.map_icon).into(holder.imageView);
         Log.e("exploit", "image loading");
 
@@ -54,7 +54,7 @@ public class info_adapter extends RecyclerView.Adapter<info_adapter.ItemViewHold
         return mData.size();
     }
 
-    public void setItems(ArrayList<circle> items) {
+    public void setItems(ArrayList<circle_instance> items) {
         this.mData = items;
     }
 

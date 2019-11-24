@@ -3,12 +3,13 @@ package com.example.comicmap;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.comicmap.OAuth.PostCall_Login;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -16,8 +17,6 @@ import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
@@ -59,15 +58,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(), "Network Error!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    Toast.makeText(getApplicationContext(), "Network Error!", Toast.LENGTH_SHORT).show();
                 }
             });
-            //Toast.makeText(getApplicationContext(), "mail : " + s1 + ", " + "pw : " + s2, Toast.LENGTH_SHORT).show();
         });
     }
 }

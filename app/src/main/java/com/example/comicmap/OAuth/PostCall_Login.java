@@ -1,6 +1,7 @@
-package com.example.comicmap;
+package com.example.comicmap.OAuth;
 
 
+import com.example.comicmap.MyApplication;
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;

@@ -1,9 +1,9 @@
 package com.example.comicmap;
 
-public class circle {
+public class circle_instance {
     private String url, name, author, hall, day, circle;
 
-    public circle(String url, String name, String author, String hall, String day, String circle) {
+    public circle_instance(String url, String name, String author, String hall, String day, String circle) {
         this.url = url;
         this.name = name;
         this.author = author;

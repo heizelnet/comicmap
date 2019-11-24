@@ -43,64 +43,49 @@ public class MainActivity extends AppCompatActivity {
 
         //Set Layout Button in NavigationView.. Fuck..
         LinearLayout map_button = (LinearLayout) header.findViewById(R.id.map_button);
-        map_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("exploit", "map_button_clicked!");
-                fragment_map = new fragment_map();
-                viewMenu(fragment_map);
-                drawerLayout.closeDrawer(GravityCompat.START);
-            }
+        map_button.setOnClickListener(v -> {
+            Log.e("exploit", "map_button_clicked!");
+            fragment_map = new fragment_map();
+            viewMenu(fragment_map);
+            drawerLayout.closeDrawer(GravityCompat.START);
         });
 
         //favorite Button Layer
         LinearLayout favorite_button = (LinearLayout) header.findViewById(R.id.favorite_button);
-        favorite_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("exploit", "favorite_button_clicked!");
-                fragment_favorite = new fragment_favorite();
-                viewMenu(fragment_favorite);
-                drawerLayout.closeDrawer(GravityCompat.START);
-            }
+        favorite_button.setOnClickListener(v -> {
+            Log.e("exploit", "favorite_button_clicked!");
+            fragment_favorite = new fragment_favorite();
+            viewMenu(fragment_favorite);
+            drawerLayout.closeDrawer(GravityCompat.START);
         });
 
         //Search Button Layer
         LinearLayout search_button = (LinearLayout) header.findViewById(R.id.search_button);
-        search_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("exploit", "search_button_clicked!");
-                fragment_search = new fragment_search();
-                viewMenu(fragment_search);
-                drawerLayout.closeDrawer(GravityCompat.START);
-            }
+        search_button.setOnClickListener(v -> {
+            Log.e("exploit", "search_button_clicked!");
+            fragment_search = new fragment_search();
+            viewMenu(fragment_search);
+            drawerLayout.closeDrawer(GravityCompat.START);
         });
 
         //Trade Function has deprecated..
 
         LinearLayout checklist_button = (LinearLayout) header.findViewById(R.id.trade_button);
-        checklist_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("exploit", "trade_button_clicked!");
-                fragment_checklist = new fragment_checklist();
-                viewMenu(fragment_checklist);
-                drawerLayout.closeDrawer(GravityCompat.START);
-            }
+        checklist_button.setOnClickListener(v -> {
+            Log.e("exploit", "trade_button_clicked!");
+            fragment_checklist = new fragment_checklist();
+            viewMenu(fragment_checklist);
+            drawerLayout.closeDrawer(GravityCompat.START);
         });
 
 
         //Route Button Layer
         LinearLayout route_button = (LinearLayout) header.findViewById(R.id.route_button);
-        route_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("exploit", "route_button_clicked!");
-                fragment_route = new fragment_route();
-                viewMenu(fragment_route);
-                drawerLayout.closeDrawer(GravityCompat.START);
-            }
+        route_button.setOnClickListener(v -> {
+            Log.e("exploit", "route_button_clicked!");
+            fragment_route = new fragment_route();
+            viewMenu(fragment_route);
+            drawerLayout.closeDrawer(GravityCompat.START);
         });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
