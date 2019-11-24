@@ -3,7 +3,6 @@ package com.example.comicmap;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,16 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.comicmap.OAuth.TokenClient;
+import com.example.comicmap.OAuth.TokenProcess;
+
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Timer;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -29,13 +26,16 @@ import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @RuntimePermissions
 public class SplashActivity extends AppCompatActivity {
     private TextView tv;
     private DataBaseHelper helper;
     private LoginSharedPreference loginSharedPreference = new LoginSharedPreference();
-    private TokenProcess tokenInterface = TokenClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
+    private TokenProcess loginInterface;
     private retrofit2.Call<ResponseBody> responseBodyCall;
 
     @Override
@@ -91,22 +91,23 @@ public class SplashActivity extends AppCompatActivity {
         SplashActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
+    //Check IF ID & PW stored in SharedPref
     public void logincheck() {
 
         String id = loginSharedPreference.getString("username");
         String password = loginSharedPreference.getString("password");
         if ((id != null) && (password != null)) {
             Log.e("exploit", "================Login Process...================");
-            TokenProcess loginInterface = TokenClient.getClient(TokenProcess.LOGIN_URL).create(TokenProcess.class);
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("ReturnUrl", "https://webcatalog.circle.ms/Account/Login");
             hashMap.put("state", "/");
             hashMap.put("Username", id);
             hashMap.put("Password", password);
-            retrofit2.Call<ResponseBody> responseBodyCall = loginInterface.LoginData(hashMap);
+            loginInterface = TokenClient.getClient(TokenProcess.LOGIN_URL).create(TokenProcess.class);
+            responseBodyCall = loginInterface.LoginData(hashMap);
             responseBodyCall.enqueue(new retrofit2.Callback<ResponseBody>() {
                 @Override
-                public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                public void onResponse(@NotNull retrofit2.Call<ResponseBody> call, @NotNull retrofit2.Response<ResponseBody> response) {
 
                     //Login Check in SharedPref
                     if(response.headers().toString().contains("__RequestVerificationToken=")) {
@@ -117,9 +118,7 @@ public class SplashActivity extends AppCompatActivity {
                         String refreshToken = loginSharedPreference.getString("refresh_token");
                         if(refreshToken != null) {
                             //Todo : Make token aquision function
-                            Log.e("exploit", "WellDone! go to the next stage!");
-                            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                            finish();
+                            refresh_token();
                         } else {
                             startActivity(new Intent(SplashActivity.this, PermissionActivity.class));
                             finish();
@@ -132,7 +131,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
+                public void onFailure(@NotNull retrofit2.Call<ResponseBody> call, @NotNull Throwable t) {
                     Toast.makeText(getApplicationContext(), "Login Error!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     finish();
@@ -144,7 +143,38 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
+    //Refresh Token & Go to Main page
     public void refresh_token() {
+        HashMap<String, Object> postData2 = new HashMap<>();
+        postData2.put("grant_type", "refresh_token");
+        postData2.put("refresh_token", loginSharedPreference.getString("refresh_token"));
+        postData2.put("client_id", "comicmapgZwp98BPmh5rj35zfnFNcZA5mxrpyCUQ");
+        postData2.put("client_secret", "bGLDLnC7NrwFnWR3a8C2hz9sYEJtcnLhMwRJHdwV");
+        loginInterface = TokenClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
+        responseBodyCall = loginInterface.accessToken(postData2);
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
 
+                //Todo : Check GoldUser payment time has Expired...
+                try {
+                    String result = response.body().string();
+                    JSONObject json = new JSONObject(result);
+                    String access_token = json.getString("access_token");
+                    String refresh_token = json.getString("refresh_token");
+                    loginSharedPreference.putString("access_token", access_token);
+                    loginSharedPreference.putString("refresh_token", refresh_token);
+                    Log.e("exploit", "Token retrieved! : " + access_token + ", " + refresh_token);
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    finish();
+                } catch(Exception e) {}
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                tv.setText("errorが発生します。 Retry..");
+                refresh_token();
+            }
+        });
     }
 }

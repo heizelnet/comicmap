@@ -1,4 +1,4 @@
-package com.example.comicmap;
+package com.example.comicmap.OAuth;
 
 
 

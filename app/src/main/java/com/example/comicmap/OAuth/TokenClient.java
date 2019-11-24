@@ -1,6 +1,7 @@
-package com.example.comicmap;
+package com.example.comicmap.OAuth;
 
 
+import com.example.comicmap.MyApplication;
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
@@ -9,11 +10,11 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
-class TokenClient {
+public class TokenClient {
 
     private static Retrofit retrofit = null;
 
-    static Retrofit getClient(String base_url) {
+    public static Retrofit getClient(String base_url) {
         ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(MyApplication.getAppContext()));
         OkHttpClient client = new OkHttpClient.Builder().cookieJar(cookieJar).build();
 

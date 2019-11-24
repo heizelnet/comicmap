@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.gson.JsonObject;
+import com.example.comicmap.OAuth.TokenClient;
+import com.example.comicmap.OAuth.TokenProcess;
 
 import org.json.JSONObject;
 
@@ -28,15 +28,13 @@ public class PermissionActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_permission);
             button = findViewById(R.id.permission_button);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    button.setEnabled(false);
-                    permission_check();
-                }
+            button.setOnClickListener(v -> {
+                button.setEnabled(false);
+                permission_check();
             });
         }
 
+    //Permission Check : check Gold User & get Token for API
     public void permission_check() {
         tokenInterface = TokenClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
         Log.e("exploit", "================Permission Process...================");
@@ -57,12 +55,7 @@ public class PermissionActivity extends AppCompatActivity {
 
                     //Check user with elapsedTime... f**k..
                     Handler timer = new Handler();
-                    timer.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            createToken();
-                        }
-                    }, 1500);
+                    timer.postDelayed(() -> createToken(), 1500);
                 } catch (Exception e) {
 
                 }
@@ -76,6 +69,7 @@ public class PermissionActivity extends AppCompatActivity {
         });
     }
 
+    //IF Checked Gold User.. get Code
     public void createToken() {
             HashMap<String, Object> postData = new HashMap<>();
             postData.put("__RequestVerificationToken", loginSharedPreference.getString("verificationParamToken"));
@@ -105,13 +99,14 @@ public class PermissionActivity extends AppCompatActivity {
                         button.setEnabled(true);
                     }
                 });
-        }
+    }
+
+    //After get Code, access API & get Token
     public void accessToken() {
         Log.e("exploit", "============= access Token...================");
                 HashMap<String, Object> postData2 = new HashMap<>();
                 postData2.put("grant_type", "authorization_code");
                 postData2.put("code", loginSharedPreference.getString("tokenCode"));
-                Log.e("exploit", "tokenCode : " + loginSharedPreference.getString("tokenCode"));
                 postData2.put("client_id", "comicmapgZwp98BPmh5rj35zfnFNcZA5mxrpyCUQ");
                 postData2.put("client_secret", "bGLDLnC7NrwFnWR3a8C2hz9sYEJtcnLhMwRJHdwV");
                 responseBodyCall = tokenInterface.accessToken(postData2);
