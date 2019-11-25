@@ -10,7 +10,7 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
-public class TokenClient {
+public class APIClient {
 
     private static Retrofit retrofit = null;
 

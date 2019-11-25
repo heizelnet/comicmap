@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.comicmap.OAuth.TokenClient;
+import com.example.comicmap.OAuth.APIClient;
 import com.example.comicmap.OAuth.TokenProcess;
 
 import org.jetbrains.annotations.NotNull;
@@ -56,6 +56,7 @@ public class SplashActivity extends AppCompatActivity {
             helper.createDatabase();
         } catch (Exception e) { e.printStackTrace(); }
         tv.setText(R.string.done);
+        Log.e("exploit", "database updating..");
 
         //Login With check ID, Password in SharedPref
         logincheck();
@@ -103,7 +104,7 @@ public class SplashActivity extends AppCompatActivity {
             hashMap.put("state", "/");
             hashMap.put("Username", id);
             hashMap.put("Password", password);
-            loginInterface = TokenClient.getClient(TokenProcess.LOGIN_URL).create(TokenProcess.class);
+            loginInterface = APIClient.getClient(TokenProcess.LOGIN_URL).create(TokenProcess.class);
             responseBodyCall = loginInterface.LoginData(hashMap);
             responseBodyCall.enqueue(new retrofit2.Callback<ResponseBody>() {
                 @Override
@@ -150,7 +151,7 @@ public class SplashActivity extends AppCompatActivity {
         postData2.put("refresh_token", loginSharedPreference.getString("refresh_token"));
         postData2.put("client_id", "comicmapgZwp98BPmh5rj35zfnFNcZA5mxrpyCUQ");
         postData2.put("client_secret", "bGLDLnC7NrwFnWR3a8C2hz9sYEJtcnLhMwRJHdwV");
-        loginInterface = TokenClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
+        loginInterface = APIClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
         responseBodyCall = loginInterface.accessToken(postData2);
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override

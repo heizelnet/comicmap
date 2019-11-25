@@ -1,4 +1,4 @@
-package com.example.comicmap;
+package com.example.comicmap.fragment;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.comicmap.R;
 
 public class circle_info_dialog extends Dialog {
 

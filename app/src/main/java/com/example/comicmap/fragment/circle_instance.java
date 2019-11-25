@@ -1,4 +1,4 @@
-package com.example.comicmap;
+package com.example.comicmap.fragment;
 
 public class circle_instance {
     private String url, name, author, hall, day, circle;

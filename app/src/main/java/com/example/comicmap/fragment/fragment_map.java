@@ -29,9 +29,6 @@ import androidx.fragment.app.Fragment;
 import com.example.comicmap.DataBaseHelper;
 import com.example.comicmap.ItemSpinnerAdapter;
 import com.example.comicmap.R;
-import com.example.comicmap.circle_instance;
-import com.example.comicmap.circle_info_dialog;
-import com.example.comicmap.circle_info_adapter;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.PhotoView;
 
@@ -206,18 +203,21 @@ public class fragment_map extends Fragment {
             String query = "select * from circle_info where Hall like '%" + hallName +
                     "%' and Day=" + day + " and location_x=" + location_x +
                     " and location_y=" + location_y;
+
             Cursor cur = mDataBase.rawQuery(query, null);
             cur.moveToFirst();
+            Log.e("exploit", "Query : " + query);
+            Log.e("exploit", "Query Index : " + cur.getCount());
 
             //iterate query add items to dialog
             ArrayList<circle_instance> items = new ArrayList<>();
             if(cur.getCount() != 0) {
                 while (true) {
                     try {
-                        Log.e("exploit", "Circle Result :" + cur.getString(cur.getColumnIndex("circle_instance")));
+                        Log.e("exploit", "Circle Result :" + cur.getString(cur.getColumnIndex("circle")));
                         items.add(new circle_instance("Sample", cur.getString(cur.getColumnIndex("Name")),
                                 cur.getString(cur.getColumnIndex("Author")),
-                                hallName, String.valueOf(day), cur.getString(cur.getColumnIndex("circle_instance"))));
+                                hallName, String.valueOf(day), cur.getString(cur.getColumnIndex("circle"))));
                     } catch (Exception e) {
                         break;
                     }

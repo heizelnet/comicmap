@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.comicmap.OAuth.TokenClient;
+import com.example.comicmap.OAuth.APIClient;
 import com.example.comicmap.OAuth.TokenProcess;
 
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +21,7 @@ import retrofit2.Call;
 public class PermissionActivity extends AppCompatActivity {
     private Button button;
     private LoginSharedPreference loginSharedPreference = new LoginSharedPreference();
-    private TokenProcess tokenInterface = TokenClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
+    private TokenProcess tokenInterface = APIClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
     private retrofit2.Call<ResponseBody> responseBodyCall;
 
         @Override
@@ -37,7 +37,7 @@ public class PermissionActivity extends AppCompatActivity {
 
     //Permission Check : check Gold User & get Token for API
     public void permission_check() {
-        tokenInterface = TokenClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
+        tokenInterface = APIClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
         Log.e("exploit", "================Permission Process...================");
         responseBodyCall = tokenInterface.addParameters(
                 "code",

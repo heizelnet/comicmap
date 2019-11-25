@@ -1,4 +1,4 @@
-package com.example.comicmap;
+package com.example.comicmap.fragment;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.comicmap.R;
 
 import java.util.ArrayList;
 
