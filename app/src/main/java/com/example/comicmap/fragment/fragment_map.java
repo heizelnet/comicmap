@@ -207,14 +207,12 @@ public class fragment_map extends Fragment {
             Cursor cur = mDataBase.rawQuery(query, null);
             cur.moveToFirst();
             Log.e("exploit", "Query : " + query);
-            Log.e("exploit", "Query Index : " + cur.getCount());
 
             //iterate query add items to dialog
             ArrayList<circle_instance> items = new ArrayList<>();
             if(cur.getCount() != 0) {
                 while (true) {
                     try {
-                        Log.e("exploit", "Circle Result :" + cur.getString(cur.getColumnIndex("circle")));
                         items.add(new circle_instance("Sample", cur.getString(cur.getColumnIndex("Name")),
                                 cur.getString(cur.getColumnIndex("Author")),
                                 hallName, String.valueOf(day), cur.getString(cur.getColumnIndex("circle"))));

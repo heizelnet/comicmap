@@ -56,6 +56,41 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="60dp"
+            android:fontFamily="@font/nicokaku"
+            android:gravity="center"
+            android:hint="SEARCH HERE"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:hint="SEARCH HERE" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_search_category_default"
+            tools:layout_editor_absoluteY="0dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/photo_view"
