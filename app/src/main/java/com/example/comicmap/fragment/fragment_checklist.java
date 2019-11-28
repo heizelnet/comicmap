@@ -1,9 +1,13 @@
 package com.example.comicmap.fragment;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -12,17 +16,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comicmap.CheckListAdapter;
-import com.example.comicmap.DataSharedPreference;
 import com.example.comicmap.MyApplication;
 import com.example.comicmap.R;
 import com.example.comicmap.SwipeDeleter;
+
 
 public class fragment_checklist extends Fragment {
 
     private ViewGroup viewGroup;
     private RecyclerView recyclerView;
-    private DataSharedPreference pref = new DataSharedPreference();
-    private CheckListAdapter mAdapter = new CheckListAdapter(pref.getStringArrayList(pref.CHECKLIST_KEY));
+    private EditText editText;
+    //private ArrayList<String> cache = new ArrayList<>();
+    private CheckListAdapter mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,10 +46,11 @@ public class fragment_checklist extends Fragment {
 
         viewGroup = view.findViewById(R.id.chk_empty_group);
         recyclerView = view.findViewById(R.id.rec_chk_view);
+        //cache = pref.getStringArrayList(pref.CHECKLIST_KEY);
+        mAdapter = new CheckListAdapter();
 
         //Test Code for update
-        //setUpRecyclerView();
-
+        setUpRecyclerView();
         if(mAdapter.getItemCount() == 0) {
             recyclerView.setVisibility(View.GONE);
             viewGroup.setVisibility(View.VISIBLE);
@@ -52,6 +58,28 @@ public class fragment_checklist extends Fragment {
             viewGroup.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
         }
+
+        editText = view.findViewById(R.id.editText_chklist);
+        editText.setOnEditorActionListener((v, actionId, event) -> {
+            switch(actionId) {
+                case EditorInfo.IME_ACTION_DONE:
+                    // 완료 버튼
+                    if(mAdapter.getItemCount() == 0) {
+                        //cache.add(editText.getText().toString());
+                        //mAdapter.notifyItemInserted(mAdapter.getItemCount());
+                        mAdapter.addItem(mAdapter.getItemCount(), editText.getText().toString());
+                        viewGroup.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    } else {
+                        //cache.add(editText.getText().toString());
+                        //mAdapter.notifyItemInserted(mAdapter.getItemCount());
+                        mAdapter.addItem(mAdapter.getItemCount(), editText.getText().toString());
+                    }
+                    editText.getText().clear();
+                    break;
+            }
+            return false;
+        });
 
         return view;
     }

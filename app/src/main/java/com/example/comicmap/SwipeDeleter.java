@@ -1,7 +1,6 @@
 package com.example.comicmap;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 

@@ -14,10 +14,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:layout_marginBottom="10dp">
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/editText_chklist"
+            android:imeOptions="actionDone"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:textSize="25sp"
