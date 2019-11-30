@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
-    android:background="#fafafa">
+    android:background="@drawable/border_rectangle_thin_line">
 
 
     <CheckBox
@@ -25,11 +25,10 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/nicokaku"
         android:layout_marginStart="5dp"
-        android:paddingTop="5dp"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/checkBox"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Very" />
+        tools:text="Very Very Long String" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
