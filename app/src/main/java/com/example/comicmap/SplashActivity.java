@@ -2,6 +2,8 @@ package com.example.comicmap;
 
 import android.Manifest;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -13,10 +15,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.comicmap.OAuth.APIClient;
 import com.example.comicmap.OAuth.TokenProcess;
+import com.example.comicmap.fragment.circle_instance;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import okhttp3.ResponseBody;
@@ -35,6 +39,8 @@ public class SplashActivity extends AppCompatActivity {
     private TextView tv;
     private DataBaseHelper helper;
     private LoginSharedPreference loginSharedPreference = new LoginSharedPreference();
+    private DataSharedPreference dataSharedPreference = new DataSharedPreference();
+    private SQLiteDatabase mDataBase;
     private TokenProcess loginInterface;
     private retrofit2.Call<ResponseBody> responseBodyCall;
 
@@ -55,11 +61,41 @@ public class SplashActivity extends AppCompatActivity {
         try {
             helper.createDatabase();
         } catch (Exception e) { e.printStackTrace(); }
+
+        //SearchBox Update
         tv.setText(R.string.done);
         Log.e("exploit", "database updating..");
+        if(dataSharedPreference.getStringArrayList(dataSharedPreference.SEARCH_BOX).isEmpty()) {
+            mDataBase = helper.openDataBase();
+            String query = "select Name, Author from circle_info";
+            Cursor cur = mDataBase.rawQuery(query, null);
+            cur.moveToFirst();
+
+            //iterate query add items to dialog
+            ArrayList<String> items = new ArrayList<>();
+            Log.e("exploit", "query count : " + cur.getCount());
+            if (cur.getCount() != 0) {
+                while (true) {
+                    try {
+                        items.add(cur.getString(cur.getColumnIndex("Name")) + " / " +
+                                cur.getString(cur.getColumnIndex("Author")));
+                    } catch (Exception e) {
+                        break;
+                    }
+                    cur.moveToNext();
+                }
+            }
+            dataSharedPreference.setStringArrayList(dataSharedPreference.SEARCH_BOX, items);
+            Log.e("exploit", "Update complete!");
+        }
+
 
         //Login With check ID, Password in SharedPref
-        logincheck();
+        //logincheck();
+
+        //client_id, client_secret이 만료되어 잠시 중단...
+        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        finish();
         
     }
 

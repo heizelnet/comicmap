@@ -14,6 +14,7 @@ public class DataSharedPreference {
     private SharedPreferences pref;
     private Context mContext;
     public final String CHECKLIST_KEY = "checklist";
+    public final String SEARCH_BOX = "search_list";
     public final String FAVORITE_KEY = "favorite_list";
 
     public DataSharedPreference() {

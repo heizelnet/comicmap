@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,10 +29,14 @@ import androidx.fragment.app.Fragment;
 
 
 import com.example.comicmap.DataBaseHelper;
+import com.example.comicmap.DataSharedPreference;
 import com.example.comicmap.ItemSpinnerAdapter;
+import com.example.comicmap.MyApplication;
 import com.example.comicmap.R;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
 
@@ -52,7 +57,7 @@ public class fragment_map extends Fragment {
     private float circle_pixel, map_width, map_height, map_pixel;
     private String hallName;
     private Point size;
-    private AutoCompleteTextView autoCompleteTextView;
+    private DataSharedPreference dataSharedPreference = new DataSharedPreference();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,7 +79,20 @@ public class fragment_map extends Fragment {
         display.getSize(size);
 
         //Set Search Default Settings
-        autoCompleteTextView = view.findViewById(R.id.editTextAuto);
+        final AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.editTextAuto);
+        ChipGroup chipGroup = view.findViewById(R.id.ChipGroup);
+        autoCompleteTextView.setAdapter(new ArrayAdapter<String>(MyApplication.getAppContext(),
+                android.R.layout.simple_dropdown_item_1line, dataSharedPreference.getStringArrayList(dataSharedPreference.SEARCH_BOX)));
+        autoCompleteTextView.setOnItemClickListener((adapterView, view13, i, l) -> {
+
+            Chip chip = new Chip(getContext());
+            chip.setText(autoCompleteTextView.getText().toString());
+            chip.setCheckable(false);
+            chip.setCloseIconVisible(true);
+
+            chipGroup.addView(chip);
+            chip.setOnCloseIconClickListener(view12 -> chipGroup.removeView(chip));
+        });
         
 
         //Set Map with bitmap layer

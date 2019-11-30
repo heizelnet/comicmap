@@ -50,6 +50,7 @@ public class PermissionActivity extends AppCompatActivity {
             public void onResponse(@NotNull retrofit2.Call<ResponseBody> call, @NotNull retrofit2.Response<ResponseBody> response) {
                 try {
                     String result = response.body().string();
+                    Log.e("exploit", result);
                     String req_token = result.split("<input name=\"__RequestVerificationToken\" type=\"hidden\" value=\"")[1].split("\" />")[0];
                     loginSharedPreference.putString("verificationParamToken", req_token);
                     Log.e("exploit", "Result token : " + req_token);

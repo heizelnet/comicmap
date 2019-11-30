@@ -63,7 +63,36 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="60dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <AutoCompleteTextView
+                android:id="@+id/editTextAuto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:fontFamily="@font/nicokaku"
+                android:gravity="center"
+                android:hint="作家名、サークル名..."
+                android:completionThreshold="2"
+                />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/ChipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:chipSpacingVertical="4dp"
+                />
+
+        </LinearLayout>
+<!--
         <AutoCompleteTextView
             android:id="@+id/editTextAuto"
             android:layout_width="match_parent"
@@ -72,13 +101,13 @@
             android:layout_marginEnd="60dp"
             android:fontFamily="@font/nicokaku"
             android:gravity="center"
-            android:hint="SEARCH HERE"
+            android:hint="作家名、サークル名..."
             android:inputType="textPersonName"
+            android:completionThreshold="2"
             app:layout_constraintEnd_toStartOf="@+id/imageButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
+!-->
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="50dp"
