@@ -63,8 +63,9 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp">
 
-        <EditText
-            android:id="@+id/editText"
+
+        <AutoCompleteTextView
+            android:id="@+id/editTextAuto"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
@@ -75,8 +76,8 @@
             android:inputType="textPersonName"
             app:layout_constraintEnd_toStartOf="@+id/imageButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:hint="SEARCH HERE" />
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <ImageButton
             android:id="@+id/imageButton"

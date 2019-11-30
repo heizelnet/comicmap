@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -51,6 +52,7 @@ public class fragment_map extends Fragment {
     private float circle_pixel, map_width, map_height, map_pixel;
     private String hallName;
     private Point size;
+    private AutoCompleteTextView autoCompleteTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,10 @@ public class fragment_map extends Fragment {
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);
+
+        //Set Search Default Settings
+        autoCompleteTextView = view.findViewById(R.id.editTextAuto);
+        
 
         //Set Map with bitmap layer
         map_pixel = getResources().getInteger(R.integer.west_12_width);
