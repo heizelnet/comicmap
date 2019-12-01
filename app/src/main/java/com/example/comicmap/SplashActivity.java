@@ -69,22 +69,26 @@ public class SplashActivity extends AppCompatActivity {
         Log.e("exploit", "database updating..");
         if(dataSharedPreference.getStringArrayList(dataSharedPreference.SEARCH_BOX).isEmpty()) {
             mDataBase = helper.openDataBase();
-            String query = "select Name, Author from circle_info";
+            String query = "select Name, Author, Hall from circle_info";
             Cursor cur = mDataBase.rawQuery(query, null);
             cur.moveToFirst();
 
             //iterate query add items to dialog
             ArrayList<String> items = new ArrayList<>();
             Log.e("exploit", "query count : " + cur.getCount());
-            String Name, Author;
             if (cur.getCount() != 0) {
                 while (true) {
                     try {
-                        Name = (cur.getString(cur.getColumnIndex("Name")).equals("")) ? " ": cur.getString(cur.getColumnIndex("Name"));
-                        Author = (cur.getString(cur.getColumnIndex("Author")).equals("")) ? " ": cur.getString(cur.getColumnIndex("Author"));
-                        items.add(Name + " / " +
-                                Author);
+                        if(!cur.getString(cur.getColumnIndex("Name")).equals("")) {
+                            items.add("Name: " + cur.getString(cur.getColumnIndex("Name")) + " / "
+                                    + cur.getString(cur.getColumnIndex("Hall")));
+                        }
+                        if(!cur.getString(cur.getColumnIndex("Author")).equals("")) {
+                            items.add("Author: " + cur.getString(cur.getColumnIndex("Author")) + " / "
+                                    + cur.getString(cur.getColumnIndex("Hall")));
+                        }
                     } catch (Exception e) {
+                        e.printStackTrace();
                         break;
                     }
                     cur.moveToNext();

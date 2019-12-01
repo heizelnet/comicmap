@@ -97,8 +97,6 @@ public class fragment_map extends Fragment {
             autoCompleteTextView.getText().clear();
  */
             autoCompleteTextView.clearFocus();
-            String debug = autoCompleteTextView.getText().toString();
-            Log.e("exploit", "name : " + debug.split(" / ")[0] + ", circle : " + debug.split(" / ")[1]);
         });
         
 
