@@ -10,6 +10,8 @@
         <item name="android:textSize">20sp</item>
         <item name="android:actionButtonStyle">@style/myActionButtonStyle</item>
         <item name="actionButtonStyle">@style/myActionButtonStyle</item>
+        <item name="colorControlActivated">#009688</item>
+        <item name="colorControlNormal">#171717</item>
     </style>
     <style name="myActionButtonStyle" parent="Widget.AppCompat.ActionButton">
         <item name="android:minWidth">24dp</item>
@@ -45,5 +47,12 @@
         <item name="android:theme">@style/SelectableItemTheme</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
+
+    <style name="ChipTextStyle">
+        <item name="android:textSize">25sp</item>
+        <item name="android:fontFamily">@font/nicokaku</item>
+        <item name="android:textColor">@color/whiteTextColor</item>
+    </style>
+
 
 </resources>

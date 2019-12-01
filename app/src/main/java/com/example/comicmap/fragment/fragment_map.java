@@ -80,18 +80,25 @@ public class fragment_map extends Fragment {
 
         //Set Search Default Settings
         final AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.editTextAuto);
-        ChipGroup chipGroup = view.findViewById(R.id.ChipGroup);
+        //ChipGroup chipGroup = view.findViewById(R.id.ChipGroup);
+        //final Chip chip = new Chip(getActivity());
         autoCompleteTextView.setAdapter(new ArrayAdapter<String>(MyApplication.getAppContext(),
                 android.R.layout.simple_dropdown_item_1line, dataSharedPreference.getStringArrayList(dataSharedPreference.SEARCH_BOX)));
         autoCompleteTextView.setOnItemClickListener((adapterView, view13, i, l) -> {
-
-            Chip chip = new Chip(getContext());
+/*
             chip.setText(autoCompleteTextView.getText().toString());
             chip.setCheckable(false);
             chip.setCloseIconVisible(true);
+            chip.setTextAppearanceResource(R.style.ChipTextStyle);
 
             chipGroup.addView(chip);
             chip.setOnCloseIconClickListener(view12 -> chipGroup.removeView(chip));
+            autoCompleteTextView.clearFocus();
+            autoCompleteTextView.getText().clear();
+ */
+            autoCompleteTextView.clearFocus();
+            String debug = autoCompleteTextView.getText().toString();
+            Log.e("exploit", "name : " + debug.split(" / ")[0] + ", circle : " + debug.split(" / ")[1]);
         });
         
 

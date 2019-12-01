@@ -14,7 +14,7 @@
         android:focusable="true"
         android:background="@color/ripple_color">
         <LinearLayout
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="130dp"
             android:clickable="true"
             android:focusable="true"
@@ -25,8 +25,8 @@
             android:paddingBottom="5dp"
             android:orientation="vertical">
             <ImageView
-                android:layout_width="95dp"
-                android:layout_height="95dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:background="@drawable/idea_bulb"/>
             <TextView
                 android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
                 android:text="MAP"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:fontFamily="@font/nicokaku"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -43,7 +43,7 @@
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
         <LinearLayout
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="130dp"
             android:clickable="true"
             android:focusable="true"
@@ -54,8 +54,8 @@
             android:paddingBottom="5dp"
             android:orientation="vertical">
             <ImageView
-                android:layout_width="95dp"
-                android:layout_height="95dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:background="@drawable/heart_img"/>
             <TextView
                 android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
                 android:text="FAVORITE"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:fontFamily="@font/nicokaku"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -72,7 +72,7 @@
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
         <LinearLayout
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="130dp"
             android:clickable="true"
             android:focusable="true"
@@ -83,8 +83,8 @@
             android:paddingBottom="5dp"
             android:orientation="vertical">
             <ImageView
-                android:layout_width="95dp"
-                android:layout_height="95dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:background="@drawable/search"/>
             <TextView
                 android:layout_width="match_parent"
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
                 android:text="SEARCH"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:fontFamily="@font/nicokaku"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -101,7 +101,7 @@
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
         <LinearLayout
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="130dp"
             android:clickable="true"
             android:focusable="true"
@@ -112,8 +112,8 @@
             android:paddingBottom="5dp"
             android:orientation="vertical">
             <ImageView
-                android:layout_width="95dp"
-                android:layout_height="95dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:background="@drawable/money_trade"/>
             <TextView
                 android:layout_width="match_parent"
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
                 android:text="CHECKLIST"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:fontFamily="@font/nicokaku"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -130,7 +130,7 @@
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"/>
         <LinearLayout
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="130dp"
             android:clickable="true"
             android:focusable="true"
@@ -141,8 +141,8 @@
             android:paddingBottom="5dp"
             android:orientation="vertical">
             <ImageView
-                android:layout_width="95dp"
-                android:layout_height="95dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:background="@drawable/map_route"/>
             <TextView
                 android:layout_width="match_parent"
@@ -150,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
                 android:text="ROUTE"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:fontFamily="@font/nicokaku"
                 android:textStyle="bold" />
         </LinearLayout>

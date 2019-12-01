@@ -63,6 +63,48 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp">
 
+        <HorizontalScrollView
+            android:id="@+id/chipGroup2HorizontalView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:scrollbars="none"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="60dp" >
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/ChipGroup"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/nicokaku"
+                app:chipSpacingVertical="4dp" />
+        </HorizontalScrollView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="60dp"
+            app:layout_constraintStart_toEndOf="@id/chipGroup2HorizontalView"
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <AutoCompleteTextView
+                android:id="@+id/editTextAuto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPersonName"
+                android:fontFamily="@font/nicokaku"
+                android:gravity="center"
+                android:hint="作家名、サークル名..."
+                android:completionThreshold="2"
+                android:background="@android:color/transparent" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+<!--
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -82,7 +124,8 @@
                 android:gravity="center"
                 android:hint="作家名、サークル名..."
                 android:completionThreshold="2"
-                />
+                android:background="@android:color/transparent" />
+
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/ChipGroup"
@@ -92,22 +135,8 @@
                 />
 
         </LinearLayout>
-<!--
-        <AutoCompleteTextView
-            android:id="@+id/editTextAuto"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="60dp"
-            android:fontFamily="@font/nicokaku"
-            android:gravity="center"
-            android:hint="作家名、サークル名..."
-            android:inputType="textPersonName"
-            android:completionThreshold="2"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-!-->
+        !-->
+
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="50dp"

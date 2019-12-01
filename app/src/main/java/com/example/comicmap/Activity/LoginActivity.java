@@ -1,4 +1,4 @@
-package com.example.comicmap;
+package com.example.comicmap.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.comicmap.LoginSharedPreference;
 import com.example.comicmap.OAuth.PostCall_Login;
+import com.example.comicmap.R;
+import com.example.comicmap.SplashActivity;
 
 import org.jetbrains.annotations.NotNull;
 

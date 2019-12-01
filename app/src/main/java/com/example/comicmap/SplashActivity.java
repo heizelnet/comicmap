@@ -13,9 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.comicmap.Activity.LoginActivity;
+import com.example.comicmap.Activity.MainActivity;
+import com.example.comicmap.Activity.PermissionActivity;
 import com.example.comicmap.OAuth.APIClient;
 import com.example.comicmap.OAuth.TokenProcess;
-import com.example.comicmap.fragment.circle_instance;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
@@ -36,7 +38,7 @@ import retrofit2.Response;
 
 @RuntimePermissions
 public class SplashActivity extends AppCompatActivity {
-    private TextView tv;
+    private TextView tv_load;
     private DataBaseHelper helper;
     private LoginSharedPreference loginSharedPreference = new LoginSharedPreference();
     private DataSharedPreference dataSharedPreference = new DataSharedPreference();
@@ -57,13 +59,13 @@ public class SplashActivity extends AppCompatActivity {
     void checkProcess() {
         //Check DataBase Permission & Storage
         helper = new DataBaseHelper(this);
-        tv = findViewById(R.id.textView_load);
+        tv_load = findViewById(R.id.textView_load);
         try {
             helper.createDatabase();
         } catch (Exception e) { e.printStackTrace(); }
 
         //SearchBox Update
-        tv.setText(R.string.done);
+        tv_load.setText(R.string.done);
         Log.e("exploit", "database updating..");
         if(dataSharedPreference.getStringArrayList(dataSharedPreference.SEARCH_BOX).isEmpty()) {
             mDataBase = helper.openDataBase();
@@ -74,11 +76,14 @@ public class SplashActivity extends AppCompatActivity {
             //iterate query add items to dialog
             ArrayList<String> items = new ArrayList<>();
             Log.e("exploit", "query count : " + cur.getCount());
+            String Name, Author;
             if (cur.getCount() != 0) {
                 while (true) {
                     try {
-                        items.add(cur.getString(cur.getColumnIndex("Name")) + " / " +
-                                cur.getString(cur.getColumnIndex("Author")));
+                        Name = (cur.getString(cur.getColumnIndex("Name")).equals("")) ? " ": cur.getString(cur.getColumnIndex("Name"));
+                        Author = (cur.getString(cur.getColumnIndex("Author")).equals("")) ? " ": cur.getString(cur.getColumnIndex("Author"));
+                        items.add(Name + " / " +
+                                Author);
                     } catch (Exception e) {
                         break;
                     }
@@ -151,7 +156,7 @@ public class SplashActivity extends AppCompatActivity {
                         loginSharedPreference.putString("verificationToken", response.headers().toString().split("__RequestVerificationToken=")[1].split(";")[0]);
 
                         //Check SharedPref for Refresh Tokens..
-                        tv.setText("Gold 会員 チェック中..");
+                        tv_load.setText("Gold 会員 チェック中..");
                         String refreshToken = loginSharedPreference.getString("refresh_token");
                         if(refreshToken != null) {
                             //Todo : Make token aquision function
@@ -209,7 +214,7 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                tv.setText("errorが発生します。 Retry..");
+                tv_load.setText("errorが発生します。 Retry..");
                 refresh_token();
             }
         });

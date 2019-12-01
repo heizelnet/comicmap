@@ -7,8 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="5dp"
-    android:paddingBottom="5dp"
-    android:background="@drawable/border_rectangle_thin_line">
+    android:paddingBottom="5dp">
 
 
     <CheckBox
@@ -25,7 +24,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/nicokaku"
         android:layout_marginStart="5dp"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/checkBox"

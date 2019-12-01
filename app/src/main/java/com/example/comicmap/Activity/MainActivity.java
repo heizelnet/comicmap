@@ -1,4 +1,4 @@
-package com.example.comicmap;
+package com.example.comicmap.Activity;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.comicmap.R;
 import com.example.comicmap.fragment.fragment_checklist;
 import com.example.comicmap.fragment.fragment_favorite;
 import com.example.comicmap.fragment.fragment_map;
