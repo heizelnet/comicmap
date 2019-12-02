@@ -27,7 +27,7 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@drawable/idea_bulb"/>
+                android:background="@drawable/map_icon2"/>
             <TextView
                 android:layout_width="match_parent"
                 android:gravity="center"
@@ -114,7 +114,7 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="@drawable/money_trade"/>
+                android:background="@drawable/checklist"/>
             <TextView
                 android:layout_width="match_parent"
                 android:gravity="center"

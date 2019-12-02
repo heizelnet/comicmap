@@ -33,7 +33,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:text="MAP"
             android:textSize="15sp"
-            android:fontFamily="@font/saucer_bold"
+            android:fontFamily="@font/nicokaku"
             android:textStyle="bold" />
     </LinearLayout>
     <View
@@ -61,7 +61,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:text="FAVORITE"
             android:textSize="15sp"
-            android:fontFamily="@font/saucer_bold"
+            android:fontFamily="@font/nicokaku"
             android:textStyle="bold" />
     </LinearLayout>
     <View
@@ -89,7 +89,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:text="SEARCH"
             android:textSize="15sp"
-            android:fontFamily="@font/saucer_bold"
+            android:fontFamily="@font/nicokaku"
             android:textStyle="bold" />
     </LinearLayout>
     <View
@@ -117,7 +117,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:text="TRADE"
             android:textSize="15sp"
-            android:fontFamily="@font/saucer_bold"
+            android:fontFamily="@font/nicokaku"
             android:textStyle="bold" />
     </LinearLayout>
     <View
@@ -145,7 +145,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:text="ROUTE"
             android:textSize="15sp"
-            android:fontFamily="@font/saucer_bold"
+            android:fontFamily="@font/nicokaku"
             android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

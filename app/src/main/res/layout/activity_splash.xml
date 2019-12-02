@@ -13,12 +13,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:fontFamily="@font/saucer_bold"
+        android:fontFamily="@font/nicokaku"
 
-        android:text="COMIC"
+        android:text="CoMiC"
         android:textAlignment="center"
-        android:textColor="#171717"
-        android:textSize="80sp"
+        android:textColor="@color/gray2"
+        android:textSize="90sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -30,19 +30,19 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/saucer_bold"
+        android:fontFamily="@font/nicokaku"
         android:gravity="center_horizontal"
-        android:text="MAP"
+        android:text="Map"
 
         android:textAlignment="center"
-        android:textColor="#171717"
-        android:textSize="80sp"
+        android:textColor="@color/gray2"
+        android:textSize="90sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.55" />
+        app:layout_constraintVertical_bias="0.60" />
 
     <TextView
         android:id="@+id/textView_load"
