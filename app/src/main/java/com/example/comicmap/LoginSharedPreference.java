@@ -1,8 +1,9 @@
 package com.example.comicmap;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.HashSet;
 
@@ -12,7 +13,7 @@ public class LoginSharedPreference {
     private Context mContext;
     public LoginSharedPreference() {
         mContext = MyApplication.getAppContext();
-        pref = mContext.getSharedPreferences("LOG_INFO", Activity.MODE_PRIVATE);
+        pref = mContext.getSharedPreferences("LOG_INFO", AppCompatActivity.MODE_PRIVATE);
     }
 
     public void putString(String key, String value) {

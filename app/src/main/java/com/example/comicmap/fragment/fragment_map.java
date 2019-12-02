@@ -25,12 +25,14 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.Fragment;
 
 
 import com.example.comicmap.DataBaseHelper;
 import com.example.comicmap.DataSharedPreference;
 import com.example.comicmap.ItemSpinnerAdapter;
+import com.example.comicmap.MapSpinnerItem;
 import com.example.comicmap.MyApplication;
 import com.example.comicmap.R;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
@@ -51,8 +53,9 @@ public class fragment_map extends Fragment {
     private circle_info_adapter adapter = new circle_info_adapter();
     private circle_info_dialog dialog;
     private SQLiteDatabase mDataBase;
-    private boolean toggle;
-    private Spinner spinnerHall, spinnerDay;
+    private boolean toggle, toggle_search;
+    private int location_x, location_y;
+    private MapSpinnerItem spinnerHall, spinnerDay;
     private int day;
     private float circle_pixel, map_width, map_height, map_pixel;
     private String hallName;
@@ -71,6 +74,7 @@ public class fragment_map extends Fragment {
 
         //Set Default Settings
         toggle = false;
+        toggle_search = false;
         imageButton = view.findViewById(R.id.AnimationButton);
         photoView = view.findViewById(R.id.photo_view);
         photoView.setMaximumScale(7.0f);
@@ -96,7 +100,31 @@ public class fragment_map extends Fragment {
             autoCompleteTextView.clearFocus();
             autoCompleteTextView.getText().clear();
  */
-            autoCompleteTextView.clearFocus();
+        autoCompleteTextView.clearFocus();
+        String condition = autoCompleteTextView.getText().toString().split(" : ")[0];
+        String value = autoCompleteTextView.getText().toString().split(" : ")[1];
+        String query = "select Hall, Day, location_x, location_y from circle_info where " + condition + "='" + value + "'";
+        Cursor cur = mDataBase.rawQuery(query, null);
+        cur.moveToFirst();
+
+        String Hall = cur.getString(cur.getColumnIndex("Hall"));
+        day = cur.getInt(cur.getColumnIndex("Day"));
+        location_x = cur.getInt(cur.getColumnIndex("location_x"));
+        location_y = cur.getInt(cur.getColumnIndex("location_y"));
+
+        toggle_search = true;
+        Log.e("exploit", "location_x : " + location_x + " , location_y : " + location_y + ", toogle_search : " + toggle_search);
+        if(Hall.equals("W12")) {
+            spinnerHall.setSelection(0);
+        } if(Hall.equals("W34")) {
+            spinnerHall.setSelection(1);
+        } if(Hall.equals("S12")) {
+            spinnerHall.setSelection(2);
+        } if(Hall.equals("S34")) {
+            spinnerHall.setSelection(3);
+        }
+        spinnerDay.setSelection(day - 1);
+
         });
         
 
@@ -110,13 +138,13 @@ public class fragment_map extends Fragment {
         canvas = new Canvas(bitmap);
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setColor(Color.argb(120, 164, 198, 57));
+        paint.setColor(Color.argb(150, 83, 38, 31));
         photoView.setImageBitmap(bitmap);
 
         //Set Spinner Adapter
         String[] Hall, Day;
-        spinnerHall =(Spinner) view.findViewById(R.id.spinner3);
-        spinnerDay = (Spinner) view.findViewById(R.id.spinner4);
+        spinnerHall = (MapSpinnerItem) view.findViewById(R.id.spinner3);
+        spinnerDay =  (MapSpinnerItem) view.findViewById(R.id.spinner4);
         Hall = getResources().getStringArray(R.array.HallArray);
         Day = getResources().getStringArray(R.array.DayArray);
         spinnerHall.setAdapter(new ItemSpinnerAdapter(getActivity().getApplicationContext(), Hall));
@@ -150,11 +178,31 @@ public class fragment_map extends Fragment {
                         map_pixel = getResources().getInteger(R.integer.south_34_width);
                         break;
                 }
+                Log.e("exploit", "selected_Hall");
                 bitmap = drawable.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
                 map_width = bitmap.getWidth();
                 map_height = bitmap.getHeight();
                 canvas.setBitmap(bitmap);
                 photoView.setImageBitmap(bitmap);
+
+                //Set search point when toggle_search true..
+                if(toggle_search) {
+                    float density = (map_width / map_pixel);
+                    float point_x = ((location_x * circle_pixel) + (circle_pixel / 2)) * density;
+                    float point_y = ((location_y * circle_pixel) + (circle_pixel / 2)) * density;
+                    canvas.drawCircle(point_x , point_y, circle_pixel, paint);
+/*
+                    //Test Code for pallette
+                    paint.setColor(Color.argb(120, 0, 185, 146));
+                    canvas.drawCircle(point_x + circle_pixel , point_y, circle_pixel / 2, paint);
+                    paint.setColor(Color.argb(120, 0, 128, 0));
+                    canvas.drawCircle(point_x , point_y + circle_pixel, circle_pixel / 2, paint);
+
+ */
+                    photoView.invalidate();
+                    toggle_search = false;
+                    Log.e("exploit", "toggle_search");
+                }
 
                 if(toggle) {
                     imageButton.setImageDrawable(getContext().getDrawable(R.drawable.unfill_heart));
@@ -227,9 +275,9 @@ public class fragment_map extends Fragment {
             //get location & add query
             float density = (map_width / map_pixel);
             Log.e("exploit", "DPI : " + density + ", resource width : " + map_pixel + ", circle_pixel : " + circle_pixel);
-            int location_x = (int)Math.floor((map_width / density * x) / circle_pixel);
-            int location_y = (int)Math.floor((map_height / density * y) / circle_pixel);
-            String query = "select * from circle_info where Hall like '%" + hallName +
+            location_x = (int)Math.floor((map_width / density * x) / circle_pixel);
+            location_y = (int)Math.floor((map_height / density * y) / circle_pixel);
+            String query = "select Name, Author, circle from circle_info where Hall like '%" + hallName +
                     "%' and Day=" + day + " and location_x=" + location_x +
                     " and location_y=" + location_y;
 

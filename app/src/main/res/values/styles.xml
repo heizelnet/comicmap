@@ -1,14 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">#171717</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:actionButtonStyle">@style/myActionButtonStyle</item>
         <item name="actionButtonStyle">@style/myActionButtonStyle</item>
         <item name="colorControlActivated">#009688</item>
         <item name="colorControlNormal">#171717</item>
@@ -44,13 +43,13 @@
     </style>
 
     <style name="SelectableItemBackground">
-        <item name="android:theme">@style/SelectableItemTheme</item>
-        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="theme">@style/SelectableItemTheme</item>
+        <item name="background">?attr/selectableItemBackground</item>
     </style>
 
     <style name="ChipTextStyle">
         <item name="android:textSize">25sp</item>
-        <item name="android:fontFamily">@font/nicokaku</item>
+        <item name="fontFamily">@font/nicokaku</item>
         <item name="android:textColor">@color/whiteTextColor</item>
     </style>
 

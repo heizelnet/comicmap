@@ -1,8 +1,9 @@
 package com.example.comicmap;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,7 +20,7 @@ public class DataSharedPreference {
 
     public DataSharedPreference() {
         mContext = MyApplication.getAppContext();
-        pref = mContext.getSharedPreferences("DataSheet", Activity.MODE_PRIVATE);
+        pref = mContext.getSharedPreferences("DataSheet", AppCompatActivity.MODE_PRIVATE);
     }
 
     public void putString(String key, String value) {
