@@ -1,12 +1,16 @@
 package com.example.comicmap.fragment;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,7 +30,6 @@ public class fragment_checklist extends Fragment {
     private ViewGroup viewGroup;
     private RecyclerView recyclerView;
     private EditText editText;
-    //private ArrayList<String> cache = new ArrayList<>();
     private CheckListAdapter mAdapter;
 
     @Override

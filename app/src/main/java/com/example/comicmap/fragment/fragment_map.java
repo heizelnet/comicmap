@@ -1,6 +1,7 @@
 package com.example.comicmap.fragment;
 
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -103,7 +104,8 @@ public class fragment_map extends Fragment {
         autoCompleteTextView.clearFocus();
         String condition = autoCompleteTextView.getText().toString().split(" : ")[0];
         String value = autoCompleteTextView.getText().toString().split(" : ")[1];
-        String query = "select Hall, Day, location_x, location_y from circle_info where " + condition + "='" + value + "'";
+        String query = "select Hall, Day, location_x, location_y from circle_info where " + condition + "=\"" + value + "\"";
+        //(?=?)
         Cursor cur = mDataBase.rawQuery(query, null);
         cur.moveToFirst();
 
@@ -138,7 +140,7 @@ public class fragment_map extends Fragment {
         canvas = new Canvas(bitmap);
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setColor(Color.argb(150, 83, 38, 31));
+        paint.setColor(Color.argb(150, 158, 246, 25));
         photoView.setImageBitmap(bitmap);
 
         //Set Spinner Adapter
