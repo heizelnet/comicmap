@@ -1,7 +1,6 @@
 package com.example.comicmap.fragment;
 
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -22,11 +21,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.Fragment;
 
 
@@ -101,6 +98,8 @@ public class fragment_map extends Fragment {
             autoCompleteTextView.clearFocus();
             autoCompleteTextView.getText().clear();
  */
+
+        //This part will be changed prepareStatement query..
         autoCompleteTextView.clearFocus();
         String condition = autoCompleteTextView.getText().toString().split(" : ")[0];
         String value = autoCompleteTextView.getText().toString().split(" : ")[1];
