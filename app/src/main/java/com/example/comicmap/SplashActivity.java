@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.comicmap.Activity.LoginActivity;
 import com.example.comicmap.Activity.MainActivity;
 import com.example.comicmap.Activity.PermissionActivity;
-import com.example.comicmap.OAuth.APIClient;
+import com.example.comicmap.OAuth.LoginClient;
 import com.example.comicmap.OAuth.TokenProcess;
 
 import org.jetbrains.annotations.NotNull;
@@ -147,7 +147,7 @@ public class SplashActivity extends AppCompatActivity {
             hashMap.put("state", "/");
             hashMap.put("Username", id);
             hashMap.put("Password", password);
-            loginInterface = APIClient.getClient(TokenProcess.LOGIN_URL).create(TokenProcess.class);
+            loginInterface = LoginClient.getClient(TokenProcess.LOGIN_URL).create(TokenProcess.class);
             responseBodyCall = loginInterface.LoginData(hashMap);
             responseBodyCall.enqueue(new retrofit2.Callback<ResponseBody>() {
                 @Override
@@ -194,7 +194,7 @@ public class SplashActivity extends AppCompatActivity {
         postData2.put("refresh_token", loginSharedPreference.getString("refresh_token"));
         postData2.put("client_id", "comicmapgZwp98BPmh5rj35zfnFNcZA5mxrpyCUQ");
         postData2.put("client_secret", "bGLDLnC7NrwFnWR3a8C2hz9sYEJtcnLhMwRJHdwV");
-        loginInterface = APIClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
+        loginInterface = LoginClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
         responseBodyCall = loginInterface.accessToken(postData2);
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -203,6 +203,7 @@ public class SplashActivity extends AppCompatActivity {
                 //Todo : Check GoldUser payment time has Expired...
                 try {
                     String result = response.body().string();
+                    Log.e("exploit", "token_type: " +result );
                     JSONObject json = new JSONObject(result);
                     String access_token = json.getString("access_token");
                     String refresh_token = json.getString("refresh_token");

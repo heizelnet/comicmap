@@ -2,15 +2,17 @@ package com.example.comicmap.OAuth;
 
 
 
+import android.annotation.SuppressLint;
+
+import com.example.comicmap.LoginSharedPreference;
+
 import java.util.HashMap;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -54,4 +56,8 @@ public interface TokenProcess {
     @FormUrlEncoded
     @POST("/OAuth2/Token/")
     Call<ResponseBody> accessToken(@FieldMap HashMap<String, Object> param);
+
+    @GET("Readers/FavoriteCircles/")
+    Call<ResponseBody> getFavoriteList(
+            @Query("page") String page);
 }

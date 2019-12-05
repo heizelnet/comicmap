@@ -9,7 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.comicmap.LoginSharedPreference;
-import com.example.comicmap.OAuth.APIClient;
+import com.example.comicmap.OAuth.LoginClient;
 import com.example.comicmap.OAuth.TokenProcess;
 import com.example.comicmap.R;
 
@@ -23,7 +23,7 @@ import retrofit2.Call;
 public class PermissionActivity extends AppCompatActivity {
     private Button button;
     private LoginSharedPreference loginSharedPreference = new LoginSharedPreference();
-    private TokenProcess tokenInterface = APIClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
+    private TokenProcess tokenInterface = LoginClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
     private retrofit2.Call<ResponseBody> responseBodyCall;
 
         @Override
@@ -39,7 +39,7 @@ public class PermissionActivity extends AppCompatActivity {
 
     //Permission Check : check Gold User & get Token for API
     public void permission_check() {
-        tokenInterface = APIClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
+        tokenInterface = LoginClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
         Log.e("exploit", "================Permission Process...================");
         responseBodyCall = tokenInterface.addParameters(
                 "code",
