@@ -1,5 +1,6 @@
 package com.example.comicmap.fragment;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -16,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -99,8 +102,16 @@ public class fragment_map extends Fragment {
             autoCompleteTextView.getText().clear();
  */
 
-        //This part will be changed prepareStatement query..
+        //Hide Keyboard & Focus
+        InputMethodManager inputManager = (InputMethodManager) MyApplication.getAppContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        View v = getActivity().getCurrentFocus();
+        if (v != null) {
+            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+            inputManager.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
         autoCompleteTextView.clearFocus();
+
+        //This part will be changed prepareStatement query..
         String condition = autoCompleteTextView.getText().toString().split(" : ")[0];
         String value = autoCompleteTextView.getText().toString().split(" : ")[1];
         String query = "select Hall, Day, location_x, location_y from circle_info where " + condition + "=\"" + value + "\"";

@@ -36,7 +36,8 @@ public class SwipeDeleter extends ItemTouchHelper.SimpleCallback {
     }
 
     public SwipeDeleter(CheckListAdapter adapter) {
-        super(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+        //super(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+        super(0,ItemTouchHelper.LEFT);
         mAdapter = adapter;
         background = new ColorDrawable(ContextCompat.getColor(MyApplication.getAppContext(), R.color.gray2));
 
@@ -62,11 +63,12 @@ public class SwipeDeleter extends ItemTouchHelper.SimpleCallback {
         int backgroundCornerOffset = 20;
 
         if (dX > 0) { // Swiping to the right
+            /*
             background.setBounds(itemView.getLeft(), itemView.getTop(),
-                    itemView.getLeft() + ((int) dX) + backgroundCornerOffset,
-                    itemView.getBottom());
+                    itemView.getLeft() + ((int) dX) + backgroundCornerOffset, itemView.getBottom());
+             */
 
-        } else if (dX < 0) { // Swiping to the left
+        } else if (dX < -0.45) { // Swiping to the left
             background.setBounds(itemView.getRight() + ((int) dX) - backgroundCornerOffset,
                     itemView.getTop(), itemView.getRight(), itemView.getBottom());
         } else { // view is unSwiped

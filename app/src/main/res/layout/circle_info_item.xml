@@ -23,8 +23,8 @@
 
             <ImageView
                 android:id="@+id/imageThumb"
-                android:layout_width="70dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="105dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -33,10 +33,10 @@
                 android:id="@+id/text_Name2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="80dp"
-                android:fontFamily="@font/nicokaku"
+                android:layout_marginStart="90dp"
+                android:textSize="13sp"
                 android:maxLines="1"
-                tools:text="TextView"
+                tools:text="VeryLongLongLongTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,11 +44,10 @@
                 android:id="@+id/text_Author2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="80dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/nicokaku"
+                android:layout_marginStart="90dp"
+                android:textSize="13sp"
                 android:maxLines="1"
-                tools:text="TextView"
+                tools:text="VeryLongLongLongTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_Name2" />
 
@@ -56,9 +55,9 @@
                 android:id="@+id/text_Hall2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="80dp"
-                android:fontFamily="@font/nicokaku"
-                tools:text="TextView"
+                android:layout_marginStart="90dp"
+                android:textSize="13sp"
+                tools:text="VeryLongLongLongTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_Author2" />
 
@@ -66,9 +65,9 @@
                 android:id="@+id/text_Day2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="80dp"
-                android:fontFamily="@font/nicokaku"
-                tools:text="TextView"
+                android:layout_marginStart="90dp"
+                android:textSize="13sp"
+                tools:text="VeryLongLongLongTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_Hall2" />
 
@@ -76,11 +75,44 @@
                 android:id="@+id/text_Circle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="80dp"
-                android:fontFamily="@font/nicokaku"
-                tools:text="TextView"
+                android:layout_marginStart="90dp"
+                android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_Day2" />
+                app:layout_constraintTop_toBottomOf="@+id/text_Day2"
+                tools:text="VeryLongLongLongTextView" />
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:srcCompat="@drawable/pixiv_on_"
+                android:layout_marginStart="90dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_Circle" />
+
+            <ImageButton
+                android:id="@+id/imageButton3"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="180dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_Circle"
+                app:srcCompat="@drawable/twitter_on_" />
+
+            <ImageButton
+                android:id="@+id/imageButton4"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="270dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_Circle"
+                app:srcCompat="@drawable/niconico_on_" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
