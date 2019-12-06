@@ -3,10 +3,10 @@ android comicmarket app for fun :D
 
 todo Update
 
-1. set map pixel location in DB
+1. Update c97 database
 
-2. make Trade tab (set Twitter API, profile)
+2. Map editor (It'll be update in c98)
 
-3. change UI/UX design
+3. Route (Map route engine)
 
-4. Login Comiket account + REST API
+4. code refactoring, license update
