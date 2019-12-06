@@ -14,9 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comicmap.DataBaseHelper;
-import com.example.comicmap.LoginSharedPreference;
 import com.example.comicmap.OAuth.APIClient;
-import com.example.comicmap.OAuth.LoginClient;
 import com.example.comicmap.OAuth.TokenProcess;
 import com.example.comicmap.R;
 

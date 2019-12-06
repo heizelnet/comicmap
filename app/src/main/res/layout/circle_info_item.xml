@@ -82,7 +82,7 @@
                 tools:text="VeryLongLongLongTextView" />
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/imageButton_pixiv"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 app:srcCompat="@drawable/pixiv_on_"
@@ -93,7 +93,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_Circle" />
 
             <ImageButton
-                android:id="@+id/imageButton3"
+                android:id="@+id/imageButton_twitter"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="180dp"
@@ -104,7 +104,7 @@
                 app:srcCompat="@drawable/twitter_on_" />
 
             <ImageButton
-                android:id="@+id/imageButton4"
+                android:id="@+id/imageButton_nico"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="270dp"

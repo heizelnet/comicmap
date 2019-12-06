@@ -60,14 +60,11 @@ public class CheckListAdapter extends Adapter<CheckListAdapter.ViewHolder> {
         View view = inflater.inflate(R.layout.checklist_item, parent, false) ;
         CheckListAdapter.ViewHolder vh = new CheckListAdapter.ViewHolder(view);
 
-        vh.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked)
-                    vh.textView1.setPaintFlags(vh.textView1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                else
-                    vh.textView1.setPaintFlags(0);
-            }
+        vh.checkBox.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+            if(isChecked)
+                vh.textView1.setPaintFlags(vh.textView1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            else
+                vh.textView1.setPaintFlags(0);
         });
 
         return vh ;

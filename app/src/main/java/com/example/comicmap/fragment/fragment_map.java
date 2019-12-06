@@ -289,7 +289,9 @@ public class fragment_map extends Fragment {
             Log.e("exploit", "DPI : " + density + ", resource width : " + map_pixel + ", circle_pixel : " + circle_pixel);
             location_x = (int)Math.floor((map_width / density * x) / circle_pixel);
             location_y = (int)Math.floor((map_height / density * y) / circle_pixel);
-            String query = "select Name, Author, circle from circle_info where Hall like '%" + hallName +
+            String query = "select Name, Author, circle, " +
+                    "IsPixivRegistered, PixivUrl, IsTwitterRegistered, TwitterUrl, IsNiconicoRegistered, NiconicoUrl" +
+                    " from circle_info where Hall like '%" + hallName +
                     "%' and Day=" + day + " and location_x=" + location_x +
                     " and location_y=" + location_y;
 
@@ -304,7 +306,10 @@ public class fragment_map extends Fragment {
                     try {
                         items.add(new circle_instance("Sample", cur.getString(cur.getColumnIndex("Name")),
                                 cur.getString(cur.getColumnIndex("Author")),
-                                hallName, String.valueOf(day), cur.getString(cur.getColumnIndex("circle"))));
+                                hallName, String.valueOf(day), cur.getString(cur.getColumnIndex("circle")),
+                                cur.getInt(cur.getColumnIndex("IsPixivRegistered")), cur.getInt(cur.getColumnIndex("IsTwitterRegistered")),
+                                cur.getInt(cur.getColumnIndex("IsNiconicoRegistered")), cur.getString(cur.getColumnIndex("PixivUrl")),
+                                cur.getString(cur.getColumnIndex("TwitterUrl")), cur.getString(cur.getColumnIndex("NiconicoUrl"))));
                     } catch (Exception e) {
                         break;
                     }
