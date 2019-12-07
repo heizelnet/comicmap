@@ -99,10 +99,6 @@ public class SplashActivity extends AppCompatActivity {
 
         //Login With check ID, Password in SharedPref
         logincheck();
-
-        //client_id, client_secret이 만료되어 잠시 중단...
-        //startActivity(new Intent(SplashActivity.this, MainActivity.class));
-        //finish();
         
     }
 

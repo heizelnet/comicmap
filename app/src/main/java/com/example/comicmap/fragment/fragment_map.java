@@ -125,7 +125,7 @@ public class fragment_map extends Fragment {
         location_y = cur.getInt(cur.getColumnIndex("location_y"));
 
         toggle_search = true;
-        Log.e("exploit", "location_x : " + location_x + " , location_y : " + location_y + ", toogle_search : " + toggle_search);
+        Log.e("exploit", "location_x : " + location_x + " , location_y : " + location_y + ", toggle_search : " + toggle_search);
         if(Hall.equals("W12")) {
             spinnerHall.setSelection(0);
         } if(Hall.equals("W34")) {
