@@ -11,9 +11,11 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface TokenProcess {
+    String CATALOG_URL = "https://webcatalog.circle.ms/Circle/";
     String LOGIN_URL = "https://auth2.circle.ms/";
     String BASE_URL = "https://auth1-sandbox.circle.ms/";
     String API_URL = "https://api1-sandbox.circle.ms/";
@@ -60,9 +62,10 @@ public interface TokenProcess {
             @Query("sort") int sort
     );
 
-    /*
-            @Query("event_id") String event_id,
-            @Query("event_no") int event_no,
-            @Query("sort") int sort
-     */
+    @Headers({"Accept-Language: ko,en-US;q=0.9,en;q=0.8,ja;q=0.7",
+            "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36",
+    })
+    @POST("{wid}/DetailJson")
+    Call<ResponseBody> getDetailJson(
+            @Path("wid") String wid);
 }

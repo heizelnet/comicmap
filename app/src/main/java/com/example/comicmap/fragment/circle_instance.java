@@ -1,19 +1,19 @@
 package com.example.comicmap.fragment;
 
 public class circle_instance {
-    private int isPixivUrl, isTwitterUrl, isNicoUrl;
-    private String url, name, author, hall, day, circle;
+    private int isPixivUrl, isTwitterUrl, isNicoUrl, wid;
+    private String name, author, hall, day, circle;
     private String pixivUrl, TwitterUrl, NicoUrl;
 
-    public circle_instance(String url, String name, String author, String hall, String day, String circle,
+    public circle_instance(int wid, String name, String author, String hall, String day, String circle,
                            int isPixivUrl, int isTwitterUrl, int isNicoUrl,
                            String pixivUrl, String TwitterUrl, String NicoUrl) {
-        this.url = url;
         this.name = name;
         this.author = author;
         this.hall = hall;
         this.day = day;
         this.circle = circle;
+        this.wid = wid;
         this.isPixivUrl = isPixivUrl;
         this.isTwitterUrl = isTwitterUrl;
         this.isNicoUrl = isNicoUrl;
@@ -22,9 +22,7 @@ public class circle_instance {
         this.NicoUrl = NicoUrl;
     }
 
-    public String getUrl() {
-        return url;
-    }
+    public String getWid() { return String.valueOf(wid); }
 
     public String getName() {
         return name;

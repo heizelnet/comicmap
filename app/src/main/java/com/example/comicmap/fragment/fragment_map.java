@@ -35,6 +35,8 @@ import com.example.comicmap.DataSharedPreference;
 import com.example.comicmap.ItemSpinnerAdapter;
 import com.example.comicmap.MapSpinnerItem;
 import com.example.comicmap.MyApplication;
+import com.example.comicmap.OAuth.APIClient;
+import com.example.comicmap.OAuth.TokenProcess;
 import com.example.comicmap.R;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.PhotoView;
@@ -51,7 +53,7 @@ public class fragment_map extends Fragment {
     private BitmapDrawable drawable;
     private ImageButton imageButton;
     private Paint paint;
-    private circle_info_adapter adapter = new circle_info_adapter();
+    private circle_info_adapter adapter;
     private circle_info_dialog dialog;
     private SQLiteDatabase mDataBase;
     private boolean toggle, toggle_search;
@@ -85,23 +87,9 @@ public class fragment_map extends Fragment {
 
         //Set Search Default Settings
         final AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.editTextAuto);
-        //ChipGroup chipGroup = view.findViewById(R.id.ChipGroup);
-        //final Chip chip = new Chip(getActivity());
-        autoCompleteTextView.setAdapter(new ArrayAdapter<String>(MyApplication.getAppContext(),
+        autoCompleteTextView.setAdapter(new ArrayAdapter<>(MyApplication.getAppContext(),
                 android.R.layout.simple_dropdown_item_1line, dataSharedPreference.getStringArrayList(dataSharedPreference.SEARCH_BOX)));
         autoCompleteTextView.setOnItemClickListener((adapterView, view13, i, l) -> {
-/*
-            chip.setText(autoCompleteTextView.getText().toString());
-            chip.setCheckable(false);
-            chip.setCloseIconVisible(true);
-            chip.setTextAppearanceResource(R.style.ChipTextStyle);
-
-            chipGroup.addView(chip);
-            chip.setOnCloseIconClickListener(view12 -> chipGroup.removeView(chip));
-            autoCompleteTextView.clearFocus();
-            autoCompleteTextView.getText().clear();
- */
-
         //Hide Keyboard & Focus
         InputMethodManager inputManager = (InputMethodManager) MyApplication.getAppContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         View v = getActivity().getCurrentFocus();
@@ -110,6 +98,7 @@ public class fragment_map extends Fragment {
             inputManager.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
         autoCompleteTextView.clearFocus();
+
 
         //This part will be changed prepareStatement query..
         String condition = autoCompleteTextView.getText().toString().split(" : ")[0];
@@ -123,6 +112,7 @@ public class fragment_map extends Fragment {
         day = cur.getInt(cur.getColumnIndex("Day"));
         location_x = cur.getInt(cur.getColumnIndex("location_x"));
         location_y = cur.getInt(cur.getColumnIndex("location_y"));
+        cur.close();
 
         toggle_search = true;
         Log.e("exploit", "location_x : " + location_x + " , location_y : " + location_y + ", toggle_search : " + toggle_search);
@@ -200,17 +190,9 @@ public class fragment_map extends Fragment {
                 //Set search point when toggle_search true..
                 if(toggle_search) {
                     float density = (map_width / map_pixel);
-                    float point_x = ((location_x * circle_pixel) + (circle_pixel / 2)) * density;
+                    float point_x = ((location_x * circle_pixel) + (circle_pixel / 3)) * density;
                     float point_y = ((location_y * circle_pixel) + (circle_pixel / 2)) * density;
                     canvas.drawCircle(point_x , point_y, circle_pixel, paint);
-/*
-                    //Test Code for pallette
-                    paint.setColor(Color.argb(120, 0, 185, 146));
-                    canvas.drawCircle(point_x + circle_pixel , point_y, circle_pixel / 2, paint);
-                    paint.setColor(Color.argb(120, 0, 128, 0));
-                    canvas.drawCircle(point_x , point_y + circle_pixel, circle_pixel / 2, paint);
-
- */
                     photoView.invalidate();
                     toggle_search = false;
                     Log.e("exploit", "toggle_search");
@@ -289,11 +271,9 @@ public class fragment_map extends Fragment {
             Log.e("exploit", "DPI : " + density + ", resource width : " + map_pixel + ", circle_pixel : " + circle_pixel);
             location_x = (int)Math.floor((map_width / density * x) / circle_pixel);
             location_y = (int)Math.floor((map_height / density * y) / circle_pixel);
-            String query = "select Name, Author, circle, " +
-                    "IsPixivRegistered, PixivUrl, IsTwitterRegistered, TwitterUrl, IsNiconicoRegistered, NiconicoUrl" +
-                    " from circle_info where Hall like '%" + hallName +
-                    "%' and Day=" + day + " and location_x=" + location_x +
-                    " and location_y=" + location_y;
+            String query = "select wid, Name, Author, circle, IsPixivRegistered, PixivUrl, " +
+                    "IsTwitterRegistered, TwitterUrl, IsNiconicoRegistered, NiconicoUrl from circle_info " +
+                    "where Hall like '%" + hallName + "%' and Day=" + day + " and location_x=" + location_x + " and location_y=" + location_y;
 
             Cursor cur = mDataBase.rawQuery(query, null);
             cur.moveToFirst();
@@ -304,7 +284,7 @@ public class fragment_map extends Fragment {
             if(cur.getCount() != 0) {
                 while (true) {
                     try {
-                        items.add(new circle_instance("Sample", cur.getString(cur.getColumnIndex("Name")),
+                        items.add(new circle_instance(cur.getInt(cur.getColumnIndex("wid")), cur.getString(cur.getColumnIndex("Name")),
                                 cur.getString(cur.getColumnIndex("Author")),
                                 hallName, String.valueOf(day), cur.getString(cur.getColumnIndex("circle")),
                                 cur.getInt(cur.getColumnIndex("IsPixivRegistered")), cur.getInt(cur.getColumnIndex("IsTwitterRegistered")),
@@ -317,7 +297,7 @@ public class fragment_map extends Fragment {
                 }
 
                 //Set Dialog Items (Circle A, Circle B)
-                adapter.setItems(items);
+                adapter = new circle_info_adapter(items);
                 dialog = new circle_info_dialog(fragment_map.this, adapter);
                 dialog.show();
 

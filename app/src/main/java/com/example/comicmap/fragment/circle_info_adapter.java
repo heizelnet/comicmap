@@ -16,14 +16,29 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.comicmap.OAuth.APIClient;
+import com.example.comicmap.OAuth.LoginClient;
+import com.example.comicmap.OAuth.TokenProcess;
 import com.example.comicmap.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapter.ItemViewHolder> {
 
-    private ArrayList<circle_instance> mData = new ArrayList<>();
+    private ArrayList<circle_instance> mData;
     private Context context;
+    private TokenProcess apiInterface;
+    private retrofit2.Call<ResponseBody> responseBodyCall;
+
+    public circle_info_adapter(ArrayList<circle_instance> data) {
+        this.mData = data;
+    }
 
     @NonNull
     @Override
@@ -32,17 +47,15 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View view = inflater.inflate(R.layout.circle_info_item, parent, false);
-        circle_info_adapter.ItemViewHolder vh = new circle_info_adapter.ItemViewHolder(view);
+        circle_info_adapter.ItemViewHolder holder = new circle_info_adapter.ItemViewHolder(view);
 
-        return vh;
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        circle_instance data = mData.get(position);
-        Glide.with(holder.itemView.getContext()).load(R.drawable.idea_bulb).into(holder.imageView);
-        Log.e("exploit", "image loading");
 
+        circle_instance data = mData.get(position);
         Resources res = context.getResources();
         holder.textName2.setText(res.getString(R.string.row_Name, data.getName()));
         holder.textAuthor2.setText(res.getString(R.string.row_Author, data.getAuthor()));
@@ -77,6 +90,25 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
         } else
             holder.button_nico.setImageDrawable(context.getResources().getDrawable(R.drawable.niconico_off_));
 
+        //Image Set
+        apiInterface = LoginClient.getClient(TokenProcess.CATALOG_URL).create(TokenProcess.class);
+        responseBodyCall = apiInterface.getDetailJson(data.getWid());
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String url = response.body().string().split("\"CircleCutUrl\":\"")[1].split("\",\"")[0];
+                    Glide.with(holder.itemView.getContext()).load(url).into(holder.imageView);
+                } catch (Exception e) {
+                    Glide.with(holder.itemView.getContext()).load(R.drawable.idea_bulb).into(holder.imageView);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Glide.with(holder.itemView.getContext()).load(R.drawable.idea_bulb).into(holder.imageView);
+            }
+        });
 
     }
 
@@ -85,9 +117,11 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
         return mData.size();
     }
 
+    /*
     public void setItems(ArrayList<circle_instance> items) {
         this.mData = items;
     }
+     */
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView textName2, textAuthor2, textHall2, textDay2, textCircle;
