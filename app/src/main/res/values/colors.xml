@@ -15,4 +15,14 @@
     <color name="ripple_color">#FCFCFC</color>
 
 
+    <color name="circle_color1">#FF944A</color>
+    <color name="circle_color2">#FF00FF</color>
+    <color name="circle_color3">#FFF700</color>
+    <color name="circle_color4">#00B54A</color>
+    <color name="circle_color5">#00B5FF</color>
+    <color name="circle_color6">#9C529C</color>
+    <color name="circle_color7">#0000FF</color>
+    <color name="circle_color8">#00FF00</color>
+    <color name="circle_color9">#FF0000</color>
+
 </resources>

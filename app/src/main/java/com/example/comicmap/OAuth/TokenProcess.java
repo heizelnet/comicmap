@@ -2,10 +2,6 @@ package com.example.comicmap.OAuth;
 
 
 
-import android.annotation.SuppressLint;
-
-import com.example.comicmap.LoginSharedPreference;
-
 import java.util.HashMap;
 
 import okhttp3.ResponseBody;
@@ -20,7 +16,7 @@ import retrofit2.http.Query;
 public interface TokenProcess {
     String LOGIN_URL = "https://auth2.circle.ms/";
     String BASE_URL = "https://auth1-sandbox.circle.ms/";
-    String API_URL = "https://api1.circle.ms/";
+    String API_URL = "https://api1-sandbox.circle.ms/";
 
     @FormUrlEncoded
     @Headers({"Accept-Language: ko,en-US;q=0.9,en;q=0.8,ja;q=0.7",
@@ -57,7 +53,16 @@ public interface TokenProcess {
     @POST("/OAuth2/Token/")
     Call<ResponseBody> accessToken(@FieldMap HashMap<String, Object> param);
 
-    @GET("Readers/FavoriteCircles/")
+    @GET("/Readers/FavoriteCircles/")
     Call<ResponseBody> getFavoriteList(
-            @Query("page") String page);
+            @Query("event_id") String event_id,
+            @Query("event_no") int event_no,
+            @Query("sort") int sort
+    );
+
+    /*
+            @Query("event_id") String event_id,
+            @Query("event_no") int event_no,
+            @Query("sort") int sort
+     */
 }

@@ -20,6 +20,8 @@ import com.example.comicmap.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,13 +74,18 @@ public class fragment_favorite extends Fragment {
 
         textView.setText("Loading..");
         apiInterface = APIClient.getClient(TokenProcess.API_URL).create(TokenProcess.class);
-        responseBodyCall = apiInterface.getFavoriteList("1");
+        responseBodyCall = apiInterface.getFavoriteList("148", 97, 0);
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                    Log.e("exploit", "Code : " + response.code());
-                    Log.e("exploit", "Message : " + response.message());
-                    textView.setText("Error!");
+                    //Log.e("exploit", "Code : " + response.code());
+                    //Log.e("exploit", "Message : " + response.message());
+                try {
+                    Log.e("exploit", response.body().string());
+                    textView.setText("Success!");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
