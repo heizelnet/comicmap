@@ -35,13 +35,9 @@ import com.example.comicmap.DataSharedPreference;
 import com.example.comicmap.ItemSpinnerAdapter;
 import com.example.comicmap.MapSpinnerItem;
 import com.example.comicmap.MyApplication;
-import com.example.comicmap.OAuth.APIClient;
-import com.example.comicmap.OAuth.TokenProcess;
 import com.example.comicmap.R;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.PhotoView;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
 
@@ -90,6 +86,7 @@ public class fragment_map extends Fragment {
         autoCompleteTextView.setAdapter(new ArrayAdapter<>(MyApplication.getAppContext(),
                 android.R.layout.simple_dropdown_item_1line, dataSharedPreference.getStringArrayList(dataSharedPreference.SEARCH_BOX)));
         autoCompleteTextView.setOnItemClickListener((adapterView, view13, i, l) -> {
+
         //Hide Keyboard & Focus
         InputMethodManager inputManager = (InputMethodManager) MyApplication.getAppContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         View v = getActivity().getCurrentFocus();
@@ -115,7 +112,7 @@ public class fragment_map extends Fragment {
         cur.close();
 
         toggle_search = true;
-        Log.e("exploit", "location_x : " + location_x + " , location_y : " + location_y + ", toggle_search : " + toggle_search);
+        //Log.e("exploit", "location_x : " + location_x + " , location_y : " + location_y + ", toggle_search : " + toggle_search);
         if(Hall.equals("W12")) {
             spinnerHall.setSelection(0);
         } if(Hall.equals("W34")) {
@@ -222,17 +219,8 @@ public class fragment_map extends Fragment {
             }
         });
 
-        spinnerHall.setSelection(0);
-        spinnerDay.setSelection(0);
-
         //Set TapListener
         photoView.setOnPhotoTapListener(new PhotoTapListener());
-
-        //Set LongClickListener
-        photoView.setOnLongClickListener(view1 -> {
-            Log.e("exploit", "Long clicked");
-            return false;
-        });
 
         //favorite button listener
         imageButton.setOnClickListener(v -> {
@@ -271,7 +259,7 @@ public class fragment_map extends Fragment {
             Log.e("exploit", "DPI : " + density + ", resource width : " + map_pixel + ", circle_pixel : " + circle_pixel);
             location_x = (int)Math.floor((map_width / density * x) / circle_pixel);
             location_y = (int)Math.floor((map_height / density * y) / circle_pixel);
-            String query = "select wid, Name, Author, circle, IsPixivRegistered, PixivUrl, " +
+            String query = "select wid, Name, Author, Genre, circle, IsPixivRegistered, PixivUrl, " +
                     "IsTwitterRegistered, TwitterUrl, IsNiconicoRegistered, NiconicoUrl from circle_info " +
                     "where Hall like '%" + hallName + "%' and Day=" + day + " and location_x=" + location_x + " and location_y=" + location_y;
 
@@ -286,7 +274,7 @@ public class fragment_map extends Fragment {
                     try {
                         items.add(new circle_instance(cur.getInt(cur.getColumnIndex("wid")), cur.getString(cur.getColumnIndex("Name")),
                                 cur.getString(cur.getColumnIndex("Author")),
-                                hallName, String.valueOf(day), cur.getString(cur.getColumnIndex("circle")),
+                                cur.getString(cur.getColumnIndex("Genre")), String.valueOf(day), cur.getString(cur.getColumnIndex("circle")),
                                 cur.getInt(cur.getColumnIndex("IsPixivRegistered")), cur.getInt(cur.getColumnIndex("IsTwitterRegistered")),
                                 cur.getInt(cur.getColumnIndex("IsNiconicoRegistered")), cur.getString(cur.getColumnIndex("PixivUrl")),
                                 cur.getString(cur.getColumnIndex("TwitterUrl")), cur.getString(cur.getColumnIndex("NiconicoUrl"))));

@@ -78,7 +78,7 @@
             android:focusable="true"
             style="@style/SelectableItemBackground"
             android:elevation="3dp"
-            android:id="@+id/search_button"
+            android:id="@+id/genre_button"
             android:gravity="center_horizontal"
             android:paddingBottom="5dp"
             android:orientation="vertical">
@@ -91,7 +91,7 @@
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
-                android:text="SEARCH"
+                android:text="GENRE"
                 android:textSize="15sp"
                 android:fontFamily="@font/nicokaku"
                 android:textStyle="bold" />

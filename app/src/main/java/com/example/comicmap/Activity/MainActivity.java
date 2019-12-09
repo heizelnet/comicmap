@@ -7,6 +7,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -19,15 +20,16 @@ import com.example.comicmap.fragment.fragment_checklist;
 import com.example.comicmap.fragment.fragment_favorite;
 import com.example.comicmap.fragment.fragment_map;
 import com.example.comicmap.fragment.fragment_route;
-import com.example.comicmap.fragment.fragment_search;
+import com.example.comicmap.fragment.fragment_genre;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Fragment fragment_map, fragment_favorite, fragment_search, fragment_checklist, fragment_route;
+    private Fragment fragment_map, fragment_favorite, fragment_genre, fragment_checklist, fragment_route;
     private boolean isOpen = false;
     private DrawerLayout drawerLayout;
     private NavigationView drawerView;
+    private String prevTag, Tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +44,11 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout header = (LinearLayout) nav_header_view.findViewById(R.id.drawer_item);
         Toast.makeText(getApplicationContext(), "Login Success!", Toast.LENGTH_SHORT).show();
 
-        //Set Layout Button in NavigationView.. Fuck..
+        //Set Layout Button in NavigationView..
         LinearLayout map_button = (LinearLayout) header.findViewById(R.id.map_button);
         map_button.setOnClickListener(v -> {
             Log.e("exploit", "map_button_clicked!");
+
             fragment_map = new fragment_map();
             viewMenu(fragment_map);
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -55,17 +58,19 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout favorite_button = (LinearLayout) header.findViewById(R.id.favorite_button);
         favorite_button.setOnClickListener(v -> {
             Log.e("exploit", "favorite_button_clicked!");
+
             fragment_favorite = new fragment_favorite();
             viewMenu(fragment_favorite);
             drawerLayout.closeDrawer(GravityCompat.START);
         });
 
         //Search Button Layer
-        LinearLayout search_button = (LinearLayout) header.findViewById(R.id.search_button);
+        LinearLayout search_button = (LinearLayout) header.findViewById(R.id.genre_button);
         search_button.setOnClickListener(v -> {
-            Log.e("exploit", "search_button_clicked!");
-            fragment_search = new fragment_search();
-            viewMenu(fragment_search);
+            Log.e("exploit", "genre_button_clicked!");
+
+            fragment_genre = new fragment_genre();
+            viewMenu(fragment_genre);
             drawerLayout.closeDrawer(GravityCompat.START);
         });
 
@@ -74,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout checklist_button = (LinearLayout) header.findViewById(R.id.trade_button);
         checklist_button.setOnClickListener(v -> {
             Log.e("exploit", "trade_button_clicked!");
-            fragment_checklist = new fragment_checklist();
+            if(fragment_checklist == null)
+                fragment_checklist = new fragment_checklist();
             viewMenu(fragment_checklist);
             drawerLayout.closeDrawer(GravityCompat.START);
         });
@@ -84,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout route_button = (LinearLayout) header.findViewById(R.id.route_button);
         route_button.setOnClickListener(v -> {
             Log.e("exploit", "route_button_clicked!");
-            fragment_route = new fragment_route();
+            if(fragment_route == null)
+                fragment_route = new fragment_route();
             viewMenu(fragment_route);
             drawerLayout.closeDrawer(GravityCompat.START);
         });
@@ -97,15 +104,14 @@ public class MainActivity extends AppCompatActivity {
     }
     private void viewMenu(Fragment selected_frag) {
         FragmentManager manager = getSupportFragmentManager();
-        String fragmentTag = selected_frag.getClass().getSimpleName();
-        Log.e("exploit", "Tag name : " + fragmentTag);
-        manager.popBackStack(fragmentTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-        manager.beginTransaction()
+        Tag = selected_frag.getClass().getSimpleName();
+        manager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        FragmentTransaction addTransaction = manager.beginTransaction();
+        addTransaction
                 .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
+                .addToBackStack(null)
                 .add(R.id.fragment, selected_frag)
-                .addToBackStack(fragmentTag)
-                .commit();
+                .commitAllowingStateLoss();
         /*
         if(!isOpen) {
 
@@ -145,34 +151,3 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
-
-/* SpeedDialView + CircularReveal Backup Code
-
-        //Add Action Items
-        SpeedDialView speedDialView = findViewById(R.id.speedDial);
-        speedDialView.addActionItem(
-                new SpeedDialActionItem.Builder(R.id.fab_link, R.drawable.ic_link_white_24dp)
-                        .create()
-        );
-        speedDialView.addActionItem(
-                new SpeedDialActionItem.Builder(R.id.fab_map, R.drawable.ic_pencil_alt_white_24dp)
-                        .create()
-        );
-
-        //FAB ActionListener
-        speedDialView.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
-            @Override
-            public boolean onActionSelected(SpeedDialActionItem speedDialActionItem) {
-                switch (speedDialActionItem.getId()) {
-                    case R.id.fab_map:
-                        viewMenu();
-                        return false;
-                    case R.id.fab_link:
-                        Toast.makeText(getApplicationContext(), "Link clicked!", Toast.LENGTH_SHORT).show();
-                        return false; // true to keep the Speed Dial open
-                    default:
-                        return false;
-                }
-            }
-        });
- */

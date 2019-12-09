@@ -25,7 +25,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/idea_bulb" />
+            app:srcCompat="@drawable/question_mark" />
 
         <TextView
             android:id="@+id/textView_route"
@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nicokaku"
             android:text="Coming Soon"
+            android:textColor="@color/gray2"
             android:textAlignment="center"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -40,7 +41,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView_route"
             app:layout_constraintVertical_bias="0.02"
-            tools:text="TextView" />
+            tools:text="Coming Soon" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

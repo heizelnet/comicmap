@@ -152,9 +152,8 @@ public class SplashActivity extends AppCompatActivity {
                     //Login Check in SharedPref
                     if(response.headers().toString().contains("__RequestVerificationToken=")) {
                         loginSharedPreference.putString("verificationToken", response.headers().toString().split("__RequestVerificationToken=")[1].split(";")[0]);
-
+                        Log.e("exploit", "================Login OK...================");
                         //Check SharedPref for Refresh Tokens..
-                        tv_load.setText("Gold 会員 チェック中..");
                         String refreshToken = loginSharedPreference.getString("refresh_token");
                         if(refreshToken != null) {
                             //Todo : Make token aquision function
@@ -190,16 +189,18 @@ public class SplashActivity extends AppCompatActivity {
         postData2.put("refresh_token", loginSharedPreference.getString("refresh_token"));
         postData2.put("client_id", "comicmapgZwp98BPmh5rj35zfnFNcZA5mxrpyCUQ");
         postData2.put("client_secret", "bGLDLnC7NrwFnWR3a8C2hz9sYEJtcnLhMwRJHdwV");
+        tv_load.setText("Gold 会員 チェック中..");
+        Log.e("exploit", "Refreshing token...");
         loginInterface = LoginClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
         responseBodyCall = loginInterface.accessToken(postData2);
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-
                 //Todo : Check GoldUser payment time has Expired...
                 try {
                     String result = response.body().string();
-                    Log.e("exploit", "token_type: " +result );
+                    Log.e("exploit", "Result code : " + response.code());
+                    Log.e("exploit", "token_type: " +result);
                     JSONObject json = new JSONObject(result);
                     String access_token = json.getString("access_token");
                     String refresh_token = json.getString("refresh_token");
@@ -208,7 +209,10 @@ public class SplashActivity extends AppCompatActivity {
                     Log.e("exploit", "Token retrieved! : " + access_token + ", " + refresh_token);
                     startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     finish();
-                } catch(Exception e) {}
+                } catch(Exception e) {
+                    Toast.makeText(MyApplication.getAppContext(), "Error! Access token Retry!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(SplashActivity.this, PermissionActivity.class));
+                }
             }
 
             @Override

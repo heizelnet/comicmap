@@ -7,6 +7,8 @@ import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
@@ -16,7 +18,7 @@ public class LoginClient {
 
     public static Retrofit getClient(String base_url) {
         ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(MyApplication.getAppContext()));
-        OkHttpClient client = new OkHttpClient.Builder().cookieJar(cookieJar).build();
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS).cookieJar(cookieJar).build();
 
 
         retrofit = new Retrofit.Builder()

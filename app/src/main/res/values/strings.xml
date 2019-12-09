@@ -12,7 +12,7 @@
     <string name="south_circle_pixel">40</string>
     <string name="row_Author" translatable="false">Author :  %1$s</string>
     <string name="row_Name" translatable="false">Name :  %1$s</string>
-    <string name="row_Hall">Hall :   %1$s</string>
+    <string name="row_Genre">Genre :   %1$s</string>
     <string name="row_Day">Day :    %1$s</string>
     <string name="row_Circle">Circle : %1$s</string>
     <string name="loading">Copying Database..</string>
@@ -20,4 +20,5 @@
     <string name="open_drawer">open</string>
     <string name="close_drawer">close</string>
     <string name="event_id">148</string>
+    <integer name="event_no">97</integer>
 </resources>

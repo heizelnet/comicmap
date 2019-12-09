@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +15,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.comicmap.OAuth.APIClient;
 import com.example.comicmap.OAuth.LoginClient;
 import com.example.comicmap.OAuth.TokenProcess;
 import com.example.comicmap.R;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
@@ -59,7 +56,7 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
         Resources res = context.getResources();
         holder.textName2.setText(res.getString(R.string.row_Name, data.getName()));
         holder.textAuthor2.setText(res.getString(R.string.row_Author, data.getAuthor()));
-        holder.textHall2.setText(res.getString(R.string.row_Hall, data.getHall()));
+        holder.textGenre.setText(res.getString(R.string.row_Genre, data.getgenre()));
         holder.textDay2.setText(res.getString(R.string.row_Day, data.getDay()));
         holder.textCircle.setText(res.getString(R.string.row_Circle, data.getCircle()));
 
@@ -98,15 +95,15 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String url = response.body().string().split("\"CircleCutUrl\":\"")[1].split("\",\"")[0];
-                    Glide.with(holder.itemView.getContext()).load(url).into(holder.imageView);
+                    Glide.with(holder.itemView.getContext()).load(url).placeholder(R.drawable.info_icon).dontAnimate().into(holder.imageView);
                 } catch (Exception e) {
-                    Glide.with(holder.itemView.getContext()).load(R.drawable.idea_bulb).into(holder.imageView);
+                    Glide.with(holder.itemView.getContext()).load(R.drawable.info_icon).into(holder.imageView);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Glide.with(holder.itemView.getContext()).load(R.drawable.idea_bulb).into(holder.imageView);
+                Glide.with(holder.itemView.getContext()).load(R.drawable.info_icon).into(holder.imageView);
             }
         });
 
@@ -117,14 +114,9 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
         return mData.size();
     }
 
-    /*
-    public void setItems(ArrayList<circle_instance> items) {
-        this.mData = items;
-    }
-     */
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-        TextView textName2, textAuthor2, textHall2, textDay2, textCircle;
+        TextView textName2, textAuthor2, textGenre, textDay2, textCircle;
         ImageView imageView;
         ImageButton button_pixiv, button_twitter, button_nico;
 
@@ -133,7 +125,7 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
             imageView = itemView.findViewById(R.id.imageThumb);
             textName2 = itemView.findViewById(R.id.text_Name2);
             textAuthor2 = itemView.findViewById(R.id.text_Author2);
-            textHall2 = itemView.findViewById(R.id.text_Hall2);
+            textGenre = itemView.findViewById(R.id.text_Genre);
             textDay2 = itemView.findViewById(R.id.text_Day2);
             textCircle = itemView.findViewById(R.id.text_Circle);
             button_pixiv = itemView.findViewById(R.id.imageButton_pixiv);

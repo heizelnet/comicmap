@@ -52,7 +52,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_Name2" />
 
             <TextView
-                android:id="@+id/text_Hall2"
+                android:id="@+id/text_Genre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="90dp"
@@ -69,7 +69,7 @@
                 android:textSize="13sp"
                 tools:text="VeryLongLongLongTextView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_Hall2" />
+                app:layout_constraintTop_toBottomOf="@+id/text_Genre" />
 
             <TextView
                 android:id="@+id/text_Circle"

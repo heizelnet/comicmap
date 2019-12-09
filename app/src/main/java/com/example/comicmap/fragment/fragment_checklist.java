@@ -90,4 +90,9 @@ public class fragment_checklist extends Fragment {
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
 }

@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                         loginSharedPreference.putString("username", s1);
                         loginSharedPreference.putString("password", s2);
                         loginSharedPreference.putString("verificationToken", verification);
-                        startActivity(new Intent(LoginActivity.this, SplashActivity.class));
+                        startActivity(new Intent(LoginActivity.this, PermissionActivity.class));
                         finish();
                     }
                     else {

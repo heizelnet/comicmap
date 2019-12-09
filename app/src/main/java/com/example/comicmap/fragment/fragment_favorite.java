@@ -11,16 +11,22 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comicmap.DataBaseHelper;
+import com.example.comicmap.MyApplication;
 import com.example.comicmap.OAuth.APIClient;
 import com.example.comicmap.OAuth.TokenProcess;
 import com.example.comicmap.R;
+import com.example.comicmap.SwipeDeleter;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -35,6 +41,7 @@ public class fragment_favorite extends Fragment {
     private TextView textView;
     private TokenProcess apiInterface;
     private retrofit2.Call<ResponseBody> responseBodyCall;
+    private circle_info_adapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +64,7 @@ public class fragment_favorite extends Fragment {
         textView = view.findViewById(R.id.textView_favorite_state);
 
         //Test Code for update
-
+        /*
         String query = "select * from circle_info where favorite != 0";
         Cursor cur = mDataBase.rawQuery(query, null);
         if(cur.getCount() == 0) {
@@ -68,33 +75,102 @@ public class fragment_favorite extends Fragment {
         }
         cur.close();
         mDataBase.close();
+         */
+        show_favorite();
 
         recyclerView.setVisibility(View.GONE);
         viewGroup.setVisibility(View.VISIBLE);
 
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    public void show_favorite() {
         textView.setText("Loading..");
         apiInterface = APIClient.getClient(TokenProcess.API_URL).create(TokenProcess.class);
-        responseBodyCall = apiInterface.getFavoriteList("148", 97, 0);
+        responseBodyCall = apiInterface.getFavoriteList(getResources().getString(R.string.event_id), getResources().getInteger(R.integer.event_no), 0);
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                    //Log.e("exploit", "Code : " + response.code());
-                    //Log.e("exploit", "Message : " + response.message());
                 try {
-                    Log.e("exploit", response.body().string());
-                    textView.setText("Success!");
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    String jString = response.body().string();
+                    JSONObject res1 = new JSONObject(jString).getJSONObject("response");
+                    if(res1.getInt("maxcount") == 0) {
+                        textView.setText("Empty!");
+                    } else {
+                        //Add Items
+                        JSONArray list = res1.getJSONArray("list");
+                        ArrayList<circle_instance> items = new ArrayList<>();
+                        for(int i=0; i<list.length(); i++) {
+                            JSONObject tmp = list.getJSONObject(i).getJSONObject("circle");
+                            int wid = tmp.getInt("wcid");
+
+                            String query = "select * from circle_info where wid=" + wid + ";";
+
+                            Cursor cur = mDataBase.rawQuery(query, null);
+                            cur.moveToFirst();
+
+                            //iterate query add items to dialog
+                            if (cur.getCount() != 0) {
+                                while (true) {
+                                    try {
+                                        items.add(new circle_instance(wid, cur.getString(cur.getColumnIndex("Name")),
+                                                cur.getString(cur.getColumnIndex("Author")),
+                                                cur.getString(cur.getColumnIndex("Genre")), cur.getString(cur.getColumnIndex("Day")),
+                                                cur.getString(cur.getColumnIndex("circle")), cur.getInt(cur.getColumnIndex("IsPixivRegistered")),
+                                                cur.getInt(cur.getColumnIndex("IsTwitterRegistered")), cur.getInt(cur.getColumnIndex("IsNiconicoRegistered")),
+                                                cur.getString(cur.getColumnIndex("PixivUrl")), cur.getString(cur.getColumnIndex("TwitterUrl")),
+                                                cur.getString(cur.getColumnIndex("NiconicoUrl"))));
+                                    } catch (Exception e) {
+                                        break;
+                                    }
+                                    cur.moveToNext();
+                                }
+                            }
+                        }
+                        adapter = new circle_info_adapter(items);
+                        setUpRecyclerView();
+
+                        viewGroup.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    }
+                } catch (Exception e) {
+                    textView.setText("Error! Retry..");
+                    show_favorite();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("exploit", "Call Failed...");
-                textView.setText("Failed..");
+                if(call.isCanceled()) {
+                    Log.e("exploit", "Request cancelled..");
+                } else {
+                    Log.e("exploit", "Favorite failed...");
+                    textView.setText("Error! Retry..");
+                    show_favorite();
+                }
             }
         });
 
-        return view;
     }
+
+    private void setUpRecyclerView() {
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MyApplication.getAppContext()));
+        /*
+        ItemTouchHelper itemTouchHelper = new
+                ItemTouchHelper(new SwipeDeleter(adapter));
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+         */
+    }
+
 }

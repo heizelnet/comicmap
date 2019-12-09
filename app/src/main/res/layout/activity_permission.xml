@@ -6,11 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".Activity.PermissionActivity">
 
+    <TextView
+        android:id="@+id/textView_AccessToken"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nicokaku"
+        android:text="ACCESS TOKEN"
+        android:textSize="30dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_Permission"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_Permission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="330dp"
+        android:fontFamily="@font/nicokaku"
+        android:text="Permissions"
+        app:layout_constraintBottom_toTopOf="@+id/permission_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/permission_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="340dp"
+        android:layout_marginBottom="200dp"
         android:textStyle="bold"
         android:text="承認します"
         app:layout_constraintBottom_toBottomOf="parent"
