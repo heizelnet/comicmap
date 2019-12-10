@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.comicmap.DataBaseHelper;
 import com.example.comicmap.MyApplication;
@@ -34,15 +35,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class fragment_favorite extends Fragment {
+public class fragment_favorite extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private ViewGroup viewGroup;
     private RecyclerView recyclerView;
     private SQLiteDatabase mDataBase;
     private TextView textView;
-    private TokenProcess apiInterface;
-    private retrofit2.Call<ResponseBody> responseBodyCall;
     private circle_info_adapter adapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,24 +59,11 @@ public class fragment_favorite extends Fragment {
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
         mDataBase = new DataBaseHelper(getContext()).openDataBase();
 
-
+        swipeRefreshLayout = view.findViewById(R.id.swipeLayout);
+        swipeRefreshLayout.setOnRefreshListener(this);
         viewGroup = view.findViewById(R.id.empty_group);
         recyclerView = view.findViewById(R.id.recview);
         textView = view.findViewById(R.id.textView_favorite_state);
-
-        //Test Code for update
-        /*
-        String query = "select * from circle_info where favorite != 0";
-        Cursor cur = mDataBase.rawQuery(query, null);
-        if(cur.getCount() == 0) {
-            recyclerView.setVisibility(View.GONE);
-            viewGroup.setVisibility(View.VISIBLE);
-        } else {
-            viewGroup.setVisibility(View.GONE);
-        }
-        cur.close();
-        mDataBase.close();
-         */
         show_favorite();
         return view;
     }
@@ -137,4 +124,9 @@ public class fragment_favorite extends Fragment {
          */
     }
 
+    @Override
+    public void onRefresh() {
+        show_favorite();
+        swipeRefreshLayout.setRefreshing(false);
+    }
 }

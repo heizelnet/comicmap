@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/empty_group"
         android:layout_width="match_parent"
@@ -43,13 +42,19 @@
             tools:text="TextView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
+   <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recview"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layoutAnimation="@anim/recycler_animation"
         android:background="#fafafa" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
