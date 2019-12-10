@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,14 +17,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.comicmap.Activity.LoginActivity;
 import com.example.comicmap.Activity.MainActivity;
 import com.example.comicmap.Activity.PermissionActivity;
+import com.example.comicmap.OAuth.APIClient;
 import com.example.comicmap.OAuth.LoginClient;
 import com.example.comicmap.OAuth.TokenProcess;
+import com.example.comicmap.fragment.circle_instance;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 import okhttp3.ResponseBody;
 import permissions.dispatcher.NeedsPermission;
@@ -45,6 +50,7 @@ public class SplashActivity extends AppCompatActivity {
     private SQLiteDatabase mDataBase;
     private TokenProcess loginInterface;
     private retrofit2.Call<ResponseBody> responseBodyCall;
+    private TokenProcess apiInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +68,13 @@ public class SplashActivity extends AppCompatActivity {
         tv_load = findViewById(R.id.textView_load);
         try {
             helper.createDatabase();
+            mDataBase = helper.openDataBase();
         } catch (Exception e) { e.printStackTrace(); }
 
         //SearchBox Update
         tv_load.setText(R.string.done);
         Log.e("exploit", "database updating..");
         if(dataSharedPreference.getStringArrayList(dataSharedPreference.SEARCH_BOX).isEmpty()) {
-            mDataBase = helper.openDataBase();
             String query = "select Name, Author from circle_info";
             Cursor cur = mDataBase.rawQuery(query, null);
             cur.moveToFirst();
@@ -156,8 +162,15 @@ public class SplashActivity extends AppCompatActivity {
                         //Check SharedPref for Refresh Tokens..
                         String refreshToken = loginSharedPreference.getString("refresh_token");
                         if(refreshToken != null) {
-                            //Todo : Make token aquision function
-                            refresh_token();
+
+                            int startTime = (int) SystemClock.elapsedRealtime() / 1000;
+                            int lastTime = loginSharedPreference.getInt("elpasedTime");
+                            if((startTime - lastTime) > 85000) {
+                                refresh_token();
+                            } else {
+                                show_favorite();
+                            }
+
                         } else {
                             startActivity(new Intent(SplashActivity.this, PermissionActivity.class));
                             finish();
@@ -207,11 +220,15 @@ public class SplashActivity extends AppCompatActivity {
                     loginSharedPreference.putString("access_token", access_token);
                     loginSharedPreference.putString("refresh_token", refresh_token);
                     Log.e("exploit", "Token retrieved! : " + access_token + ", " + refresh_token);
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                    finish();
+
+                    int lastTime = (int) SystemClock.elapsedRealtime();
+                    loginSharedPreference.putInt("elpasedTime", lastTime/1000);
+                    show_favorite();
+
                 } catch(Exception e) {
                     Toast.makeText(MyApplication.getAppContext(), "Error! Access token Retry!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(SplashActivity.this, PermissionActivity.class));
+                    finish();
                 }
             }
 
@@ -219,6 +236,51 @@ public class SplashActivity extends AppCompatActivity {
             public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
                 tv_load.setText("errorが発生します。 Retry..");
                 refresh_token();
+            }
+        });
+    }
+
+    public void show_favorite() {
+        tv_load.setText("favorite updating..");
+        apiInterface = APIClient.getClient(TokenProcess.API_URL).create(TokenProcess.class);
+        responseBodyCall = apiInterface.getFavoriteList(getResources().getString(R.string.event_id), getResources().getInteger(R.integer.event_no), 0);
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                try {
+                    String jString = response.body().string();
+                    JSONObject res1 = new JSONObject(jString).getJSONObject("response");
+                    if(res1.getInt("maxcount") == 0) {
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        finish();
+                    } else {
+                        //Add Items
+                        JSONArray list = res1.getJSONArray("list");
+                        for(int i=0; i<list.length(); i++) {
+                            JSONObject tmp = list.getJSONObject(i).getJSONObject("favorite");
+                            int wid = tmp.getInt("wcid");
+                            int favorite_color = tmp.getInt("color");
+
+                            String query = String.format(Locale.KOREA, "update circle_info set favorite=%d where wid=%d", favorite_color, wid);
+                            mDataBase.execSQL(query);
+                        }
+                        Log.e("exploit", "WellDone!");
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        finish();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e("exploit", "favorite_exception..");
+                    tv_load.setText("Error with favorite.. Retry!");
+                    show_favorite();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("exploit", "Favorite failed...");
+                tv_load.setText("Error with favorite.. Retry!");
+                show_favorite();
             }
         });
     }

@@ -26,6 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
@@ -77,10 +78,6 @@ public class fragment_favorite extends Fragment {
         mDataBase.close();
          */
         show_favorite();
-
-        recyclerView.setVisibility(View.GONE);
-        viewGroup.setVisibility(View.VISIBLE);
-
         return view;
     }
 
@@ -96,70 +93,37 @@ public class fragment_favorite extends Fragment {
 
     public void show_favorite() {
         textView.setText("Loading..");
-        apiInterface = APIClient.getClient(TokenProcess.API_URL).create(TokenProcess.class);
-        responseBodyCall = apiInterface.getFavoriteList(getResources().getString(R.string.event_id), getResources().getInteger(R.integer.event_no), 0);
-        responseBodyCall.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+
+        ArrayList<circle_instance> items = new ArrayList<>();
+        String query = "select * from circle_info where favorite > 0";
+
+        Cursor cur = mDataBase.rawQuery(query, null);
+        cur.moveToFirst();
+
+        //iterate query add items to dialog
+        if (cur.getCount() != 0) {
+            while (true) {
                 try {
-                    String jString = response.body().string();
-                    JSONObject res1 = new JSONObject(jString).getJSONObject("response");
-                    if(res1.getInt("maxcount") == 0) {
-                        textView.setText("Empty!");
-                    } else {
-                        //Add Items
-                        JSONArray list = res1.getJSONArray("list");
-                        ArrayList<circle_instance> items = new ArrayList<>();
-                        for(int i=0; i<list.length(); i++) {
-                            JSONObject tmp = list.getJSONObject(i).getJSONObject("circle");
-                            int wid = tmp.getInt("wcid");
-
-                            String query = "select * from circle_info where wid=" + wid + ";";
-
-                            Cursor cur = mDataBase.rawQuery(query, null);
-                            cur.moveToFirst();
-
-                            //iterate query add items to dialog
-                            if (cur.getCount() != 0) {
-                                while (true) {
-                                    try {
-                                        items.add(new circle_instance(wid, cur.getString(cur.getColumnIndex("Name")),
-                                                cur.getString(cur.getColumnIndex("Author")),
-                                                cur.getString(cur.getColumnIndex("Genre")), cur.getString(cur.getColumnIndex("Day")),
-                                                cur.getString(cur.getColumnIndex("circle")), cur.getInt(cur.getColumnIndex("IsPixivRegistered")),
-                                                cur.getInt(cur.getColumnIndex("IsTwitterRegistered")), cur.getInt(cur.getColumnIndex("IsNiconicoRegistered")),
-                                                cur.getString(cur.getColumnIndex("PixivUrl")), cur.getString(cur.getColumnIndex("TwitterUrl")),
-                                                cur.getString(cur.getColumnIndex("NiconicoUrl"))));
-                                    } catch (Exception e) {
-                                        break;
-                                    }
-                                    cur.moveToNext();
-                                }
-                            }
-                        }
-                        adapter = new circle_info_adapter(items);
-                        setUpRecyclerView();
-
-                        viewGroup.setVisibility(View.GONE);
-                        recyclerView.setVisibility(View.VISIBLE);
-                    }
+                    items.add(new circle_instance(cur.getInt(cur.getColumnIndex("wid")), cur.getString(cur.getColumnIndex("Name")),
+                            cur.getString(cur.getColumnIndex("Author")),
+                            cur.getString(cur.getColumnIndex("Genre")), cur.getString(cur.getColumnIndex("Day")),
+                            cur.getString(cur.getColumnIndex("circle")), cur.getInt(cur.getColumnIndex("IsPixivRegistered")),
+                            cur.getInt(cur.getColumnIndex("IsTwitterRegistered")), cur.getInt(cur.getColumnIndex("IsNiconicoRegistered")),
+                            cur.getString(cur.getColumnIndex("PixivUrl")), cur.getString(cur.getColumnIndex("TwitterUrl")),
+                            cur.getString(cur.getColumnIndex("NiconicoUrl"))));
                 } catch (Exception e) {
-                    textView.setText("Error! Retry..");
-                    show_favorite();
+                        break;
                 }
+                cur.moveToNext();
             }
+            adapter = new circle_info_adapter(items);
+            setUpRecyclerView();
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                if(call.isCanceled()) {
-                    Log.e("exploit", "Request cancelled..");
-                } else {
-                    Log.e("exploit", "Favorite failed...");
-                    textView.setText("Error! Retry..");
-                    show_favorite();
-                }
-            }
-        });
+            viewGroup.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        } else {
+            textView.setText("Empty!");
+        }
 
     }
 

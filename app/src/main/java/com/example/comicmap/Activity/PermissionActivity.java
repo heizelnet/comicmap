@@ -3,6 +3,7 @@ package com.example.comicmap.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
@@ -126,6 +127,11 @@ public class PermissionActivity extends AppCompatActivity {
                             String refresh_token = json.getString("refresh_token");
                             loginSharedPreference.putString("access_token", access_token);
                             loginSharedPreference.putString("refresh_token", refresh_token);
+
+                            //Set TimeStamp
+                            int lastTime = (int) SystemClock.elapsedRealtime();
+                            loginSharedPreference.putInt("elpasedTime", lastTime/1000 );
+
                             Log.e("exploit", "Token retrieved! : " + access_token + ", " + refresh_token);
                             startActivity(new Intent(PermissionActivity.this, MainActivity.class));
                             finish();

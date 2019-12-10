@@ -26,6 +26,14 @@ public class LoginSharedPreference {
         return pref.getString(key, null);
     }
 
+    public void putInt(String key, int value) {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt(key, value);
+        editor.apply();
+    }
+
+    public int getInt(String key) { return pref.getInt(key, 0); }
+
     public void putHashSet(String key, HashSet<String> set){
         SharedPreferences.Editor editor = pref.edit();
         editor.putStringSet(key, set);

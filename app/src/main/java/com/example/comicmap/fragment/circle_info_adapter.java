@@ -3,7 +3,10 @@ package com.example.comicmap.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +18,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.comicmap.DataBaseHelper;
+import com.example.comicmap.MyApplication;
 import com.example.comicmap.OAuth.LoginClient;
 import com.example.comicmap.OAuth.TokenProcess;
 import com.example.comicmap.R;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -32,6 +38,7 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
     private Context context;
     private TokenProcess apiInterface;
     private retrofit2.Call<ResponseBody> responseBodyCall;
+    private SQLiteDatabase mDatabase;
 
     public circle_info_adapter(ArrayList<circle_instance> data) {
         this.mData = data;
@@ -41,10 +48,12 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
+        mDatabase = new DataBaseHelper(context).openDataBase();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View view = inflater.inflate(R.layout.circle_info_item, parent, false);
         circle_info_adapter.ItemViewHolder holder = new circle_info_adapter.ItemViewHolder(view);
+        int position = holder.getAdapterPosition();
 
         return holder;
     }
@@ -67,7 +76,7 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
                 context.startActivity(new Intent(Intent.ACTION_VIEW, uri));
             });
         } else
-            holder.button_pixiv.setImageDrawable(context.getResources().getDrawable(R.drawable.pixiv_off_));
+            holder.button_pixiv.setImageDrawable(context.getDrawable(R.drawable.pixiv_off_));
 
         if(data.isTwitterUrl()) {
             holder.button_twitter.setImageDrawable(context.getResources().getDrawable(R.drawable.twitter_on_));
@@ -76,7 +85,7 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
                 context.startActivity(new Intent(Intent.ACTION_VIEW, uri));
             });
         } else
-            holder.button_twitter.setImageDrawable(context.getResources().getDrawable(R.drawable.twitter_off_));
+            holder.button_twitter.setImageDrawable(context.getDrawable(R.drawable.twitter_off_));
 
         if(data.isNicoUrl()) {
             holder.button_nico.setImageDrawable(context.getResources().getDrawable(R.drawable.niconico_on_));
@@ -85,7 +94,36 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
                 context.startActivity(new Intent(Intent.ACTION_VIEW, uri));
             });
         } else
-            holder.button_nico.setImageDrawable(context.getResources().getDrawable(R.drawable.niconico_off_));
+            holder.button_nico.setImageDrawable(context.getDrawable(R.drawable.niconico_off_));
+
+        //Set favorite Listener
+        String query_favorite = String.format(Locale.KOREA, "select favorite from circle_info where wid=%d", Integer.parseInt(data.getWid()));
+        Cursor cur = mDatabase.rawQuery(query_favorite, null);
+        cur.moveToFirst();
+
+        if(cur.getInt(cur.getColumnIndex("favorite")) > 0)
+            holder.favorite_button.setImageDrawable(context.getDrawable(R.drawable.favorite_on));
+        else
+            holder.favorite_button.setImageDrawable(context.getDrawable(R.drawable.favorite_off));
+        cur.close();
+        holder.favorite_button.setOnClickListener(view -> {
+            String query;
+            Cursor cur_ = mDatabase.rawQuery(query_favorite, null);
+            cur_.moveToFirst();
+            if(cur_.getInt(cur.getColumnIndex("favorite")) > 0) {
+                holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.favorite_off));
+                query = String.format(Locale.KOREA, "update circle_info set favorite=%d where wid=%d", 0, Integer.parseInt(data.getWid()));
+                Log.e("exploit", "favorite off");
+
+            } else {
+                holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.favorite_on));
+                query = String.format(Locale.KOREA, "update circle_info set favorite=%d where wid=%d", 3, Integer.parseInt(data.getWid()));
+                Log.e("exploit", "favorite on");
+            }
+            cur_.close();
+            mDatabase.execSQL(query);
+        });
+
 
         //Image Set
         apiInterface = LoginClient.getClient(TokenProcess.CATALOG_URL).create(TokenProcess.class);
@@ -118,7 +156,7 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView textName2, textAuthor2, textGenre, textDay2, textCircle;
         ImageView imageView;
-        ImageButton button_pixiv, button_twitter, button_nico;
+        ImageButton button_pixiv, button_twitter, button_nico, favorite_button;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -131,6 +169,7 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
             button_pixiv = itemView.findViewById(R.id.imageButton_pixiv);
             button_twitter = itemView.findViewById(R.id.imageButton_twitter);
             button_nico = itemView.findViewById(R.id.imageButton_nico);
+            favorite_button = itemView.findViewById(R.id.favorite_circle_button);
 
         }
     }

@@ -8,12 +8,12 @@ public class circle_instance {
     public circle_instance(int wid, String name, String author, String genre, String day, String circle,
                            int isPixivUrl, int isTwitterUrl, int isNicoUrl,
                            String pixivUrl, String TwitterUrl, String NicoUrl) {
+        this.wid = wid;
         this.name = name;
         this.author = author;
         this.genre = genre;
         this.day = day;
         this.circle = circle;
-        this.wid = wid;
         this.isPixivUrl = isPixivUrl;
         this.isTwitterUrl = isTwitterUrl;
         this.isNicoUrl = isNicoUrl;

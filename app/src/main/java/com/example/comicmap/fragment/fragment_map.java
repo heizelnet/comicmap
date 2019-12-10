@@ -8,7 +8,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -112,7 +111,6 @@ public class fragment_map extends Fragment {
         cur.close();
 
         toggle_search = true;
-        //Log.e("exploit", "location_x : " + location_x + " , location_y : " + location_y + ", toggle_search : " + toggle_search);
         if(Hall.equals("W12")) {
             spinnerHall.setSelection(0);
         } if(Hall.equals("W34")) {
@@ -189,18 +187,20 @@ public class fragment_map extends Fragment {
                     float density = (map_width / map_pixel);
                     float point_x = ((location_x * circle_pixel) + (circle_pixel / 3)) * density;
                     float point_y = ((location_y * circle_pixel) + (circle_pixel / 2)) * density;
+                    paint.setColor(Color.argb(150, 158, 246, 25));
                     canvas.drawCircle(point_x , point_y, circle_pixel, paint);
                     photoView.invalidate();
                     toggle_search = false;
-                    Log.e("exploit", "toggle_search");
+                    Log.e("exploit", "point_x : "+point_x +" point_y : "+point_y);
                 }
-
+/*
                 if(toggle) {
                     imageButton.setImageDrawable(getContext().getDrawable(R.drawable.unfill_heart));
                     AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageButton.getDrawable();
                     animatedVectorDrawable.start();
                     toggle = false;
                 }
+ */
             }
 
             @Override
@@ -225,22 +225,37 @@ public class fragment_map extends Fragment {
         //favorite button listener
         imageButton.setOnClickListener(v -> {
             if(!toggle) {
-                imageButton.setImageDrawable(getContext().getDrawable(R.drawable.fill_heart));
-                AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageButton.getDrawable();
-                animatedVectorDrawable.start();
+                imageButton.setImageDrawable(getContext().getDrawable(R.drawable.favorite_on));
 
                 Log.e("exploit", "Favorite Function Activated");
                 //Test code for favorite function
                 //canvas.setBitmap(bitmap);
-                canvas.drawCircle(map_width * (float)0.86, map_height * (float)0.65, circle_pixel / 2, paint);
-                canvas.drawCircle(map_width * (float)0.68, map_height * (float)0.56, circle_pixel/ 2, paint);
+                String format = "select * from circle_info " +
+                        "where Hall like '%" + hallName + "%' and Day=" + day + " and favorite >0";
+
+                Log.e("exploit", "favorite_query : " + format);
+;               Cursor cur = mDataBase.rawQuery(format, null);
+                cur.moveToFirst();
+                if(cur.getCount() != 0) {
+                    while (true) {
+                        try {
+                            float density = (map_width / map_pixel);
+                            float point_x = ((cur.getInt(cur.getColumnIndex("location_x")) * circle_pixel) + (circle_pixel / 3)) * density;
+                            float point_y = ((cur.getInt(cur.getColumnIndex("location_y")) * circle_pixel) + (circle_pixel / 2)) * density;
+                            int favorite_color = cur.getInt(cur.getColumnIndex("favorite"));
+                            paint.setColor(getColor(favorite_color));
+                            Log.e("exploit", "point_x : "+point_x +" point_y : "+point_y+" favorite : "+favorite_color);
+                            canvas.drawCircle(point_x, point_y, circle_pixel / 2, paint);
+                        } catch(Exception e) { break; }
+                        cur.moveToNext();
+                    }
+                    cur.close();
+                }
                 photoView.invalidate();
                 toggle = true;
 
             } else {
-                imageButton.setImageDrawable(getContext().getDrawable(R.drawable.unfill_heart));
-                AnimatedVectorDrawable animatedVectorDrawable = (AnimatedVectorDrawable) imageButton.getDrawable();
-                animatedVectorDrawable.start();
+                imageButton.setImageDrawable(getContext().getDrawable(R.drawable.favorite_off));
                 bitmap = drawable.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
                 canvas.drawBitmap(bitmap, 0, 0, null);
                 photoView.invalidate();
@@ -259,8 +274,7 @@ public class fragment_map extends Fragment {
             Log.e("exploit", "DPI : " + density + ", resource width : " + map_pixel + ", circle_pixel : " + circle_pixel);
             location_x = (int)Math.floor((map_width / density * x) / circle_pixel);
             location_y = (int)Math.floor((map_height / density * y) / circle_pixel);
-            String query = "select wid, Name, Author, Genre, circle, IsPixivRegistered, PixivUrl, " +
-                    "IsTwitterRegistered, TwitterUrl, IsNiconicoRegistered, NiconicoUrl from circle_info " +
+            String query = "select * from circle_info " +
                     "where Hall like '%" + hallName + "%' and Day=" + day + " and location_x=" + location_x + " and location_y=" + location_y;
 
             Cursor cur = mDataBase.rawQuery(query, null);
@@ -306,5 +320,42 @@ public class fragment_map extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
+    }
+
+    public int getColor(int value) {
+        int resource_id = 0;
+        switch (value) {
+            case 0:
+                resource_id = R.color.whiteTextColor;
+                break;
+            case 1:
+                resource_id = R.color.circle_color1;
+                break;
+            case 2:
+                resource_id = R.color.circle_color2;
+                break;
+            case 3:
+                resource_id = R.color.circle_color3;
+                break;
+            case 4:
+                resource_id = R.color.circle_color4;
+                break;
+            case 5:
+                resource_id = R.color.circle_color5;
+                break;
+            case 6:
+                resource_id = R.color.circle_color6;
+                break;
+            case 7:
+                resource_id = R.color.circle_color7;
+                break;
+            case 8:
+                resource_id = R.color.circle_color8;
+                break;
+            case 9:
+                resource_id = R.color.circle_color9;
+                break;
+        }
+        return resource_id;
     }
 }
