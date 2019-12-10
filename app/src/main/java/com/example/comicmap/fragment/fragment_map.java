@@ -245,7 +245,7 @@ public class fragment_map extends Fragment {
                             int favorite_color = cur.getInt(cur.getColumnIndex("favorite"));
                             paint.setColor(getColor(favorite_color));
                             Log.e("exploit", "point_x : "+point_x +" point_y : "+point_y+" favorite : "+favorite_color);
-                            canvas.drawCircle(point_x, point_y, circle_pixel / 2, paint);
+                            canvas.drawCircle(point_x, point_y, (circle_pixel * 2) / 3, paint);
                         } catch(Exception e) { break; }
                         cur.moveToNext();
                     }

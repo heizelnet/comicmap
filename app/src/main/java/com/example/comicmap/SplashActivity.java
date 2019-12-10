@@ -241,7 +241,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     public void show_favorite() {
-        tv_load.setText("favorite updating..");
+        tv_load.setText("User Data Update..");
         apiInterface = APIClient.getClient(TokenProcess.API_URL).create(TokenProcess.class);
         responseBodyCall = apiInterface.getFavoriteList(getResources().getString(R.string.event_id), getResources().getInteger(R.integer.event_no), 0);
         responseBodyCall.enqueue(new Callback<ResponseBody>() {

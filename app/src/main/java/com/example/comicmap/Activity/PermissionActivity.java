@@ -112,8 +112,8 @@ public class PermissionActivity extends AppCompatActivity {
                 HashMap<String, Object> postData2 = new HashMap<>();
                 postData2.put("grant_type", "authorization_code");
                 postData2.put("code", loginSharedPreference.getString("tokenCode"));
-                postData2.put("client_id", "comicmapgZwp98BPmh5rj35zfnFNcZA5mxrpyCUQ");
-                postData2.put("client_secret", "bGLDLnC7NrwFnWR3a8C2hz9sYEJtcnLhMwRJHdwV");
+                postData2.put("client_id", getResources().getString(R.string.client_id));
+                postData2.put("client_secret", getResources().getString(R.string.client_secret));
                 responseBodyCall = tokenInterface.accessToken(postData2);
                 responseBodyCall.enqueue(new retrofit2.Callback<ResponseBody>() {
                     @Override
