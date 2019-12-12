@@ -33,8 +33,8 @@ public interface TokenProcess {
      */
     @GET("OAuth2/")
     Call<ResponseBody> addParameters(
-                @Query("response_type") String owner,
-                @Query("client_id") String repo,
+                @Query("response_type") String response_type,
+                @Query("client_id") String client_id,
                 @Query("state") String state,
                 @Query("scope") String scope);
 

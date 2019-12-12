@@ -1,6 +1,8 @@
 package com.example.comicmap.OAuth;
 
 
+import android.util.Log;
+
 import com.example.comicmap.MyApplication;
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
@@ -8,26 +10,34 @@ import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
+import java.util.HashSet;
 
 import okhttp3.Call;
 import okhttp3.FormBody;
+import okhttp3.Interceptor;
 import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 
 public class PostCall_Login {
     private String url;
     private String id_, password_;
-    private OkHttpClient okHttpClient;
+    private OkHttpClient.Builder httpClient;
+    private ClearableCookieJar cookieJar;
 
     public PostCall_Login(String id, String password) {
         url = "https://auth2.circle.ms";
         id_ = id;
         password_ = password;
-        ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(MyApplication.getAppContext()));
-        okHttpClient = new OkHttpClient.Builder().cookieJar(cookieJar).build();
+        cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(MyApplication.getAppContext()));
+
+        httpClient = new OkHttpClient.Builder();
     }
     /* Create OkHttp3 Call object use post method with url. */
     public Call createHttpPostMethodCall() {
@@ -54,7 +64,7 @@ public class PostCall_Login {
         Request request = builder.build();
 
         // Create a new Call object with post method.
-        Call call = okHttpClient.newCall(request);
+        Call call = httpClient.cookieJar(cookieJar).build().newCall(request);
 
         return call;
     }

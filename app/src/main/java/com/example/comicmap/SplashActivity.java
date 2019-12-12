@@ -16,11 +16,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.comicmap.Activity.LoginActivity;
 import com.example.comicmap.Activity.MainActivity;
-import com.example.comicmap.Activity.PermissionActivity;
 import com.example.comicmap.OAuth.APIClient;
 import com.example.comicmap.OAuth.LoginClient;
 import com.example.comicmap.OAuth.TokenProcess;
-import com.example.comicmap.fragment.circle_instance;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -144,6 +142,23 @@ public class SplashActivity extends AppCompatActivity {
         String password = loginSharedPreference.getString("password");
         if ((id != null) && (password != null)) {
             Log.e("exploit", "================Login Process...================");
+            //Check SharedPref for Refresh Tokens..
+            String refreshToken = loginSharedPreference.getString("refresh_token");
+            if(refreshToken != null) {
+
+                int startTime = (int) SystemClock.elapsedRealtime() / 1000;
+                int lastTime = loginSharedPreference.getInt("elpasedTime");
+                if((startTime - lastTime) > 85000) {
+                    refresh_token();
+                } else {
+                    show_favorite();
+                }
+
+            } else {
+                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                finish();
+            }
+            /*
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("ReturnUrl", "https://webcatalog.circle.ms/Account/Login");
             hashMap.put("state", "/");
@@ -189,6 +204,7 @@ public class SplashActivity extends AppCompatActivity {
                     finish();
                 }
             });
+             */
         } else {
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             finish();
@@ -200,8 +216,8 @@ public class SplashActivity extends AppCompatActivity {
         HashMap<String, Object> postData2 = new HashMap<>();
         postData2.put("grant_type", "refresh_token");
         postData2.put("refresh_token", loginSharedPreference.getString("refresh_token"));
-        postData2.put("client_id", "comicmapgZwp98BPmh5rj35zfnFNcZA5mxrpyCUQ");
-        postData2.put("client_secret", "bGLDLnC7NrwFnWR3a8C2hz9sYEJtcnLhMwRJHdwV");
+        postData2.put("client_id", getResources().getString(R.string.client_id));
+        postData2.put("client_secret", getResources().getString(R.string.client_secret));
         tv_load.setText("Gold 会員 チェック中..");
         Log.e("exploit", "Refreshing token...");
         loginInterface = LoginClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
@@ -227,7 +243,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 } catch(Exception e) {
                     Toast.makeText(MyApplication.getAppContext(), "Error! Access token Retry!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(SplashActivity.this, PermissionActivity.class));
+                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     finish();
                 }
             }

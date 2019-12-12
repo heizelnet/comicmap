@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "525115698758",
+    "firebase_url": "https://comicmap-c97.firebaseio.com",
+    "project_id": "comicmap-c97",
+    "storage_bucket": "comicmap-c97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525115698758:android:5bf689655ce1bc49846447",
+        "android_client_info": {
+          "package_name": "com.example.comicmap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "525115698758-r5qm15fk9rq6kpg5ga6l3aafaicc58e3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7vUtuesDaZziP364AUAyNy29APbfYp2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "525115698758-r5qm15fk9rq6kpg5ga6l3aafaicc58e3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
