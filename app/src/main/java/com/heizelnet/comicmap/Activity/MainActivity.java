@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         manager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         FragmentTransaction addTransaction = manager.beginTransaction();
         addTransaction
-                .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
+                //.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
                 .addToBackStack(null)
                 .add(R.id.fragment, selected_frag)
                 .commitAllowingStateLoss();

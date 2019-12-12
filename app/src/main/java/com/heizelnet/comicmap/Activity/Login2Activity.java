@@ -73,6 +73,7 @@ public class Login2Activity extends AppCompatActivity {
             if (!TextUtils.isEmpty(code)) {
                 //Login Success & Gold User
                 ////Log.e("exploit", "code : " + code + ", state : " + state);
+                loginSharedPreference.putInt("IS_VERIFICATED", 0);
                 accessToken();
             }
             if(!TextUtils.isEmpty(error)) {
