@@ -75,6 +75,9 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
         holder.textDay2.setText(res.getString(R.string.row_Day, data.getDay()));
         holder.textCircle.setText(res.getString(R.string.row_Circle, data.getCircle()));
 
+
+
+        //Set Author URL Image button
         if(data.isPixivUrl()) {
             holder.button_pixiv.setImageDrawable(context.getResources().getDrawable(R.drawable.pixiv_on_));
             holder.button_pixiv.setOnClickListener(view -> {
@@ -102,7 +105,9 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
         } else
             holder.button_nico.setImageDrawable(context.getDrawable(R.drawable.niconico_off_));
 
-        //Set favorite Listener
+
+
+        //Set favorite or not
         String query_favorite = String.format(Locale.KOREA, "select favorite from circle_info where wid=%d", Integer.parseInt(data.getWid()));
         Cursor cur = mDatabase.rawQuery(query_favorite, null);
         cur.moveToFirst();
@@ -112,6 +117,10 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
         else
             holder.favorite_button.setImageDrawable(context.getDrawable(R.drawable.favorite_off));
         cur.close();
+
+
+
+        //Set Favorite Button Listener
         holder.favorite_button.setOnClickListener(view -> {
             String query;
             Cursor cur_ = mDatabase.rawQuery(query_favorite, null);
@@ -131,7 +140,8 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
         });
 
 
-        //Image Set
+
+        //Circle Cut Image Set
         cookieManager.acceptCookie();
         cookieManager.setAcceptCookie(true);
         apiInterface = APIClient.getClient(TokenProcess.CATALOG_URL).create(TokenProcess.class);

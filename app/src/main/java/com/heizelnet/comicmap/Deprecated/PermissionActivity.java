@@ -28,17 +28,18 @@ public class PermissionActivity extends AppCompatActivity {
     private TokenProcess tokenInterface = LoginClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
     private retrofit2.Call<ResponseBody> responseBodyCall;
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_permission);
-            button = findViewById(R.id.permission_button);
-            button.setOnClickListener(v -> {
-                button.setEnabled(false);
-                permission_check();
-            });
-        }
-
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_permission);
+        button = findViewById(R.id.permission_button);
+        button.setOnClickListener(v -> {
+            button.setEnabled(false);
+            //permission_check();
+        });
+    }
+}
+/*
     //Permission Check : check Gold User & get Token for API
     public void permission_check() {
         tokenInterface = LoginClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
@@ -149,3 +150,5 @@ public class PermissionActivity extends AppCompatActivity {
                 });
         }
 }
+
+ */

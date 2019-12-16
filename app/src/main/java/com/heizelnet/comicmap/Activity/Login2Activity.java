@@ -19,11 +19,14 @@ import com.heizelnet.comicmap.OAuth.APIClient;
 import com.heizelnet.comicmap.OAuth.LoginClient;
 import com.heizelnet.comicmap.OAuth.TokenProcess;
 import com.heizelnet.comicmap.R;
+import com.heizelnet.comicmap.SplashActivity;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -119,8 +122,6 @@ public class Login2Activity extends AppCompatActivity {
                     //Set TimeStamp
                     int lastTime = (int) SystemClock.elapsedRealtime();
                     loginSharedPreference.putInt("elpasedTime", lastTime/1000 );
-
-                    ////Log.e("exploit", "Token retrieved! : " + access_token + ", " + refresh_token);
                     show_favorite();
                 } catch (Exception e) {
                     ////Log.e("exploit", "Access_token Error!, maybe requestverification_token");
@@ -132,7 +133,6 @@ public class Login2Activity extends AppCompatActivity {
             @Override
             public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
                 tv_load.setText("Network Error! Retry..");
-                ////Log.e("exploit", "onFailure");
                 accessToken();
             }
         });
@@ -178,7 +178,13 @@ public class Login2Activity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                ////Log.e("exploit", "Favorite failed...");
+                if (t instanceof SocketTimeoutException) {
+                    startActivity(new Intent(Login2Activity.this, MainActivity.class));
+                    finish();
+                } else if(t instanceof IOException) {
+                    startActivity(new Intent(Login2Activity.this, MainActivity.class));
+                    finish();
+                }
                 tv_load.setText("Error with favorite.. Retry!");
                 show_favorite();
             }
