@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.webkit.CookieManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,8 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -276,12 +279,15 @@ public class SplashActivity extends AppCompatActivity {
 
     public void show_favorite() {
         tv_load.setText("User Data Update..");
+        int lastTime = (int) SystemClock.elapsedRealtime();
         apiInterface = APIClient.getClient(TokenProcess.API_URL).create(TokenProcess.class);
         responseBodyCall = apiInterface.getFavoriteList(getResources().getString(R.string.event_id), getResources().getInteger(R.integer.event_no), 0);
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
                 try {
+                    int lastTime2 = (int) SystemClock.elapsedRealtime();
+                    Log.e("exploit", "ElpasedTime : " + (lastTime2 - lastTime) / 1000);
                     String jString = response.body().string();
                     JSONObject res1 = new JSONObject(jString).getJSONObject("response");
                     if(res1.getInt("maxcount") == 0) {
@@ -305,7 +311,6 @@ public class SplashActivity extends AppCompatActivity {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ////Log.e("exploit", "favorite_exception..");
                     tv_load.setText("Error with favorite.. Retry!");
                     show_favorite();
                 }
@@ -313,9 +318,16 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                ////Log.e("exploit", "Favorite failed...");
-                tv_load.setText("Error with favorite.. Retry!");
-                show_favorite();
+                if (t instanceof SocketTimeoutException) {
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    finish();
+                } else if(t instanceof IOException) {
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    finish();
+                }else {
+                    tv_load.setText("Error with favorite.. Retry!");
+                    show_favorite();
+                }
             }
         });
     }

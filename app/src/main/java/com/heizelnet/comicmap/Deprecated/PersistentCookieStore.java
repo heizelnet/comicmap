@@ -1,4 +1,4 @@
-package com.heizelnet.comicmap.cookie;
+package com.heizelnet.comicmap.Deprecated;
 
 import android.content.Context;
 import android.content.SharedPreferences;
