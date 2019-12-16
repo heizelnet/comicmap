@@ -95,6 +95,8 @@
                 android:layout_height="25dp"
                 app:srcCompat="@drawable/pixiv_on_"
                 android:layout_marginStart="90dp"
+                android:clickable="true"
+                android:focusable="true"
                 android:padding="0dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"

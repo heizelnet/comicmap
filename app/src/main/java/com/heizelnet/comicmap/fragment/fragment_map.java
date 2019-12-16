@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment;
 import com.heizelnet.comicmap.DataBaseHelper;
 import com.heizelnet.comicmap.DataSharedPreference;
 import com.heizelnet.comicmap.ItemSpinnerAdapter;
+import com.heizelnet.comicmap.Logger;
 import com.heizelnet.comicmap.MapSpinnerItem;
 import com.heizelnet.comicmap.MyApplication;
 import com.heizelnet.comicmap.R;
@@ -174,7 +175,7 @@ public class fragment_map extends Fragment {
                         map_pixel = getResources().getInteger(R.integer.south_34_width);
                         break;
                 }
-                //Log.e("exploit", "selected_Hall");
+                Logger.e("exploit", "selected_Hall");
                 bitmap = drawable.getBitmap().copy(Bitmap.Config.ARGB_8888, true);
                 map_width = bitmap.getWidth();
                 map_height = bitmap.getHeight();
@@ -190,7 +191,7 @@ public class fragment_map extends Fragment {
                     canvas.drawCircle(point_x , point_y, circle_pixel, paint);
                     photoView.invalidate();
                     toggle_search = false;
-                    //Log.e("exploit", "point_x : "+point_x +" point_y : "+point_y);
+                    Logger.e("exploit", "point_x : "+point_x +" point_y : "+point_y);
                 }
 /*
                 if(toggle) {
@@ -226,13 +227,13 @@ public class fragment_map extends Fragment {
             if(!toggle) {
                 imageButton.setImageDrawable(getContext().getDrawable(R.drawable.favorite_on));
 
-                //Log.e("exploit", "Favorite Function Activated");
+                Logger.e("exploit", "Favorite Function Activated");
                 //Test code for favorite function
                 //canvas.setBitmap(bitmap);
                 String format = "select * from circle_info " +
                         "where Hall like '%" + hallName + "%' and Day=" + day + " and favorite >0";
 
-                //Log.e("exploit", "favorite_query : " + format);
+                Logger.e("exploit", "favorite_query : " + format);
 ;               Cursor cur = mDataBase.rawQuery(format, null);
                 cur.moveToFirst();
                 if(cur.getCount() != 0) {
@@ -243,7 +244,7 @@ public class fragment_map extends Fragment {
                             float point_y = ((cur.getInt(cur.getColumnIndex("location_y")) * circle_pixel) + (circle_pixel / 2)) * density;
                             int favorite_color = cur.getInt(cur.getColumnIndex("favorite"));
                             paint.setColor(getColor(favorite_color));
-                            //Log.e("exploit", "point_x : "+point_x +" point_y : "+point_y+" favorite : "+favorite_color);
+                            Logger.e("exploit", "point_x : "+point_x +" point_y : "+point_y+" favorite : "+favorite_color);
                             canvas.drawCircle(point_x, point_y, (circle_pixel * 2) / 3, paint);
                         } catch(Exception e) { break; }
                         cur.moveToNext();
@@ -270,7 +271,7 @@ public class fragment_map extends Fragment {
 
             //get location & add query
             float density = (map_width / map_pixel);
-            //Log.e("exploit", "DPI : " + density + ", resource width : " + map_pixel + ", circle_pixel : " + circle_pixel);
+            Logger.e("exploit", "DPI : " + density + ", resource width : " + map_pixel + ", circle_pixel : " + circle_pixel);
             location_x = (int)Math.floor((map_width / density * x) / circle_pixel);
             location_y = (int)Math.floor((map_height / density * y) / circle_pixel);
             String query = "select * from circle_info " +
@@ -278,7 +279,7 @@ public class fragment_map extends Fragment {
 
             Cursor cur = mDataBase.rawQuery(query, null);
             cur.moveToFirst();
-            //Log.e("exploit", "Query : " + query);
+            Logger.e("exploit", "Query : " + query);
 
             //iterate query add items to dialog
             ArrayList<circle_instance> items = new ArrayList<>();
@@ -309,9 +310,9 @@ public class fragment_map extends Fragment {
             }
             cur.close();
 
-            //Log.e("exploit", "View Length : " + map_width + ", " + map_height);
-            //Log.e("exploit", "Percentage : " + x + ", " + y + " , " + view.getId());
-            //Log.e("exploit", "Check Location : " + location_x + ", " + location_y);
+            Logger.e("exploit", "View Length : " + map_width + ", " + map_height);
+            Logger.e("exploit", "Percentage : " + x + ", " + y + " , " + view.getId());
+            Logger.e("exploit", "Check Location : " + location_x + ", " + location_y);
 
         }
     }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.session.MediaSession;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +14,15 @@ import android.webkit.CookieManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.heizelnet.comicmap.DataBaseHelper;
+import com.heizelnet.comicmap.Logger;
 import com.heizelnet.comicmap.LoginSharedPreference;
 import com.heizelnet.comicmap.MyApplication;
 import com.heizelnet.comicmap.OAuth.APIClient;
@@ -26,6 +30,7 @@ import com.heizelnet.comicmap.OAuth.TokenProcess;
 import com.heizelnet.comicmap.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 import okhttp3.ResponseBody;
@@ -122,21 +127,79 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
 
         //Set Favorite Button Listener
         holder.favorite_button.setOnClickListener(view -> {
-            String query;
+            HashMap<String, Object> postData = new HashMap<>();
+            TokenProcess apiInterface_ = APIClient.getClient(TokenProcess.API_URL).create(TokenProcess.class);
+            retrofit2.Call<ResponseBody> responseBodyCall_;
             Cursor cur_ = mDatabase.rawQuery(query_favorite, null);
             cur_.moveToFirst();
-            if(cur_.getInt(cur.getColumnIndex("favorite")) > 0) {
-                holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.favorite_off));
-                query = String.format(Locale.KOREA, "update circle_info set favorite=%d where wid=%d", 0, Integer.parseInt(data.getWid()));
-                //Log.e("exploit", "favorite off");
 
-            } else {
-                holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.favorite_on));
-                query = String.format(Locale.KOREA, "update circle_info set favorite=%d where wid=%d", 3, Integer.parseInt(data.getWid()));
-                //Log.e("exploit", "favorite on");
+            view.setEnabled(false);
+            //Delete favorite
+            if(cur_.getInt(cur.getColumnIndex("favorite")) > 0) {
+                holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.circular_progress));
+                responseBodyCall_ = apiInterface_.deleteFavorite(data.getWid());
+                responseBodyCall_.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            Logger.e("exploit", response.body().string());
+                            String query = String.format(Locale.KOREA, "update circle_info set favorite=%d where wid=%d", 0, Integer.parseInt(data.getWid()));
+                            mDatabase.execSQL(query);
+                            holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.favorite_off));
+                            view.setEnabled(true);
+                        }catch(Exception e) {
+                            e.printStackTrace();
+                            holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.favorite_on));
+                            view.setEnabled(true);
+                            Toast.makeText(context, "Network Error!", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.favorite_on));
+                        view.setEnabled(true);
+                        Toast.makeText(context, "Network Error!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+
+            //Add favorite
+            else {
+                holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.circular_progress));
+                postData.put("wcid", data.getWid());
+                postData.put("color", 4);
+                postData.put("memo", "");
+                responseBodyCall_ = apiInterface_.addFavorite(postData);
+                responseBodyCall_.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            Logger.e("exploit", response.body().string());
+                            String query = String.format(Locale.KOREA, "update circle_info set favorite=%d where wid=%d", 4, Integer.parseInt(data.getWid()));
+                            mDatabase.execSQL(query);
+                            holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.favorite_on));
+                            view.setEnabled(true);
+                        } catch(Exception e) {
+                            e.printStackTrace();
+                            holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.favorite_off));
+                            view.setEnabled(true);
+                            Toast.makeText(context, "Network Error!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.favorite_off));
+                        view.setEnabled(true);
+                        Toast.makeText(context, "Network Error!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
             cur_.close();
-            mDatabase.execSQL(query);
+
         });
 
 
@@ -151,7 +214,7 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String url = response.body().string().split("\"CircleCutUrl\":\"")[1].split("\",\"")[0];
-                    Glide.with(holder.itemView.getContext()).load(url).placeholder(R.drawable.info_icon).dontAnimate().into(holder.imageView);
+                    Glide.with(holder.itemView.getContext()).load(url).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.info_icon).dontAnimate().into(holder.imageView);
                 } catch (Exception e) {
                     Glide.with(holder.itemView.getContext()).load(R.drawable.info_icon).into(holder.imageView);
                     //Log.e("exploit", "exception.. fail load image.");

@@ -32,10 +32,11 @@ public interface TokenProcess {
             @Query("sort") int sort
     );
     @DELETE("/Readers/Favorite/")
-    Call<ResponseBody> DeleteFavorite(
+    Call<ResponseBody> deleteFavorite(
             @Query("wcid") String wid
     );
 
+    @FormUrlEncoded
     @POST("/Readers/Favorite/")
     Call<ResponseBody> addFavorite(
             @FieldMap HashMap<String, Object> param

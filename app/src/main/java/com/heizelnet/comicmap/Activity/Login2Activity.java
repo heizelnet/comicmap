@@ -9,17 +9,16 @@ import android.text.TextUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
 import android.webkit.CookieManager;
 import android.widget.TextView;
 
 import com.heizelnet.comicmap.DataBaseHelper;
+import com.heizelnet.comicmap.Logger;
 import com.heizelnet.comicmap.LoginSharedPreference;
 import com.heizelnet.comicmap.OAuth.APIClient;
 import com.heizelnet.comicmap.OAuth.LoginClient;
 import com.heizelnet.comicmap.OAuth.TokenProcess;
 import com.heizelnet.comicmap.R;
-import com.heizelnet.comicmap.SplashActivity;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -75,19 +74,19 @@ public class Login2Activity extends AppCompatActivity {
             error = data.getQueryParameter(ERROR);
             if (!TextUtils.isEmpty(code)) {
                 //Login Success & Gold User
-                ////Log.e("exploit", "code : " + code + ", state : " + state);
+                Logger.e("exploit", "code : " + code + ", state : " + state);
                 loginSharedPreference.putInt("IS_VERIFICATED", 0);
                 accessToken();
             }
             if(!TextUtils.isEmpty(error)) {
                 //Not Gold User.. or Not Permmited...
-                ////Log.e("exploit", "onCreate: handle result of authorization with error :" + error);
+                Logger.e("exploit", "onCreate: handle result of authorization with error :" + error);
                 cookieManager.removeAllCookies(null);
                 //then die
                 finish();
             } if(!TextUtils.isEmpty(error_code)) {
                 //a problem occurs, the user reject our granting request or something like that
-                ////Log.e("exploit", "onCreate: handle result of authorization with error :" + error_code);
+                Logger.e("exploit", "onCreate: handle result of authorization with error :" + error_code);
                 //then die
                 cookieManager.removeAllCookies(null);
                 finish();
@@ -97,7 +96,7 @@ public class Login2Activity extends AppCompatActivity {
 
     //After get Code, access API & get Token
     public void accessToken() {
-        Log.e("exploit", "access token");
+        Logger.e("exploit", "access token");
         tv_load.setText("Access Token...");
         HashMap<String, Object> postData2 = new HashMap<>();
         postData2.put("grant_type", "authorization_code");
@@ -111,7 +110,7 @@ public class Login2Activity extends AppCompatActivity {
             public void onResponse(@NotNull retrofit2.Call<ResponseBody> call, @NotNull retrofit2.Response<ResponseBody> response) {
                 try {
                     String result = response.body().string();
-                    ////Log.e("exploit", "Token retrieved! : " + result);
+                    Logger.e("exploit", "Token retrieved! : " + result);
 
                     JSONObject json = new JSONObject(result);
                     String access_token = json.getString("access_token");
@@ -124,7 +123,7 @@ public class Login2Activity extends AppCompatActivity {
                     loginSharedPreference.putInt("elpasedTime", lastTime/1000 );
                     show_favorite();
                 } catch (Exception e) {
-                    ////Log.e("exploit", "Access_token Error!, maybe requestverification_token");
+                    Logger.e("exploit", "Access_token Error!, maybe requestverification_token");
                     cookieManager.removeAllCookies(null);
                     finish();
                 }
@@ -163,14 +162,14 @@ public class Login2Activity extends AppCompatActivity {
                             String query = String.format(Locale.KOREA, "update circle_info set favorite=%d where wid=%d", favorite_color, wid);
                             mDataBase.execSQL(query);
                         }
-                        ////Log.e("exploit", "WellDone!");
+                        ////Logger.e("exploit", "WellDone!");
                         loginSharedPreference.putInt("IS_VERIFICATED", 1);
                         startActivity(new Intent(Login2Activity.this, MainActivity.class));
                         finish();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ////Log.e("exploit", "favorite_exception..");
+                    ////Logger.e("exploit", "favorite_exception..");
                     tv_load.setText("Error with favorite.. Retry!");
                     show_favorite();
                 }
@@ -195,7 +194,7 @@ public class Login2Activity extends AppCompatActivity {
 /*
         List<Cookie> cookies = new SharedPrefsCookiePersistor(MyApplication.getAppContext()).loadAll();
         for (Cookie cookie : cookies) {
-            ////Log.e("exploit", "cookieValue : " + cookie.toString());
+            ////Logger.e("exploit", "cookieValue : " + cookie.toString());
             //bundle.putString("Cookie", cookie.toString());
             //CookieManager.getInstance().setCookie(TargetUrl, cookie.toString());
         }

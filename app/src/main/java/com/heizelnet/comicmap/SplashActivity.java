@@ -75,7 +75,7 @@ public class SplashActivity extends AppCompatActivity {
 
         //SearchBox Update
         tv_load.setText(R.string.done);
-        ////Log.e("exploit", "database updating..");
+        Logger.e("exploit", "database updating..");
         if(dataSharedPreference.getStringArrayList(dataSharedPreference.SEARCH_BOX).isEmpty()) {
             String query = "select Name, Author from circle_info";
             Cursor cur = mDataBase.rawQuery(query, null);
@@ -83,7 +83,7 @@ public class SplashActivity extends AppCompatActivity {
 
             //iterate query add items to dialog
             ArrayList<String> items = new ArrayList<>();
-            ////Log.e("exploit", "query count : " + cur.getCount());
+            Logger.e("exploit", "query count : " + cur.getCount());
             if (cur.getCount() != 0) {
                 while (true) {
                     try {
@@ -101,7 +101,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
             }
             dataSharedPreference.setStringArrayList(dataSharedPreference.SEARCH_BOX, items);
-            ////Log.e("exploit", "Update complete!");
+            Logger.e("exploit", "Update complete!");
         }
 
         //Login With check ID, Password in SharedPref
@@ -181,7 +181,7 @@ public class SplashActivity extends AppCompatActivity {
                     //Login Check in SharedPref
                     if(response.headers().toString().contains("__RequestVerificationToken=")) {
                         loginSharedPreference.putString("verificationToken", response.headers().toString().split("__RequestVerificationToken=")[1].split(";")[0]);
-                        ////Log.e("exploit", "================Login OK...================");
+                        Logger.e("exploit", "================Login OK...================");
                         //Check SharedPref for Refresh Tokens..
                         String refreshToken = loginSharedPreference.getString("refresh_token");
                         if(refreshToken != null) {
@@ -232,7 +232,7 @@ public class SplashActivity extends AppCompatActivity {
         postData2.put("client_id", getResources().getString(R.string.client_id));
         postData2.put("client_secret", getResources().getString(R.string.client_secret));
         tv_load.setText("Gold 会員 チェック中..");
-        ////Log.e("exploit", "Refreshing token...");
+        Logger.e("exploit", "Refreshing token...");
         loginInterface = LoginClient.getClient(TokenProcess.BASE_URL).create(TokenProcess.class);
         responseBodyCall = loginInterface.accessToken(postData2);
         responseBodyCall.enqueue(new Callback<ResponseBody>() {
@@ -241,14 +241,14 @@ public class SplashActivity extends AppCompatActivity {
                 //Todo : Check GoldUser payment time has Expired...
                 try {
                     String result = response.body().string();
-                    ////Log.e("exploit", "Result code : " + response.code());
-                    ////Log.e("exploit", "token_type: " +result);
+                    Logger.e("exploit", "Result code : " + response.code());
+                    Logger.e("exploit", "token_type: " +result);
                     JSONObject json = new JSONObject(result);
                     String access_token = json.getString("access_token");
                     String refresh_token = json.getString("refresh_token");
                     loginSharedPreference.putString("access_token", access_token);
                     loginSharedPreference.putString("refresh_token", refresh_token);
-                    ////Log.e("exploit", "Token retrieved! : " + access_token + ", " + refresh_token);
+                    Logger.e("exploit", "Token retrieved! : " + access_token + ", " + refresh_token);
 
                     int lastTime = (int) SystemClock.elapsedRealtime();
                     loginSharedPreference.putInt("elpasedTime", lastTime/1000);
@@ -305,7 +305,7 @@ public class SplashActivity extends AppCompatActivity {
                             String query = String.format(Locale.KOREA, "update circle_info set favorite=%d where wid=%d", favorite_color, wid);
                             mDataBase.execSQL(query);
                         }
-                        ////Log.e("exploit", "WellDone!");
+                        Logger.e("exploit", "WellDone!");
                         startActivity(new Intent(SplashActivity.this, MainActivity.class));
                         finish();
                     }
