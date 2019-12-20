@@ -59,7 +59,11 @@ public class Login2Activity extends AppCompatActivity {
         String STATE = "state";
         String ERROR_CODE = "error_code";
         String ERROR = "error";
-        helper = new DataBaseHelper(this);
+        try {
+            helper = new DataBaseHelper(this);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
         mDataBase = helper.openDataBase();
 
 

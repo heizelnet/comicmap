@@ -32,6 +32,7 @@ import com.heizelnet.comicmap.OAuth.APIClient;
 import com.heizelnet.comicmap.OAuth.TokenProcess;
 import com.heizelnet.comicmap.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -65,7 +66,11 @@ public class favorite_info_adapter extends RecyclerView.Adapter<favorite_info_ad
         Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);
-        mDatabase = new DataBaseHelper(context).openDataBase();
+        try {
+            mDatabase = new DataBaseHelper(context).openDataBase();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View view_ = inflater.inflate(R.layout.favorite_info_item, parent, false);
