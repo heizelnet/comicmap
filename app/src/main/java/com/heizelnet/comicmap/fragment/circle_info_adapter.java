@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.media.session.MediaSession;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +17,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.heizelnet.comicmap.DataBaseHelper;
 import com.heizelnet.comicmap.Logger;
-import com.heizelnet.comicmap.LoginSharedPreference;
 import com.heizelnet.comicmap.MyApplication;
 import com.heizelnet.comicmap.OAuth.APIClient;
 import com.heizelnet.comicmap.OAuth.TokenProcess;
@@ -44,7 +43,6 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
     private Context context;
     private TokenProcess apiInterface;
     private retrofit2.Call<ResponseBody> responseBodyCall;
-    private LoginSharedPreference loginSharedPreference = new LoginSharedPreference();
     private SQLiteDatabase mDatabase;
     private CookieManager cookieManager;
 
@@ -136,7 +134,9 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
             view.setEnabled(false);
             //Delete favorite
             if(cur_.getInt(cur.getColumnIndex("favorite")) > 0) {
-                holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.circular_progress));
+                AnimatedVectorDrawableCompat animatedVectorDrawableCompat = AnimatedVectorDrawableCompat.create(context, R.drawable.avd_circle);
+                holder.favorite_button.setImageDrawable(animatedVectorDrawableCompat);
+                animatedVectorDrawableCompat.start();
                 responseBodyCall_ = apiInterface_.deleteFavorite(data.getWid());
                 responseBodyCall_.enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -145,19 +145,23 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
                             Logger.e("exploit", response.body().string());
                             String query = String.format(Locale.KOREA, "update circle_info set favorite=%d where wid=%d", 0, Integer.parseInt(data.getWid()));
                             mDatabase.execSQL(query);
+                            animatedVectorDrawableCompat.stop();
                             holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.favorite_off));
                             view.setEnabled(true);
+                            Toast.makeText(context, "DELETED!", Toast.LENGTH_SHORT).show();
                         }catch(Exception e) {
                             e.printStackTrace();
+                            animatedVectorDrawableCompat.stop();
                             holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.favorite_on));
                             view.setEnabled(true);
-                            Toast.makeText(context, "Network Error!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Exception", Toast.LENGTH_SHORT).show();
                         }
 
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        animatedVectorDrawableCompat.stop();
                         holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.favorite_on));
                         view.setEnabled(true);
                         Toast.makeText(context, "Network Error!", Toast.LENGTH_SHORT).show();
@@ -168,7 +172,9 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
 
             //Add favorite
             else {
-                holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.circular_progress));
+                AnimatedVectorDrawableCompat animatedVectorDrawableCompat = AnimatedVectorDrawableCompat.create(context, R.drawable.avd_circle);
+                holder.favorite_button.setImageDrawable(animatedVectorDrawableCompat);
+                animatedVectorDrawableCompat.start();
                 postData.put("wcid", data.getWid());
                 postData.put("color", 4);
                 postData.put("memo", "");
@@ -180,18 +186,22 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
                             Logger.e("exploit", response.body().string());
                             String query = String.format(Locale.KOREA, "update circle_info set favorite=%d where wid=%d", 4, Integer.parseInt(data.getWid()));
                             mDatabase.execSQL(query);
+                            animatedVectorDrawableCompat.stop();
                             holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.favorite_on));
                             view.setEnabled(true);
+                            Toast.makeText(context, "ADDED!", Toast.LENGTH_SHORT).show();
                         } catch(Exception e) {
                             e.printStackTrace();
+                            animatedVectorDrawableCompat.stop();
                             holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.favorite_off));
                             view.setEnabled(true);
-                            Toast.makeText(context, "Network Error!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Exception..", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        animatedVectorDrawableCompat.stop();
                         holder.favorite_button.setImageDrawable(MyApplication.getAppContext().getDrawable(R.drawable.favorite_off));
                         view.setEnabled(true);
                         Toast.makeText(context, "Network Error!", Toast.LENGTH_SHORT).show();

@@ -25,8 +25,8 @@ public class APIClient {
         LoginSharedPreference loginSharedPreference = new LoginSharedPreference();
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
                 .connectTimeout(5, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS);
+                .readTimeout(5, TimeUnit.SECONDS)
+                .writeTimeout(5, TimeUnit.SECONDS);
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.acceptCookie();
         cookieManager.setAcceptCookie(true);

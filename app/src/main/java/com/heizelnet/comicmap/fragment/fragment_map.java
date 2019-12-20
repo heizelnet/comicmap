@@ -86,41 +86,41 @@ public class fragment_map extends Fragment {
                 android.R.layout.simple_dropdown_item_1line, dataSharedPreference.getStringArrayList(dataSharedPreference.SEARCH_BOX)));
         autoCompleteTextView.setOnItemClickListener((adapterView, view13, i, l) -> {
 
-        //Hide Keyboard & Focus
-        InputMethodManager inputManager = (InputMethodManager) MyApplication.getAppContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        View v = getActivity().getCurrentFocus();
-        if (v != null) {
-            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-            inputManager.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
-        autoCompleteTextView.clearFocus();
+            //Hide Keyboard & Focus
+            InputMethodManager inputManager = (InputMethodManager) MyApplication.getAppContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            View v = getActivity().getCurrentFocus();
+            if (v != null) {
+                getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                inputManager.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+            autoCompleteTextView.clearFocus();
 
 
-        //This part will be changed prepareStatement query..
-        String condition = autoCompleteTextView.getText().toString().split(" : ")[0];
-        String value = autoCompleteTextView.getText().toString().split(" : ")[1];
-        String query = "select Hall, Day, location_x, location_y from circle_info where " + condition + "=\"" + value + "\"";
-        //(?=?)
-        Cursor cur = mDataBase.rawQuery(query, null);
-        cur.moveToFirst();
+            //This part will be changed prepareStatement query..
+            String condition = autoCompleteTextView.getText().toString().split(" : ")[0];
+            String value = autoCompleteTextView.getText().toString().split(" : ")[1];
+            String query = "select Hall, Day, location_x, location_y from circle_info where " + condition + "=\"" + value + "\"";
+            //(?=?)
+            Cursor cur = mDataBase.rawQuery(query, null);
+            cur.moveToFirst();
 
-        String Hall = cur.getString(cur.getColumnIndex("Hall"));
-        day = cur.getInt(cur.getColumnIndex("Day"));
-        location_x = cur.getInt(cur.getColumnIndex("location_x"));
-        location_y = cur.getInt(cur.getColumnIndex("location_y"));
-        cur.close();
+            String Hall = cur.getString(cur.getColumnIndex("Hall"));
+            day = cur.getInt(cur.getColumnIndex("Day"));
+            location_x = cur.getInt(cur.getColumnIndex("location_x"));
+            location_y = cur.getInt(cur.getColumnIndex("location_y"));
+            cur.close();
 
-        toggle_search = true;
-        if(Hall.equals("W12")) {
-            spinnerHall.setSelection(0);
-        } if(Hall.equals("W34")) {
-            spinnerHall.setSelection(1);
-        } if(Hall.equals("S12")) {
-            spinnerHall.setSelection(2);
-        } if(Hall.equals("S34")) {
-            spinnerHall.setSelection(3);
-        }
-        spinnerDay.setSelection(day - 1);
+            toggle_search = true;
+            if(Hall.equals("W12")) {
+                spinnerHall.setSelection(0);
+            } if(Hall.equals("W34")) {
+                spinnerHall.setSelection(1);
+            } if(Hall.equals("S12")) {
+                spinnerHall.setSelection(2);
+            } if(Hall.equals("S34")) {
+                spinnerHall.setSelection(3);
+            }
+            spinnerDay.setSelection(day - 1);
 
         });
         
@@ -182,7 +182,7 @@ public class fragment_map extends Fragment {
                 canvas.setBitmap(bitmap);
                 photoView.setImageBitmap(bitmap);
 
-                //Set search point when toggle_search true..
+                //Set search point when toggle_search true..(Search function)
                 if(toggle_search) {
                     float density = (map_width / map_pixel);
                     float point_x = ((location_x * circle_pixel) + (circle_pixel / 3)) * density;
@@ -193,6 +193,9 @@ public class fragment_map extends Fragment {
                     toggle_search = false;
                     Logger.e("exploit", "point_x : "+point_x +" point_y : "+point_y);
                 }
+
+                toggle = false;
+                imageButton.setImageDrawable(getContext().getDrawable(R.drawable.favorite_off));
 /*
                 if(toggle) {
                     imageButton.setImageDrawable(getContext().getDrawable(R.drawable.unfill_heart));
@@ -243,7 +246,7 @@ public class fragment_map extends Fragment {
                             float point_x = ((cur.getInt(cur.getColumnIndex("location_x")) * circle_pixel) + (circle_pixel / 3)) * density;
                             float point_y = ((cur.getInt(cur.getColumnIndex("location_y")) * circle_pixel) + (circle_pixel / 2)) * density;
                             int favorite_color = cur.getInt(cur.getColumnIndex("favorite"));
-                            paint.setColor(getColor(favorite_color));
+                            paint.setColor(getResources().getColor(getColor(favorite_color)));
                             Logger.e("exploit", "point_x : "+point_x +" point_y : "+point_y+" favorite : "+favorite_color);
                             canvas.drawCircle(point_x, point_y, (circle_pixel * 2) / 3, paint);
                         } catch(Exception e) { break; }

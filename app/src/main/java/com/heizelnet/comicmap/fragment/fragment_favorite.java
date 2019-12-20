@@ -26,7 +26,7 @@ public class fragment_favorite extends Fragment implements SwipeRefreshLayout.On
     private RecyclerView recyclerView;
     private SQLiteDatabase mDataBase;
     private TextView textView;
-    private circle_info_adapter adapter;
+    private favorite_info_adapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -66,8 +66,8 @@ public class fragment_favorite extends Fragment implements SwipeRefreshLayout.On
     public void show_favorite() {
         textView.setText("Loading..");
 
-        ArrayList<circle_instance> items = new ArrayList<>();
-        String query = "select * from circle_info where favorite > 0";
+        ArrayList<favorite_instance> items = new ArrayList<>();
+        String query = "select * from circle_info where favorite > 0 order by favorite asc";
 
         Cursor cur = mDataBase.rawQuery(query, null);
         cur.moveToFirst();
@@ -76,19 +76,19 @@ public class fragment_favorite extends Fragment implements SwipeRefreshLayout.On
         if (cur.getCount() != 0) {
             while (true) {
                 try {
-                    items.add(new circle_instance(cur.getInt(cur.getColumnIndex("wid")), cur.getString(cur.getColumnIndex("Name")),
+                    items.add(new favorite_instance(cur.getInt(cur.getColumnIndex("wid")), cur.getString(cur.getColumnIndex("Name")),
                             cur.getString(cur.getColumnIndex("Author")),
                             cur.getString(cur.getColumnIndex("Genre")), cur.getString(cur.getColumnIndex("Day")),
                             cur.getString(cur.getColumnIndex("circle")), cur.getInt(cur.getColumnIndex("IsPixivRegistered")),
                             cur.getInt(cur.getColumnIndex("IsTwitterRegistered")), cur.getInt(cur.getColumnIndex("IsNiconicoRegistered")),
                             cur.getString(cur.getColumnIndex("PixivUrl")), cur.getString(cur.getColumnIndex("TwitterUrl")),
-                            cur.getString(cur.getColumnIndex("NiconicoUrl"))));
+                            cur.getString(cur.getColumnIndex("NiconicoUrl")), cur.getString(cur.getColumnIndex("memo"))));
                 } catch (Exception e) {
                         break;
                 }
                 cur.moveToNext();
             }
-            adapter = new circle_info_adapter(items);
+            adapter = new favorite_info_adapter(items);
             setUpRecyclerView();
 
             viewGroup.setVisibility(View.GONE);

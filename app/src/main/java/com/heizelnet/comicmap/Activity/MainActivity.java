@@ -19,7 +19,7 @@ import com.heizelnet.comicmap.fragment.fragment_checklist;
 import com.heizelnet.comicmap.fragment.fragment_favorite;
 import com.heizelnet.comicmap.fragment.fragment_map;
 import com.heizelnet.comicmap.fragment.fragment_route;
-import com.heizelnet.comicmap.fragment.fragment_genre;
+import com.heizelnet.comicmap.fragment.fragment_random;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         search_button.setOnClickListener(v -> {
             //////Log.e("exploit", "genre_button_clicked!");
 
-            fragment_genre = new fragment_genre();
+            fragment_genre = new fragment_random();
             viewMenu(fragment_genre);
             drawerLayout.closeDrawer(GravityCompat.START);
         });

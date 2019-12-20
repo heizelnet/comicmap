@@ -300,9 +300,16 @@ public class SplashActivity extends AppCompatActivity {
                             JSONObject tmp = list.getJSONObject(i).getJSONObject("favorite");
                             int wid = tmp.getInt("wcid");
                             int favorite_color = tmp.getInt("color");
-                            //Log.e("exploit", "wid : " + wid + ", color : " + favorite_color);
+                            String memo = tmp.getString("memo");
+                            if(memo.isEmpty())
+                                memo = "edit memo here";
+                            else {
+                                memo = memo.replace("\"", "");
+                                memo = memo.replace("\'", "");
+                            }
 
-                            String query = String.format(Locale.KOREA, "update circle_info set favorite=%d where wid=%d", favorite_color, wid);
+                            String query = String.format(Locale.KOREA, "update circle_info set favorite=%d, memo='%s' where wid=%d", favorite_color, memo, wid);
+                            Logger.e("exploit", "query : " + query);
                             mDataBase.execSQL(query);
                         }
                         Logger.e("exploit", "WellDone!");
