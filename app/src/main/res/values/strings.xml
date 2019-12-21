@@ -1,15 +1,17 @@
 <resources>
     <string name="app_name">comicmap</string>
-    <integer name="south_12_width">2480</integer>
-    <integer name="south_12_height">1360</integer>
-    <integer name="south_34_width">2480</integer>
-    <integer name="south_34_height">1360</integer>
-    <integer name="west_12_width">3600</integer>
-    <integer name="west_12_height">2560</integer>
-    <integer name="west_34_width">2680</integer>
-    <integer name="west_34_height">2560</integer>
-    <string name="west_circle_pixel">40</string>
-    <string name="south_circle_pixel">40</string>
+    <integer name="S12_width">2480</integer>
+    <integer name="S12_height">1360</integer>
+    <integer name="S34_width">2480</integer>
+    <integer name="S34_height">1360</integer>
+    <integer name="W12_width">3600</integer>
+    <integer name="W12_height">2560</integer>
+    <integer name="W34_width">2680</integer>
+    <integer name="W34_height">2560</integer>
+    <string name="W12_circle_pixel">40</string>
+    <string name="S12_circle_pixel">40</string>
+    <string name="W34_circle_pixel">40</string>
+    <string name="S34_circle_pixel">40</string>
     <string name="client_id">comicmapgZwp98BPmh5rj35zfnFNcZA5mxrpyCUQ</string>
     <string name="client_secret">EzLB948eVa58xXSqu3Fjk3nDsw8sHTwpEMpiDbGM</string>
     <string name="row_Author" translatable="false">Author :  %1$s</string>

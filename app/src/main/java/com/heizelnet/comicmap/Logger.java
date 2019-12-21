@@ -6,6 +6,6 @@ public class Logger {
 
     public static void e(String tag, String message) {
 
-        //Log.e(tag, message);
+        Log.e(tag, message);
     }
 }

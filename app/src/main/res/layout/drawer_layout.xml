@@ -25,7 +25,7 @@
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:background="@drawable/idea_bulb"/>
+            android:background="@drawable/heart_img"/>
         <TextView
             android:layout_width="match_parent"
             android:gravity="center"
@@ -53,7 +53,7 @@
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:background="@drawable/idea_bulb"/>
+            android:background="@drawable/heart_img"/>
         <TextView
             android:layout_width="match_parent"
             android:gravity="center"
@@ -81,7 +81,7 @@
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:background="@drawable/idea_bulb"/>
+            android:background="@drawable/heart_img"/>
         <TextView
             android:layout_width="match_parent"
             android:gravity="center"
@@ -109,7 +109,7 @@
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:background="@drawable/idea_bulb"/>
+            android:background="@drawable/heart_img"/>
         <TextView
             android:layout_width="match_parent"
             android:gravity="center"
@@ -137,7 +137,7 @@
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:background="@drawable/idea_bulb"/>
+            android:background="@drawable/heart_img"/>
         <TextView
             android:layout_width="match_parent"
             android:gravity="center"
