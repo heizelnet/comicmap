@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="5dp">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tutorial_map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/menu_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="636dp"
+                android:fontFamily="@font/nicokaku"
+                android:text="1. MAP"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="1. MAP" />
+
+            <TextView
+                android:id="@+id/menu_map_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/nicokaku"
+                android:text="  1-1. Map select"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/menu_map"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="  1-1. Map select" />
+
+            <ImageView
+                android:id="@+id/menu_map_select_img"
+                android:layout_width="300dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="7dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/map_tutorial_2"
+                app:layout_constraintTop_toBottomOf="@+id/menu_map_select"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/menu_map_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/nicokaku"
+                android:text="  1-2. Search"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/menu_map_select_img"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="  1-2. Search" />
+
+            <ImageView
+                android:id="@+id/menu_map_search_img"
+                android:layout_width="300dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="7dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/map_tutorial_3"
+                app:layout_constraintTop_toBottomOf="@+id/menu_map_search"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/menu_map_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/nicokaku"
+                android:text="  1-3. Show favorite"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/menu_map_search_img"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="  1-3. Show favorite" />
+
+            <ImageView
+                android:id="@+id/menu_map_show_img"
+                android:layout_width="300dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="7dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/map_tutorial_4"
+                app:layout_constraintTop_toBottomOf="@+id/menu_map_show"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/menu_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nicokaku"
+                android:layout_marginTop="40dp"
+                android:text="2. Favorite"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                app:layout_constraintTop_toBottomOf="@+id/menu_map_show_img"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="2. Favorite" />
+
+            <TextView
+                android:id="@+id/menu_favorite_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/nicokaku"
+                android:text="  2-1. Refresh favorite"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@+id/menu_favorite"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="  2-1. Show favorite" />
+
+            <ImageView
+                android:id="@+id/menu_favorite_refresh_img"
+                android:layout_width="300dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="7dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/favorite_tutorial_2"
+                app:layout_constraintTop_toBottomOf="@+id/menu_favorite_refresh"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/menu_favorite_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/nicokaku"
+                android:text="  2-2. Edit favorite"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@+id/menu_favorite_refresh_img"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="  2-2. Edit favorite" />
+
+            <ImageView
+                android:id="@+id/menu_favorite_edit_img"
+                android:layout_width="300dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="7dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/favorite_tutorial_3"
+                app:layout_constraintTop_toBottomOf="@+id/menu_favorite_edit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/menu_checklist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nicokaku"
+                android:layout_marginTop="40dp"
+                android:text="3. Checklist"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                app:layout_constraintTop_toBottomOf="@+id/menu_favorite_edit_img"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="3. Checklist" />
+
+            <TextView
+                android:id="@+id/menu_checklist_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/nicokaku"
+                android:text="  3-1. Add list"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@+id/menu_checklist"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="  3-1. Add checklist" />
+
+            <ImageView
+                android:id="@+id/menu_checklist_add_img"
+                android:layout_width="300dp"
+                android:layout_height="225dp"
+                android:layout_marginTop="7dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/checklist_tutorial_1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/menu_checklist_add" />
+
+            <TextView
+                android:id="@+id/menu_checklist_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/nicokaku"
+                android:text="  3-2. Delete list"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@+id/menu_checklist_add_img"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="  3-2. Delete checklist" />
+
+            <ImageView
+                android:id="@+id/menu_checklist_delete_img"
+                android:layout_width="300dp"
+                android:layout_height="225dp"
+                android:layout_marginTop="7dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/checklist_tutorial_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/menu_checklist_delete" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
