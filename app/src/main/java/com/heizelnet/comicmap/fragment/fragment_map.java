@@ -38,6 +38,7 @@ import com.heizelnet.comicmap.R;
 import com.github.chrisbanes.photoview.OnPhotoTapListener;
 import com.github.chrisbanes.photoview.PhotoView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class fragment_map extends Fragment {
@@ -68,7 +69,11 @@ public class fragment_map extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
-        mDataBase = new DataBaseHelper(getContext()).openDataBase();
+        try {
+            mDataBase = new DataBaseHelper(getContext()).openDataBase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         //Set Default Settings
         toggle = false;

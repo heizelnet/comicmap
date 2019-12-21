@@ -28,6 +28,7 @@ import com.heizelnet.comicmap.OAuth.APIClient;
 import com.heizelnet.comicmap.OAuth.TokenProcess;
 import com.heizelnet.comicmap.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -57,7 +58,11 @@ public class circle_info_adapter extends RecyclerView.Adapter<circle_info_adapte
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
-        mDatabase = new DataBaseHelper(context).openDataBase();
+        try {
+            mDatabase = new DataBaseHelper(context).openDataBase();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View view = inflater.inflate(R.layout.circle_info_item, parent, false);

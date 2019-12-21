@@ -66,10 +66,10 @@ public class SplashActivity extends AppCompatActivity {
     @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void checkProcess() {
         //Check DataBase Permission & Storage
-        helper = new DataBaseHelper(this);
-        tv_load = findViewById(R.id.textView_load);
+
         try {
-            helper.createDatabase();
+            helper = new DataBaseHelper(this);
+            tv_load = findViewById(R.id.textView_load);
             mDataBase = helper.openDataBase();
         } catch (Exception e) { e.printStackTrace(); }
 

@@ -18,6 +18,7 @@ import com.heizelnet.comicmap.DataBaseHelper;
 import com.heizelnet.comicmap.MyApplication;
 import com.heizelnet.comicmap.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class fragment_favorite extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -42,7 +43,11 @@ public class fragment_favorite extends Fragment implements SwipeRefreshLayout.On
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
-        mDataBase = new DataBaseHelper(getContext()).openDataBase();
+        try {
+            mDataBase = new DataBaseHelper(getContext()).openDataBase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         swipeRefreshLayout = view.findViewById(R.id.swipeLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
