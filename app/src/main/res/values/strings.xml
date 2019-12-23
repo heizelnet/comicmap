@@ -14,6 +14,7 @@
     <string name="S34_circle_pixel">40</string>
     <string name="client_id">comicmapgZwp98BPmh5rj35zfnFNcZA5mxrpyCUQ</string>
     <string name="client_secret">EzLB948eVa58xXSqu3Fjk3nDsw8sHTwpEMpiDbGM</string>
+    <string name="auth_url">https://auth1.circle.ms/OAuth2/</string>
     <string name="row_Author" translatable="false">Author :  %1$s</string>
     <string name="row_Name" translatable="false">Name :  %1$s</string>
     <string name="row_Genre">Genre :   %1$s</string>
