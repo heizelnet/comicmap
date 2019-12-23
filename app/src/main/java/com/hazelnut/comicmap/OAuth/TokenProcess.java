@@ -22,6 +22,15 @@ public interface TokenProcess {
     String BASE_URL = "https://auth1.circle.ms/";
     String API_URL = "https://api1.circle.ms/";
 
+    @GET("/OAuth2/")
+    Call<ResponseBody> oauth(
+            @Query("response_type") String response_type,
+            @Query("redirect_uri") String redirect_uri,
+            @Query("client_id") String client_id,
+            @Query("state") String state,
+            @Query("scope") String scope
+    );
+
     @FormUrlEncoded
     @POST("/OAuth2/Token/")
     Call<ResponseBody> accessToken(@FieldMap HashMap<String, Object> param);
